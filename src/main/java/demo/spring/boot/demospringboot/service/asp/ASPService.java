@@ -64,12 +64,18 @@ public class ASPService {
      * 下载list任务
      */
     public Collection<String> downloadListUrl(String bisName, int max, boolean headless, boolean useDriver) throws IOException {
-        Collection<String> result = new LinkedHashSet<>();
+        Collection<String> result = Collections.synchronizedSet(new LinkedHashSet<>());
+        ;
         Collection<String> listUrl = this.getListUrl(max);
-        for (String url : listUrl) {
-            String fileNames = this.downloadDetailToFile(url, bisName, headless, useDriver);
+        listUrl.parallelStream().forEach(url -> {
+            String fileNames = null;
+            try {
+                fileNames = this.downloadDetailToFile(url, bisName, headless, useDriver);
+            } catch (IOException e) {
+                log.error("下载异常:{}", e.toString(), e);
+            }
             result.add(fileNames);
-        }
+        });
         return result;
     }
 
@@ -200,7 +206,7 @@ public class ASPService {
             urls.add(url);
         });
         //开始下载
-        for (String url : urls) {
+        urls.parallelStream().forEach(url -> {
             String realUrl = null;
             if (url.startsWith("/")) {
                 realUrl = host + url;
@@ -212,12 +218,16 @@ public class ASPService {
              */
             if (url.matches("/\\d+adimg/.*")) {
                 //如果是广告，就不下载
-                continue;
+                return;
             }
-            map.put(url, DownLoadUtil.downloadFileByUrl(realUrl));
+            try {
+                map.put(url, DownLoadUtil.downloadFileByUrl(realUrl));
+            } catch (Exception e) {
+                log.error("下载发生异常:{}", e.toString(), e);
+                log.error("host:{},url:{},目标url:{}", host, url, realUrl);
+            }
             log.info("host:{},url:{},目标url:{}", host, url, realUrl);
-
-        }
+        });
         return map;
     }
 

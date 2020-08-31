@@ -47,6 +47,8 @@ local.properties
 # CDT-specific (C/C++ Development Tooling)
 .cproject
 
+locationResourcePath/
+
 # JDT-specific (Eclipse Java Development Tools)
 .classpath
 
