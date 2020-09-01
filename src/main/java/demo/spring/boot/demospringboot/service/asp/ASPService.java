@@ -12,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.FastDateFormat;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -103,16 +104,24 @@ public class ASPService {
         String regex = "(.*?)/SoftView/(.*?).html";
         String host = url.replaceAll(regex, "$1");
         String criteriaId = url.replaceAll(regex, "$2");
-        Map<String, byte[]> map = this.downloadDetailPic(host, pageSource);//下载图片
-        Info info = this.generateInfo(url, bisName, criteriaId, host, map.keySet());//生成info -> 下载的其他放入info
+        Map<String, byte[]> mapPic = this.downloadDetailPic(host, pageSource);//下载图片
+        Map<String, byte[]> mapDownloadUrl = this.downloadDownloadList(host, pageSource);//下载下载的url
+        Info info = this.generateInfo(url, bisName, criteriaId, host, mapPic.keySet());//生成info -> 下载的其他放入info
         ByteArrayOutputStream infoOut = new ByteArrayOutputStream();
         infoOut.write(jsonMapper.writeValueAsBytes(info));
         ByteArrayOutputStream result = new ByteArrayOutputStream();
         ZipOutputStream zipOutputStream = new ZipOutputStream(result);
         ZipUtils.compress(zipOutputStream, "info.txt", infoOut.toByteArray());
         ZipUtils.compress(zipOutputStream, "detail.html", pageSource.getBytes(StandardCharsets.UTF_8));
-        //压缩文件流
-        for (Map.Entry<String, byte[]> entry : map.entrySet()) {
+        //压缩pic文件流
+        for (Map.Entry<String, byte[]> entry : mapPic.entrySet()) {
+            String urlTmp = entry.getKey();
+            byte[] bytes = entry.getValue();
+            ZipUtils.compress(zipOutputStream, urlTmp.replace("/", "_"), bytes);
+        }
+
+        //压缩下载js文件流
+        for (Map.Entry<String, byte[]> entry : mapDownloadUrl.entrySet()) {
             String urlTmp = entry.getKey();
             byte[] bytes = entry.getValue();
             ZipUtils.compress(zipOutputStream, urlTmp.replace("/", "_"), bytes);
@@ -231,6 +240,50 @@ public class ASPService {
         return map;
     }
 
+    /**
+     * 下载详情页的下载url
+     * ->预期的
+     * <p>
+     * <p>
+     * document.writeln("<a href=https://www.chenxunyun.com/cloud.html target=_blank><font color=red>该源码可完美运行于辰迅云服务器</font></a>");
+     * document.writeln("<ul class=software-download> ");
+     * document.writeln("<li><a href='/dllDown/?CodeID=69891&id=1' target=_blank><em>[讯飞云高速下载]</em></a> <a href='/dllDown/?CodeID=69891&id=2' target=_blank><em>[招远网通下载点]</em></a></li> ");
+     * document.writeln("<li><a href='/dllDown/?CodeID=69891&id=3' target=_blank><em>[招远网通下载点]</em></a> <a href='/dllDown/?CodeID=69891&id=4' target=_blank><em>[双云上海下载点]</em></a></li> ");
+     * document.writeln("<li><a href='/dllDown/?CodeID=69891&id=5' target=_blank><em>[北京世博下载点]</em></a> <a href='/dllDown/?CodeID=69891&id=6' target=_blank><em>[腾佑联通下载点]</em></a></li> ");
+     * document.writeln("<li><a href='/dllDown/?CodeID=69891&id=7' target=_blank><em>[双云上海下载点]</em></a> <a href='/dllDown/?CodeID=69891&id=8' target=_blank><em>[景安快云下载点]</em></a></li> ");
+     * document.writeln("<li><a href='/dllDown/?CodeID=69891&id=9' target=_blank><em>[亿速电信下载点]</em></a> <a href='/dllDown/?CodeID=69891&id=1' target=_blank><em>[千喜电信下载点]</em></a></li> ");
+     * document.writeln("</ul> ");
+     * document.writeln("<a href=https://www.8dwww.com/server/ target=_blank><img src='/2012adimg/8dwww.gif'></a>");
+     */
+    public Map<String, byte[]> downloadDownloadList(String host, String pageSource) throws IOException {
+        Map<String, byte[]> map = new HashMap<>();
+        Document document = Jsoup.parse(pageSource);
+        int i = 0;
+        Elements downlistElements = document.getElementsByClass("downlist");//预期class只有一个
+        for (Element downlistElement : downlistElements) {
+            Elements scriptElements = downlistElement.getElementsByTag("script");
+            for (Element element : scriptElements) {
+                String jsUrl = element.attr("src");
+                String realUrl = null;
+                if (jsUrl.startsWith("/")) {
+                    realUrl = host + jsUrl;
+                } else {
+                    realUrl = jsUrl;
+                }
+                String downloadUrlsSource = IOUtils.toString(new URL(realUrl), StandardCharsets.UTF_8);
+                String key = "down";
+                String suffix = ".js";
+                if (i == 0) {
+                    key += suffix;
+                } else {
+                    key = key + i + suffix;
+                }
+                map.put(key, downloadUrlsSource.getBytes());
+                i++;
+            }
+        }
+        return map;
+    }
 
     /**
      * 根据页面是source获取list任务(相对路径)
