@@ -24,7 +24,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -93,6 +92,15 @@ public class ASPService {
         packageStream.close();
         return fileName;
     }
+
+    /**
+     * 下载的数据入byte
+     */
+    public byte[] downloadDetailToBytes(String url, String bisName, boolean headless, boolean useDriver) throws IOException {
+        ByteArrayOutputStream packageStream = this.downloadDetailToOutputStream(url, bisName, headless, useDriver);
+        return packageStream.toByteArray();
+    }
+
 
     /**
      * http://www.asp300.net/SoftView/27/SoftView_69985.html
