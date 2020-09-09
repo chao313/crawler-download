@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 import demo.spring.boot.demospringboot.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.util.DownLoadUtil;
 import demo.spring.boot.demospringboot.util.RegexUtil;
+import demo.spring.boot.demospringboot.util.URLUtils;
 import demo.spring.boot.demospringboot.util.ZipUtils;
 import demo.spring.boot.demospringboot.vo.Info;
 import lombok.extern.slf4j.Slf4j;
@@ -114,6 +115,7 @@ public class ASPService {
         String criteriaId = url.replaceAll(regex, "$2");
         Map<String, byte[]> mapPic = this.downloadDetailPic(host, pageSource);//下载图片
         Map<String, byte[]> mapDownloadUrl = this.downloadDownloadList(host, pageSource);//下载下载的url
+        String vipPanPageSource = this.downloadDownloadVipPan(host, mapDownloadUrl);//下载下载的url
         Info info = this.generateInfo(url, bisName, criteriaId, host, mapPic.keySet());//生成info -> 下载的其他放入info
         ByteArrayOutputStream infoOut = new ByteArrayOutputStream();
         infoOut.write(jsonMapper.writeValueAsBytes(info));
@@ -292,6 +294,30 @@ public class ASPService {
         }
         return map;
     }
+
+    /**
+     * 获取网盘地址
+     */
+    public String downloadDownloadVipPan(String host, Map<String, byte[]> keyToPageSourceBytes) throws IOException {
+        String pageSourceResult = "";
+        for (Map.Entry<String, byte[]> entry : keyToPageSourceBytes.entrySet()) {
+            String key = entry.getKey();
+            byte[] pageSourceBytes = entry.getValue();
+            String pageSource = IOUtils.toString(pageSourceBytes, "UTF-8");//下载的url
+            Document document = Jsoup.parse(pageSource);
+            Elements as = document.getElementsByTag("a");
+            if (as.size() > 3) {
+                String href = as.get(2).attr("href");
+                String tmp = host + href;
+//                String cookieValue = "Hm_lvt_d7682ab43891c68a00de46e9ce5b76aa=1576302267,1576385911; UM_distinctid=1742e5229f23f2-0fb7b68938e4ca-393e5809-1fa400-1742e5229f38f0; LiuLanJiLu%5Fstr=70082%24%242716%24%24%A1%BE%CD%EA%C3%C0%D4%CB%D3%AA%B0%E6%A1%BF%C7%D7%B2%E2%CE%DE%CE%CA%CC%E2%B0%AE%B5%E3%D4%DE%B6%B6%D2%F4%B5%E3%D4%DE%C8%CE%CE%F1%C6%BD%CC%A8%CD%EA%C3%C0%D0%DE%B8%B4%B0%E6%B6%CC%D0%C5%B8%C4%C8%A5%B0%A2%C0%EF%D4%C6%C8%AB%CC%D7%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D9%2D9%2F700822020991033361%5F110%2Egif%7C%7C64621%24%242708%24%24%D7%EE%D0%C2JAVA+EE+MVC%BC%DC%B9%B9%B2%CD%D2%FB%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB+MYSQL%CA%FD%BE%DD%BF%E2MVC%BC%DC%B9%B9%B2%CD%D2%FB%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2018%2D11%2D1%2F6462120181111840061%5F110%2Egif%7C%7C69309%24%242703%24%24PHP%B7%C2%D6%ED%B0%CB%BD%E4%CD%FE%BF%CD%CD%F8%D5%FB%D5%BE%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D6%2D30%2F6930920206301519251%5F110%2Egif%7C%7C69658%24%241111%24%24%D3%A9%BB%F0ThinkPHP%CE%A2%D0%C5%D0%A1%B3%CC%D0%F2%BF%AA%D4%B4%C9%CC%B3%C7+v1%2E1%2E05%24%24%2F2012uploadpic%2F2020%2D7%2D27%2F6965820207271030151%5F110%2Egif%7C%7C69116%24%242708%24%24java%2Bmysql%D0%A3%D4%B0%D1%A7%D0%A3%CB%DE%C9%E1%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D6%2D7%2F691162020671738591%5F110%2Egif%7C%7C69882%24%242708%24%24java%2Bssh%2Bmysql%BE%C6%B5%EA%CD%F8%D5%BE%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D8%2D18%2F698822020818848171%5F110%2Egif%7C%7C; ASPSESSIONIDAAATCASR=KHLLNADAHIPBHEEPFCIDKPMI; Hm_lvt_b56620492a36e2654a40162e6dcf4864=1598946186,1599450794,1599457456,1599641196; Hm_lvt_e74ddd953605e0810eb230f1b13ce662=1598946187,1599450796,1599457457,1599641197; UserType=5; Enddate=2040%2F9%2F8; loginok=True; username=hcwang%2Ddocker; CNZZDATA1254065253=429477519-1598501450-http%253A%252F%252Fwww.asp300.net%252F%7C1599650291; bj%5Fip%5Fid=1; bj%5Fcode%5Fname=java%2Bssh%2Bmysql%BE%C6%B5%EA%CD%F8%D5%BE%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB; bj%5Fcode%5Fid=69882; Hm_lpvt_e74ddd953605e0810eb230f1b13ce662=1599650770; lastLoginDate=2020%2F9%2F9+16%3A46%3A00; Hm_lpvt_b56620492a36e2654a40162e6dcf4864=1599650800";
+                String cookieValue = "lastLoginDate=2020%2F9%2F9+19%3A54%3A00; UserType=5; loginok=True; username=hcwang%2Ddocker; Enddate=2040%2F9%2F8;";
+                pageSourceResult = URLUtils.toString(tmp, cookieValue, "gb2312");
+                log.info("");
+            }
+        }
+        return pageSourceResult;
+    }
+
 
     /**
      * 根据页面是source获取list任务(相对路径)
