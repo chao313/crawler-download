@@ -24,5 +24,6 @@ public class WebDriverConfig {
             return;
         }
         System.setProperty("webdriver.chrome.driver", url.getFile());
+        log.info("驱动加载成功");
     }
 }

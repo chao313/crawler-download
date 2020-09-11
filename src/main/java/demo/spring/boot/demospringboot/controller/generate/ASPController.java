@@ -10,6 +10,7 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.service.asp.ASPService;
+import demo.spring.boot.demospringboot.service.asp.PanService;
 import demo.spring.boot.demospringboot.util.MapUtil;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -37,6 +38,9 @@ public class ASPController {
 
     @Autowired
     private ASPService aspService;
+
+    @Autowired
+    private PanService panService;
 
     @Autowired
     private ResourceService resourceService;
@@ -193,6 +197,32 @@ public class ASPController {
         try {
             Collection<String> listUrl = aspService.getListUrl(max);//获取list任务
             response.setContent(listUrl);
+            response.setCode(Code.System.OK);
+            log.info("获取完成");
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+    @ApiOperation(value = "批量保存网盘")
+    @GetMapping("/batchSavePan")
+    public Response batchSavePan(
+            @ApiParam(defaultValue = "https://pan.baidu.com/s/1wgcf5oabd1wYLrfy0dZb5A")
+            @RequestParam(value = "url")
+                    String url,
+            @ApiParam(defaultValue = "mer1")
+            @RequestParam(value = "passwd")
+                    String passwd
+    ) {
+        Response response = new Response<>();
+        try {
+            boolean result = panService.savePan(url, passwd);//获取list任务
+            response.setContent(result);
             response.setCode(Code.System.OK);
             log.info("获取完成");
         } catch (Exception e) {
