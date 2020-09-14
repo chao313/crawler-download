@@ -4,6 +4,7 @@ import demo.spring.boot.demospringboot.util.RegexUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -37,28 +38,38 @@ public class PanService {
     /**
      * 获取List任务
      */
-    public boolean savePan(String url, String passwd) throws IOException {
+    public boolean savePan(String url, String passwd) throws IOException, InterruptedException {
         File file = ResourceUtils.getFile("classpath:chromedriver_win32/chromedriver72.0.3626.69.exe");
         // 设置系统属性
         System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
         ChromeOptions options = new ChromeOptions();
 //            options.addArguments("--headless");
+        //设置共享数据
+        options.addArguments("user-data-dir=C:\\Users\\hcwang.docker\\AppData\\Local\\Google\\Chrome\\User Data");
         options.addArguments("-lang=zh-cn");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         // 实例化ChromeDriver
         WebDriver driver = new ChromeDriver(options);
         ChromeDriver chromeDriver = ((ChromeDriver) driver);
-
+        //添加cookie
+        chromeDriver.manage().getCookies().add(new Cookie("王海潮", "王海潮"));
         // 启动浏览器 打开url
         chromeDriver.navigate().to(url);
+        Thread.sleep(100);
+        try {
+            chromeDriver.findElement(By.id("accessCode")).sendKeys(passwd);
+            Thread.sleep(100);
+            WebElement submitBtn = chromeDriver.findElementByPartialLinkText("提取文件");
+            submitBtn.click();
+        } catch (Exception e) {
+            log.info("无法找到accessCode元素，继续下一步,{}", e.toString(), e);
+        }
 
-
-        chromeDriver.findElement(By.id("accessCode")).sendKeys(passwd);
-
-        WebElement submitBtn = chromeDriver.findElement(By.id("submitBtn"));
-
-        submitBtn.click();
-
-        chromeDriver.findElement(By.xpath("//*[@id=\"fileTreeDialog\"]/div[4]/a[2]")).click();
+        Thread.sleep(100);
+        chromeDriver.findElementByPartialLinkText("保存到网盘").click();
+        Thread.sleep(100);
+        chromeDriver.findElementByPartialLinkText("确定").click();
 
         return true;
     }
