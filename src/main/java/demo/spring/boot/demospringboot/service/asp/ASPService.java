@@ -118,7 +118,8 @@ public class ASPService {
         String criteriaId = url.replaceAll(regex, "$2");
         Map<String, byte[]> mapPic = this.downloadDetailPic(host, pageSource);//下载图片
         Map<String, byte[]> mapDownloadUrl = this.downloadDownloadList(host, pageSource);//下载下载的url
-        String vipPanPageSource = this.downloadDownloadVipPan(host, mapDownloadUrl);//下载下载的url
+        String urlAndPass = this.downloadDownloadVipPan(host, mapDownloadUrl);//下载pan，密码
+        log.info("pan:{},url:{}", urlAndPass, url);
         Info info = this.generateInfo(url, bisName, criteriaId, host, mapPic.keySet());//生成info -> 下载的其他放入info
         ByteArrayOutputStream infoOut = new ByteArrayOutputStream();
         infoOut.write(jsonMapper.writeValueAsBytes(info));
@@ -303,6 +304,7 @@ public class ASPService {
      */
     public String downloadDownloadVipPan(String host, Map<String, byte[]> keyToPageSourceBytes) throws IOException {
         String pageSourceResult = "";
+        String urlAndPass = "";
         for (Map.Entry<String, byte[]> entry : keyToPageSourceBytes.entrySet()) {
             String key = entry.getKey();
             byte[] pageSourceBytes = entry.getValue();
@@ -312,14 +314,18 @@ public class ASPService {
             if (as.size() > 3) {
                 String href = as.get(2).attr("href");
                 String tmp = host + href;
-                String cookieValue = "ASPSESSIONIDCCBRCBSR=MACFMMPAPIJKLAGBFPAJLIGE; Hm_lvt_b56620492a36e2654a40162e6dcf4864=1599702858,1599788084; Hm_lvt_e74ddd953605e0810eb230f1b13ce662=1599703639,1599788085; UserType=5; lastLoginDate=2020%2F9%2F9+23%3A43%3A00; loginok=True; username=hcwang%2Ddocker; Enddate=2040%2F9%2F8; LiuLanJiLu%5Fstr=70089%24%242709%24%24%C5%E0%D1%B5%D4%DA%CF%DF%BD%CC%D3%FD%CF%B5%CD%B3%D4%B4%C2%EB+%BF%AA%D4%B4%D0%DE%B8%B4%B0%E6%CD%F2%D4%C0%D4%DA%CF%DF%BD%CC%D3%FD%CF%B5%CD%B3%D4%B4%C2%EBv1%2E1%2E4+%D6%A7%B3%D6%C2%BC%B2%A5%BB%D8%BF%B4%2F%CD%F8%BF%CE%B9%BA%C2%F2%2F%D1%A7%CF%B0%B2%E2%CA%D4%24%24%2F2012uploadpic%2F2020%2D9%2D11%2F700892020911819361%5F110%2Egif%7C%7C68580%24%242717%24%24%B6%C0%C1%A2%B0%E6%CE%A2%D0%C5%B6%AF%CC%AC%B6%FE%CE%AC%C2%EB%BB%EE%C2%EB%B9%DC%C0%ED%CF%B5%CD%B3%C3%E2%CA%DA%C8%A8%B0%E6%2C%CE%A2%D0%C5%BB%EE%C2%EB%B6%FE%CE%AC%C2%EB%CF%B5%CD%B3%2C%B4%F8%B3%E4%D6%B5%D6%A7%B8%B6%24%24%2F2012uploadpic%2F2020%2D4%2D10%2F6858020204101631001%5F110%2Egif%7C%7C69525%24%243001%24%24%A1%BE%B6%C0%BC%D2%B7%A2%B2%BC%A1%BF%CE%CA%B5%C01%2E67%D2%BB%BC%FC%B6%CB%A3%A81000%C8%A8%CF%DE%A1%A2GM%B9%A4%BE%DF%A1%A2%CE%DE%B6%BE%C2%CC%C9%AB%B0%E6%B1%BE%A3%A9%24%24%2F2012uploadpic%2F2020%2D7%2D15%2F695252020715939021%5F110%2Egif%7C%7C60667%24%242709%24%24%CE%A2%BF%CE%C4%BD%BF%CE%CD%F8JAVA%BF%AA%B7%A2%7C%D4%DA%CF%DF%BF%CE%B3%CC%CD%F8%B3%CC%D0%F2JSP%2BSQL%D4%DA%CF%DF%BF%CE%B3%CC%C5%E0%D1%B5%CF%B5%CD%B3%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2016%2D8%2D23%2F6066720168231608191%5F110%2Egif%7C%7C63923%24%241301%24%24java%CD%F8%B5%EA%CF%B5%CD%B3JSPGOU+6%2E0+%B0%B2%D7%B0%B0%FC%24%24%2F2012uploadpic%2F2018%2D8%2D20%2F6392320188201101471%5F110%2Egif%7C%7C64159%24%242708%24%24JAVA%C6%FB%B3%B54S%B5%EA%B9%DC%C0%ED%CF%B5%CD%B3%D4%B4%C2%EB%A3%A8%C7%B0%CC%A8%2B%BA%F3%CC%A8%A3%A9%CE%E5%B4%F3%C4%A3%BF%E9+%CF%B5%CD%B3%C9%E8%D6%C3+%D5%FB%B3%B5%CF%FA%CA%DB+%B8%A8%D6%FA%CF%FA%CA%DB%24%24%2F2012uploadpic%2F2018%2D9%2D13%2F641592018913803341%5F110%2Egif%7C%7C; Hm_lpvt_e74ddd953605e0810eb230f1b13ce662=1599813383; UM_distinctid=1747c4f5d8220e-02e3d8367e73f-383e570a-1fa400-1747c4f5d83478; CNZZDATA1254065253=1770504000-1599813405-http%253A%252F%252Fwww.asp300.net%252F%7C1599813405; Hm_lpvt_b56620492a36e2654a40162e6dcf4864=1599813437";
+                String cookieValue = "UM_distinctid=1747c4f5d8220e-02e3d8367e73f-383e570a-1fa400-1747c4f5d83478; CNZZDATA1254065253=1770504000-1599813405-http%253A%252F%252Fwww.asp300.net%252F%7C1600152369; ASPSESSIONIDQQRBACSS=PFIFGMCAKNGEFHAJFGAMFMAP; Hm_lvt_b56620492a36e2654a40162e6dcf4864=1599702858,1599788084,1600155786,1600155837; Hm_lvt_e74ddd953605e0810eb230f1b13ce662=1599703639,1599788085,1600155787,1600155838; bj%5Fip%5Fid=3; bj%5Fcode%5Fid=70137; bj%5Fcode%5Fname=%B6%CC%CD%F8%D6%B7%C9%FA%B3%C9%2B%D3%F2%C3%FB%BC%EC%B2%E2%2B%B6%CC%CD%F8%D6%B7%BB%B9%D4%AD%2B%D3%F2%C3%FB%B7%C0%BA%EC%CB%C4%BA%CF%D2%BB%C7%B0%B6%CB%D4%B4%C2%EB; UserType=5; Enddate=2040%2F9%2F8; loginok=True; username=hcwang%2Ddocker; lastLoginDate=2020%2F9%2F15+15%3A44%3A00; LiuLanJiLu%5Fstr=70136%24%242716%24%24%BE%C5%D4%C2%D7%EE%D0%C2%D3%B0%CA%D3%CD%B6%D7%CA%C0%ED%B2%C6%CD%DA%BF%F3%B5%E7%D3%B0%CF%EE%C4%BF%D6%DA%B3%EF%C6%B1%B7%BF%B7%D6%BA%EC%D4%B4%C2%EB%B6%D4%BD%D3%C3%E2%C7%A9%D6%A7%B8%B6%D0%DE%B8%B4%B6%CC%D0%C5%2B%CA%D3%C6%B5%BD%CC%B3%CC%24%24%2F2012uploadpic%2F2020%2D9%2D15%2F701362020915858501%5F110%2Egif%7C%7C70137%24%242712%24%24%B6%CC%CD%F8%D6%B7%C9%FA%B3%C9%2B%D3%F2%C3%FB%BC%EC%B2%E2%2B%B6%CC%CD%F8%D6%B7%BB%B9%D4%AD%2B%D3%F2%C3%FB%B7%C0%BA%EC%CB%C4%BA%CF%D2%BB%C7%B0%B6%CB%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D9%2D15%2F701372020915902091%5F110%2Egif%7C%7C70089%24%242709%24%24%C5%E0%D1%B5%D4%DA%CF%DF%BD%CC%D3%FD%CF%B5%CD%B3%D4%B4%C2%EB+%BF%AA%D4%B4%D0%DE%B8%B4%B0%E6%CD%F2%D4%C0%D4%DA%CF%DF%BD%CC%D3%FD%CF%B5%CD%B3%D4%B4%C2%EBv1%2E1%2E4+%D6%A7%B3%D6%C2%BC%B2%A5%BB%D8%BF%B4%2F%CD%F8%BF%CE%B9%BA%C2%F2%2F%D1%A7%CF%B0%B2%E2%CA%D4%24%24%2F2012uploadpic%2F2020%2D9%2D11%2F700892020911819361%5F110%2Egif%7C%7C68580%24%242717%24%24%B6%C0%C1%A2%B0%E6%CE%A2%D0%C5%B6%AF%CC%AC%B6%FE%CE%AC%C2%EB%BB%EE%C2%EB%B9%DC%C0%ED%CF%B5%CD%B3%C3%E2%CA%DA%C8%A8%B0%E6%2C%CE%A2%D0%C5%BB%EE%C2%EB%B6%FE%CE%AC%C2%EB%CF%B5%CD%B3%2C%B4%F8%B3%E4%D6%B5%D6%A7%B8%B6%24%24%2F2012uploadpic%2F2020%2D4%2D10%2F6858020204101631001%5F110%2Egif%7C%7C69525%24%243001%24%24%A1%BE%B6%C0%BC%D2%B7%A2%B2%BC%A1%BF%CE%CA%B5%C01%2E67%D2%BB%BC%FC%B6%CB%A3%A81000%C8%A8%CF%DE%A1%A2GM%B9%A4%BE%DF%A1%A2%CE%DE%B6%BE%C2%CC%C9%AB%B0%E6%B1%BE%A3%A9%24%24%2F2012uploadpic%2F2020%2D7%2D15%2F695252020715939021%5F110%2Egif%7C%7C60667%24%242709%24%24%CE%A2%BF%CE%C4%BD%BF%CE%CD%F8JAVA%BF%AA%B7%A2%7C%D4%DA%CF%DF%BF%CE%B3%CC%CD%F8%B3%CC%D0%F2JSP%2BSQL%D4%DA%CF%DF%BF%CE%B3%CC%C5%E0%D1%B5%CF%B5%CD%B3%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2016%2D8%2D23%2F6066720168231608191%5F110%2Egif%7C%7C; Hm_lpvt_e74ddd953605e0810eb230f1b13ce662=1600155884; Hm_lpvt_b56620492a36e2654a40162e6dcf4864=1600155889";
 //                String loginSource = asp300FeignService.login("hcwang-docker", "Ys20140913!", "+++%B5%C7+%C2%BC+++");
                 pageSourceResult = URLUtils.toString(tmp, cookieValue, "gb2312");
-                String urlAndPass = getUrlAndPass(pageSourceResult);//获取url和密码
-                log.info("pan:{}", urlAndPass);
+                if (pageSourceResult.contains("对象已移动")) {
+                    String hrefWithoutPass = Jsoup.parse(pageSourceResult).getElementsByTag("a").attr("href");
+                    urlAndPass = hrefWithoutPass;//pan 没有密码
+                } else {
+                    urlAndPass = getUrlAndPass(pageSourceResult);//获取url和密码
+                }
             }
         }
-        return pageSourceResult;
+        return urlAndPass;
     }
 
 

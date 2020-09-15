@@ -11,10 +11,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -25,6 +28,23 @@ import java.util.Set;
 @Slf4j
 @Component
 public class PanService {
+
+    private WebDriver driver = null;
+
+    public void init() throws FileNotFoundException {
+        File file = ResourceUtils.getFile("classpath:chromedriver_win32/chromedriver72.0.3626.69.exe");
+        // 设置系统属性
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+        ChromeOptions options = new ChromeOptions();
+//            options.addArguments("--headless");
+        //设置共享数据
+        options.addArguments("user-data-dir=C:\\Users\\hcwang.docker\\AppData\\Local\\Google\\Chrome\\User Data");
+        options.addArguments("-lang=zh-cn");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        // 实例化ChromeDriver
+        driver = new ChromeDriver(options);
+    }
 
     /**
      * 获取List任务
@@ -39,18 +59,11 @@ public class PanService {
      * 获取List任务
      */
     public boolean savePan(String url, String passwd) throws IOException, InterruptedException {
-        File file = ResourceUtils.getFile("classpath:chromedriver_win32/chromedriver72.0.3626.69.exe");
-        // 设置系统属性
-        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
-        ChromeOptions options = new ChromeOptions();
-//            options.addArguments("--headless");
-        //设置共享数据
-        options.addArguments("user-data-dir=C:\\Users\\hcwang.docker\\AppData\\Local\\Google\\Chrome\\User Data");
-        options.addArguments("-lang=zh-cn");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        // 实例化ChromeDriver
-        WebDriver driver = new ChromeDriver(options);
+        synchronized (this) {
+            if (null == driver) {
+                this.init();
+            }
+        }
         ChromeDriver chromeDriver = ((ChromeDriver) driver);
         //添加cookie
         chromeDriver.manage().getCookies().add(new Cookie("王海潮", "王海潮"));
@@ -58,17 +71,42 @@ public class PanService {
         chromeDriver.navigate().to(url);
         Thread.sleep(100);
         try {
+            new WebDriverWait(chromeDriver, 10).until(ExpectedConditions.presenceOfElementLocated((By.id("accessCode"))));
             chromeDriver.findElement(By.id("accessCode")).sendKeys(passwd);
-            Thread.sleep(100);
-            WebElement submitBtn = chromeDriver.findElementByPartialLinkText("提取文件");
-            submitBtn.click();
+            new WebDriverWait(chromeDriver, 10).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("提取文件")));
+            chromeDriver.findElementByPartialLinkText("提取文件").click();
         } catch (Exception e) {
-            log.info("无法找到accessCode元素，继续下一步,{}", e.toString(), e);
+            log.info("无法找到accessCode元素，继续下一步,{}", e.toString());
         }
 
-        Thread.sleep(100);
+        new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("保存到网盘")));
+
         chromeDriver.findElementByPartialLinkText("保存到网盘").click();
-        Thread.sleep(100);
+
+        new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("确定")));
+        chromeDriver.findElementByPartialLinkText("确定").click();
+
+        return true;
+    }
+
+    /**
+     * 获取List任务
+     */
+    public boolean savePan(String url) throws IOException, InterruptedException {
+        synchronized (this) {
+            if (null == driver) {
+                this.init();
+            }
+        }
+        ChromeDriver chromeDriver = ((ChromeDriver) driver);
+        //添加cookie
+        chromeDriver.manage().getCookies().add(new Cookie("王海潮", "王海潮"));
+        // 启动浏览器 打开url
+        chromeDriver.navigate().to(url);
+
+        new WebDriverWait(chromeDriver, 10).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("保存到网盘")));
+        chromeDriver.findElementByPartialLinkText("保存到网盘").click();
+        new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("确定")));
         chromeDriver.findElementByPartialLinkText("确定").click();
 
         return true;
