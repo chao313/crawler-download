@@ -67,9 +67,9 @@ public class PanService {
         ChromeDriver chromeDriver = ((ChromeDriver) driver);
         //添加cookie
         chromeDriver.manage().getCookies().add(new Cookie("王海潮", "王海潮"));
+        Thread.sleep(1000);
         // 启动浏览器 打开url
         chromeDriver.navigate().to(url);
-        Thread.sleep(100);
         try {
             new WebDriverWait(chromeDriver, 10).until(ExpectedConditions.presenceOfElementLocated((By.id("accessCode"))));
             chromeDriver.findElement(By.id("accessCode")).sendKeys(passwd);
@@ -78,14 +78,10 @@ public class PanService {
         } catch (Exception e) {
             log.info("无法找到accessCode元素，继续下一步,{}", e.toString());
         }
-
         new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("保存到网盘")));
-
         chromeDriver.findElementByPartialLinkText("保存到网盘").click();
-
         new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("确定")));
         chromeDriver.findElementByPartialLinkText("确定").click();
-
         return true;
     }
 
@@ -101,14 +97,13 @@ public class PanService {
         ChromeDriver chromeDriver = ((ChromeDriver) driver);
         //添加cookie
         chromeDriver.manage().getCookies().add(new Cookie("王海潮", "王海潮"));
+        Thread.sleep(1000);
         // 启动浏览器 打开url
         chromeDriver.navigate().to(url);
-
         new WebDriverWait(chromeDriver, 10).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("保存到网盘")));
         chromeDriver.findElementByPartialLinkText("保存到网盘").click();
         new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("确定")));
         chromeDriver.findElementByPartialLinkText("确定").click();
-
         return true;
     }
 

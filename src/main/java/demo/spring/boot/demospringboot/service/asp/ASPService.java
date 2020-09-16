@@ -408,7 +408,7 @@ public class ASPService {
      * @param pageSourceResult
      * @return
      */
-    private String getUrlAndPass(String pageSourceResult) {
+    public String getUrlAndPass(String pageSourceResult) {
         Document document = Jsoup.parse(pageSourceResult);
 
         Elements ps = document.getElementsByTag("p");

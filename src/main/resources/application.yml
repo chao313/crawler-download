@@ -1,4 +1,8 @@
 ##控制使用哪个配置
 spring:
-     profiles:
-       active: dev
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 900000000
+      max-request-size: 900000000
