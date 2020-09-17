@@ -68,8 +68,10 @@ resources:
   ## http://localhost:8081/chao/public.txt
   static-locations: classpath:/static/,classpath:/public/
 
-
-
+local:
+  chrome:
+    driverPath: /chromedriver_win32/chromedriver72.0.3626.69.exe
+    dataPath: C:/Users/hcwang.docker/AppData/Local/Google/Chrome/User Data
 
 
 

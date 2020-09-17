@@ -14,6 +14,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -35,14 +36,17 @@ public class PanService {
 
     private WebDriver driver = null;
 
-    public void init() throws FileNotFoundException {
-        File file = ResourceUtils.getFile("classpath:chromedriver_win32/chromedriver72.0.3626.69.exe");
-        // 设置系统属性
-        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+    @Value(value = "${local.chrome.dataPath}")
+    private String dataPath;
+
+    public synchronized void init() throws FileNotFoundException {
+//        File file = ResourceUtils.getFile("classpath:chromedriver_win32/chromedriver72.0.3626.69.exe");
+//         设置系统属性
+//        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
         ChromeOptions options = new ChromeOptions();
 //            options.addArguments("--headless");
         //设置共享数据
-        options.addArguments("user-data-dir=C:\\Users\\hcwang.docker\\AppData\\Local\\Google\\Chrome\\User Data");
+        options.addArguments("user-data-dir=" + dataPath);
         options.addArguments("-lang=zh-cn");
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");
