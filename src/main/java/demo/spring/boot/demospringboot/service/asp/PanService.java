@@ -13,6 +13,7 @@ import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
@@ -28,6 +29,9 @@ import java.util.Set;
 @Slf4j
 @Component
 public class PanService {
+
+    @Autowired
+    private ASPService aspService;
 
     private WebDriver driver = null;
 
@@ -107,5 +111,29 @@ public class PanService {
         return true;
     }
 
+    /**
+     * 批量获取pan账号密码
+     */
+    public synchronized String batchGetPan(String url) throws IOException, InterruptedException {
+        synchronized (this) {
+            if (null == driver) {
+                this.init();
+            }
+        }
+        String urlAndPass = "";
+        ChromeDriver chromeDriver = ((ChromeDriver) driver);
+        //添加cookie
+        Thread.sleep(1000);
+        // 启动浏览器 打开url
+        chromeDriver.navigate().to(url);
+        String pageSource = chromeDriver.getPageSource();
+        if (pageSource.contains("百度网盘链接")) {
+            urlAndPass = aspService.getUrlAndPass(pageSource);
+        }
+        if (pageSource.contains("保存到网盘")) {
+            urlAndPass = chromeDriver.getCurrentUrl();
+        }
+        return urlAndPass;
+    }
 
 }

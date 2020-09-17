@@ -24,14 +24,14 @@ public class URLUtils {
     public static String toString(String uri, String cookieValue, String encoding) throws IOException {
         URL url = new URL(uri);
         URLConnection conn = url.openConnection();
-        conn.setReadTimeout(3000);
+//        conn.setReadTimeout(3000);
         conn.setRequestProperty("Cookie", cookieValue);
         InputStream inputStream = conn.getInputStream();
         return IOUtils.toString(inputStream, encoding);
     }
 
     /**
-     * 获取响应类型
+     * 获取响应类型 application/octet-stream
      */
     public static String getContentType(String uri, String cookieValue) throws IOException {
         URL url = new URL(uri);
