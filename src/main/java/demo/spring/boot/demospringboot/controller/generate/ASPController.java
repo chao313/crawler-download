@@ -292,16 +292,20 @@ public class ASPController {
                 JsonNode href = jsonNode.get(0);
                 String tmp = "http://www.asp300.net/" + href.textValue();
                 try {
-                    String cookieValue = "UM_distinctid=1747c4f5d8220e-02e3d8367e73f-383e570a-1fa400-1747c4f5d83478; ASPSESSIONIDQQRBACSS=GDGKGMCALGKPKPJMDLGAIIHL; Hm_lvt_b56620492a36e2654a40162e6dcf4864=1599788084,1600155786,1600155837,1600248079; Hm_lvt_e74ddd953605e0810eb230f1b13ce662=1599788085,1600155787,1600155838,1600248079; UserType=5; loginok=True; username=hcwang%2Ddocker; Enddate=2040%2F9%2F8; LiuLanJiLu%5Fstr=70142%24%242718%24%24%B8%F7%C0%E0%D6%B1%B2%A5%C6%BD%CC%A8%BE%DB%BA%CF%D6%B1%B2%A5%B5%BC%BA%BD%CD%F8%D5%BE%D4%B4%C2%EB%24%24%2F2012uploadpic%2F2020%2D9%2D16%2F7014220209161108271%5F110%2Egif%7C%7C70156%24%242702%24%24%D2%D7%D3%C5cms%C0%B6%C9%AB%B5%D8%C8%C8%B7%D6%CB%AE%C6%F7%B9%AB%CB%BE%CD%F8%D5%BE%C4%A3%B0%E5%D4%B4%C2%EB+%B4%F8%CA%D6%BB%FA%B6%CB%24%24%2F2012uploadpic%2F2020%2D9%2D16%2F7015620209161310511%5F110%2Egif%7C%7C67390%24%242716%24%24%D7%EE%D0%C2%D3%F1%BD%E0%B9%FA%BC%CA%BD%F0%C8%DA%C0%ED%B2%C6%D4%B4%C2%EB+wap%CD%EA%D5%FB%B0%E6+%B4%F8%D6%A7%B8%B6%BC%B0%B6%CC%D0%C5%B6%D4%BD%D3%BD%CC%B3%CC%24%24%2F2012uploadpic%2F2019%2D11%2D11%2F67390201911111039081%5F110%2Egif%7C%7C65023%24%242704%24%242018%D7%EE%D0%C2%B6%FE%B4%CE%BF%AA%B7%A2%B0%E6%BA%C3%C9%CC%B3%C7%B6%E0%D3%C3%BB%A7%C9%CC%B3%C7%CF%B5%CD%B3+%B6%E0%D6%D6%B5%C7%C2%BC%B7%BD%CA%BD+%D6%A7%B3%D6%B6%E0%D6%D6%D6%A7%B8%B6%B7%BD%CA%BD%24%24%2F2012uploadpic%2F2018%2D12%2D18%2F65023201812181108491%5F110%2Egif%7C%7C67702%24%242709%24%24%B0%D9%B7%D6%B0%D9%CA%D5%BF%A8%CD%F8%C0%F1%C6%B7%BF%A8%B6%D2%BB%BB%B6%FE%CA%D6%C0%F1%C6%B7%BF%A8%BB%D8%CA%D5%CD%F8%D5%BE%D4%B4%C2%EB+Thinkphp%C4%DA%BA%CB%24%24%2F2012uploadpic%2F2020%2D1%2D1%2F67702202011833031%5F110%2Egif%7C%7C39141%24%242709%24%24%B1%B4%B1%B4%C0%D6%D4%B0%C8%AB%D5%BE%CF%B5%CD%B3%24%24%2F2012images%2F94x94%2Egif%7C%7C; CNZZDATA1254065253=1770504000-1599813405-http%253A%252F%252Fwww.asp300.net%252F%7C1600253616; ASPSESSIONIDQQQCADST=EOIPGIPAHCCPNECGKIAMFJPE; bj%5Fip%5Fid=1; bj%5Fcode%5Fname=%B8%F7%C0%E0%D6%B1%B2%A5%C6%BD%CC%A8%BE%DB%BA%CF%D6%B1%B2%A5%B5%BC%BA%BD%CD%F8%D5%BE%D4%B4%C2%EB; bj%5Fcode%5Fid=70142; lastLoginDate=2020%2F9%2F16+19%3A11%3A00; Hm_lpvt_e74ddd953605e0810eb230f1b13ce662=1600257607; Hm_lpvt_b56620492a36e2654a40162e6dcf4864=1600257608";
+                    String cookieValue = "Hm_lvt_d7682ab43891c68a00de46e9ce5b76aa=1575797927,1577508495; UM_distinctid=1745fdc46d46a3-0117f8fccac71d-15306256-1aeaa0-1745fdc46d57f7; ASPSESSIONIDQQQCADST=DBAAHIPAKINCIDMOMPOFNCJF; Hm_lvt_b56620492a36e2654a40162e6dcf4864=1598886799,1600267113; Hm_lvt_e74ddd953605e0810eb230f1b13ce662=1598886799,1600267113; lastLoginDate=2020%2F9%2F16+19%3A59%3A00; UserType=5; loginok=True; username=hcwang%2Ddocker; Enddate=2040%2F9%2F8; LiuLanJiLu%5Fstr=70156%24%242702%24%24%D2%D7%D3%C5cms%C0%B6%C9%AB%B5%D8%C8%C8%B7%D6%CB%AE%C6%F7%B9%AB%CB%BE%CD%F8%D5%BE%C4%A3%B0%E5%D4%B4%C2%EB+%B4%F8%CA%D6%BB%FA%B6%CB%24%24%2F2012uploadpic%2F2020%2D9%2D16%2F7015620209161310511%5F110%2Egif%7C%7C38617%24%242709%24%24%D0%C4%B6%AF%D3%E9%C0%D6%CD%F8%CD%BC%C6%AC%D5%BE%B3%CC%D0%F2%24%24%2F2012images%2F94x94%2Egif%7C%7C39152%24%242704%24%24%C0%CB%C2%FE%BB%E9%C0%F1%CE%EF%C6%B7%D7%A8%C2%F4%B5%EA%24%24%2F2012images%2F94x94%2Egif%7C%7C39220%24%242708%24%24%BF%AD%D0%FD%CA%C0%BC%CD%C2%C3%D0%D0%C9%E7%CD%F8%C2%E7%CF%FA%CA%DB%CF%B5%CD%B3%24%24%2F2012images%2F94x94%2Egif%7C%7C38065%24%242708%24%24%CC%EC%D0%C4ERP%D4%B4%C2%EB%24%24%2F2012images%2F94x94%2Egif%7C%7C59021%24%242709%24%242015%D7%EE%D0%C2%D0%A1%D6%EDcms%CE%A2%D0%C5o2o%C9%FA%BB%EE%CD%A8%CF%B5%CD%B3V1%2E23%C6%C6%BD%E2%B0%E6+%CD%EA%C3%C0%C6%C6%BD%E2%CE%DE%B0%B5%C1%B4%CE%DE%BC%D3%C3%DC%24%24%2F2012uploadpic%2F2015%2D8%2D30%2F590212015830817391%5F110%2Egif%7C%7C; Hm_lpvt_e74ddd953605e0810eb230f1b13ce662=1600267122; Hm_lpvt_b56620492a36e2654a40162e6dcf4864=1600267126; CNZZDATA1254065253=737725373-1599336107-http%253A%252F%252Fwww.asp300.net%252F%7C1600264908";
                     Map<String, List<String>> headerFields = URLUtils.getHeaderFields(tmp, cookieValue);
                     String head = URLUtils.getContentType(tmp, cookieValue);
                     int responseCode = URLUtils.getResponseCode(tmp, cookieValue);
                     if (404 == responseCode) {
-                        log.info("pan:{},url:{}:404", urlAndPass, tmp);
+                        log.info("pan:{},url:{} ,404", urlAndPass, tmp);
+                        continue;
+                    }
+                    if (302 == responseCode) {
+                        log.info("pan:{},url:{} ,302", headerFields.get("Location").get(0), tmp);
                         continue;
                     }
                     if ("application/octet-stream".equalsIgnoreCase(head)) {
-                        log.info("pan:{},url:{}:真实文件", urlAndPass, tmp);
+                        log.info("pan:{} ,url:{} :真实文件", urlAndPass, tmp);
                         continue;
                     }
                     String pageSourceResult = URLUtils.toString(tmp, cookieValue, "gb2312");
@@ -311,9 +315,9 @@ public class ASPController {
                     } else {
                         urlAndPass = aspService.getUrlAndPass(pageSourceResult);//获取url和密码
                     }
-                    log.info("pan:{},url:{}", urlAndPass, tmp);
+                    log.info("pan:{} ,url:{}", urlAndPass, tmp);
                 } catch (Exception e) {
-                    log.info("{}保存失败：{}", tmp, e);
+                    log.info("{} 保存失败：{}", tmp, e);
                 }
 
             }

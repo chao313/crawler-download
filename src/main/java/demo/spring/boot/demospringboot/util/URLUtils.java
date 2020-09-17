@@ -24,6 +24,7 @@ public class URLUtils {
     public static String toString(String uri, String cookieValue, String encoding) throws IOException {
         URL url = new URL(uri);
         URLConnection conn = url.openConnection();
+        conn.setReadTimeout(3000);
         conn.setRequestProperty("Cookie", cookieValue);
         InputStream inputStream = conn.getInputStream();
         return IOUtils.toString(inputStream, encoding);
