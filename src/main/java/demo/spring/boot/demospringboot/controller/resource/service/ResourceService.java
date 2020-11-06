@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.resource.service;
+package demo.spring.boot.demospringboot.controller.resource.service;
 
 
 import lombok.extern.slf4j.Slf4j;
@@ -72,6 +72,11 @@ public class ResourceService {
      * @throws IOException
      */
     public boolean addFile(byte[] bytes, String fileName) throws IOException {
+        File locationResourcePathDir = new File(ResourceService.locationResourcePath);
+        if (!locationResourcePathDir.exists()) {
+            //如果文件夹不存在
+            locationResourcePathDir.mkdirs();
+        }
         File file = new File(ResourceService.locationResourcePath + fileName);
         if (!file.exists()) {
             file.createNewFile();
@@ -196,6 +201,13 @@ public class ResourceService {
      */
     public String getContextPath() {
         return contextPath;
+    }
+
+    /**
+     * 获取临时文件夹
+     */
+    public String getTmpDir() {
+        return locationResourcePath;
     }
 }
 

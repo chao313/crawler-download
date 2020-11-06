@@ -10,7 +10,7 @@ import demo.spring.boot.demospringboot.controller.wind.kafka.ProduceFactory;
 import demo.spring.boot.demospringboot.controller.wind.kafka.RecordMetadataResponse;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.resource.service.ResourceService;
+import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.service.asp.ASPService;
 import demo.spring.boot.demospringboot.service.asp.PanService;
 import demo.spring.boot.demospringboot.util.MapUtil;
@@ -338,7 +338,7 @@ public class ASPController {
 
     }
 
-    @ApiOperation(value = "批量获取网盘账号密码")
+    @ApiOperation(value = "批量获取网盘账号密码使用驱动")
     @PostMapping("/batchGetPanDriver")
     public Response batchGetPanDriver(
             @ApiParam(value = "这里上传特定格式的数据" +
