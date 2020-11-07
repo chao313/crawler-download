@@ -1,4 +1,4 @@
-package demo.spring.boot.demospringboot.resource.vo;
+package demo.spring.boot.demospringboot.controller.resource.vo;
 
 public class FileDetail {
 

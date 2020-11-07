@@ -1,7 +1,7 @@
 package demo.spring.boot.demospringboot.service.asp;
 
 import com.fasterxml.jackson.databind.json.JsonMapper;
-import demo.spring.boot.demospringboot.resource.service.ResourceService;
+import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.util.DownLoadUtil;
 import demo.spring.boot.demospringboot.util.RegexUtil;
 import demo.spring.boot.demospringboot.util.URLUtils;

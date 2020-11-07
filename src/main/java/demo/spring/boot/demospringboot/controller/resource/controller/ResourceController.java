@@ -1,9 +1,9 @@
-package demo.spring.boot.demospringboot.resource.controller;
+package demo.spring.boot.demospringboot.controller.resource.controller;
 
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.resource.service.ResourceService;
-import demo.spring.boot.demospringboot.resource.vo.FileDetail;
+import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
+import demo.spring.boot.demospringboot.controller.resource.vo.FileDetail;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
