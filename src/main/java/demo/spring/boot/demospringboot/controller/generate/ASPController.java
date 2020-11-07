@@ -349,10 +349,26 @@ public class ASPController {
         try {
             JsonMapper jsonMapper = new JsonMapper();
             List<String> list = IOUtils.readLines(listFile.getInputStream(), "UTF-8");
+            int total = list.size();
+            int i = 1;
+            boolean flag = false;
             for (String line : list) {
+                log.info("i:{}/total:{}", i++, total);
+                if (flag == false) {
+                    if (line.contains("CodeID=38715&id=1")) {
+                        log.info("定位到");
+                        flag = true;
+                    }
+                    log.info("跳过");
+                    continue;
+                }
                 String urlAndPass = "";
                 JsonNode jsonNode = jsonMapper.readTree(line);
                 JsonNode href = jsonNode.get(0);
+                if (null == href) {
+                    log.info("为null跳过");
+                    continue;
+                }
                 String tmp = "http://www.asp300.net/" + href.textValue();
                 try {
                     urlAndPass = panService.batchGetPan(tmp);
