@@ -159,7 +159,8 @@ public class SevenZipUtils {
                 }
                 randomAccessFile = new RandomAccessFile(zipFilePath + "/" + zipFileName, "r");
                 RandomAccessFileInStream t = new RandomAccessFileInStream(randomAccessFile);
-                inArchive = SevenZip.openInArchive(archiveFormat, t);
+//                inArchive = SevenZip.openInArchive(archiveFormat, t);
+                inArchive = SevenZip.openInArchive(null, t);//修改为null 就可以
                 ISimpleInArchive simpleInArchive = inArchive.getSimpleInterface();
                 System.out.println("-----Hash-----+------Size------+-----FileName----");
                 for (final ISimpleInArchiveItem item : simpleInArchive.getArchiveItems()) {

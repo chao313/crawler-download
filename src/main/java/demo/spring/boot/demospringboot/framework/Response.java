@@ -3,21 +3,12 @@ package demo.spring.boot.demospringboot.framework;
 import java.util.ArrayList;
 import java.util.List;
 
-//import lombok.Data;
-//import lombok.Getter;
-//import lombok.Setter;
-//import lombok.ToString;
-//
-//@Data
-//@Setter
-//@Getter
-//@ToString
 public class Response<T> {
     private String code;
     private String msg;
     private String error;
     private List<Exception> exceptions
-            = new ArrayList<>();
+            = new ArrayList<Exception>();
     private T content;
 
     public Response() {
@@ -29,6 +20,15 @@ public class Response<T> {
         this.content = content;
     }
 
+    public Response(String code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Response(String code, T content) {
+        this.code = code;
+        this.content = content;
+    }
 
 
     public String getCode() {
@@ -69,5 +69,13 @@ public class Response<T> {
 
     public void setContent(T content) {
         this.content = content;
+    }
+
+    public static Response fail(String msg) {
+        return new Response(Code.System.FAIL, msg);
+    }
+
+    public static Response Ok(Object content) {
+        return new Response(Code.System.OK, content);
     }
 }

@@ -5,6 +5,7 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
 import demo.spring.boot.demospringboot.util.SevenZipUtils;
+import demo.spring.boot.demospringboot.vo.LanguageType;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.SneakyThrows;
@@ -12,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.sevenzipjbinding.ArchiveFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.util.ByteUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,10 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 /**
  * 准备步骤:（目前还未成熟，多做几个之后再总结）
@@ -51,6 +51,7 @@ public class ZipController {
                     MultipartFile zipFile) {
         Response response = new Response<>();
         try {
+
             String fileName = zipFile.getOriginalFilename();
             boolean b = resourceService.addFile(zipFile.getBytes(), fileName);
             zipFile.getInputStream();
@@ -58,6 +59,7 @@ public class ZipController {
             String zipFileName = fileName;
             String targetFileDir = "_" + fileName;
             List<String> fileNames = new ArrayList<>();//存放所有文件的名称
+            StringBuilder sqlBuilder = new StringBuilder();//存放sql数据
             SevenZipUtils.unzip(zipFilePath, zipFileName, zipFilePath + targetFileDir, ArchiveFormat.RAR,
                     new BiFunction<byte[], String, byte[]>() {
                         @SneakyThrows
@@ -72,11 +74,22 @@ public class ZipController {
                             } else {
                                 encodedBytes = bytes;
                             }
+                            if (fileName.endsWith("sql")) {
+                                sqlBuilder.append(new String(bytes, charset));
+                            }
                             return encodedBytes;
                         }
                     });
-            response.setCode(Code.System.OK);
-            log.info("获取完成");
+            AtomicReference<LanguageType> languageTypeResult = new AtomicReference<>();
+            Arrays.stream(LanguageType.values()).forEach(languageType -> {
+                fileNames.forEach(fileNameTmp -> {
+                    if (fileNameTmp.endsWith(languageType.getType())) {
+                        languageTypeResult.set(languageType);
+                    }
+                });
+            });
+            log.info("检测到sql:{}", sqlBuilder.toString());
+            return Response.Ok(languageTypeResult.get());
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());

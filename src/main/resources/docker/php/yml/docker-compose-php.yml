@@ -1,0 +1,85 @@
+## docker-compose 运行
+## docker-compose -f create_mysql_users.sh.yml start
+## docker-compose -f docker-compose-php.yml build base_image_php
+
+
+##
+## docker-compose -f docker-compose-php.yml start  worm_v1
+
+
+##docker-compose -f docker-compose-php.yml up -d
+
+version: '3'
+services:
+  ## nginx
+  ## docker create --name nginx -p 10022:22 -p 15000:80 --privileged=true -ti nginx
+  ## 基础镜像
+  base_image_php:
+    build:
+      context: ../base
+      dockerfile: Dockerfile
+    image: chao313/base_image_php:v1.0
+
+#    ## 基础镜像
+#  worm:
+#    build:
+#      context: ./worm
+#      dockerfile: Dockerfile
+#    image: chao313/worm:v1.0
+#
+#  base_image_by_php_mysql_5_6:
+#    build:
+#      context: ./php5_6
+#      dockerfile: Dockerfile
+#    image: chao313/base_image_by_php_mysql_5_6:v1.1
+#
+#  base_image_by_php_mysql_7:
+#    build:
+#      context: ./php7
+#      dockerfile: Dockerfile
+#    image: chao313/base_image_by_php_mysql_5_7:v1.0
+#
+#  ## asp3000
+#  asp3000_yiyunwei:
+#    build:
+#      context: ./asp3000/yiyunwei
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_yiyunwei:v1.0
+#
+#    ## asp3000
+#  asp3000_welive5:
+#    build:
+#      context: ./asp3000/welive5
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_welive5:v1.0
+#
+#  ## asp3000
+#  asp3000_biquge:
+#    build:
+#      context: ./asp3000/biquge
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_biquge:v1.0
+#
+#  ## asp3000
+#  asp3000_144g:
+#    build:
+#      context: ./asp3000/144g
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_144g:v1.0
+#
+#
+#
+#  ## asp3000
+#  util_frp_v24:
+#    build:
+#      context: util/frpv024/
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_144g:v1.0
+#
+#
+#  ## asp3000
+#  asp3000_cmsEasy:
+#    build:
+#      context: ./asp3000/cmsEasy
+#      dockerfile: Dockerfile
+#    image: chao313/asp3000_cmsEasy:v1.0
