@@ -1,7 +1,8 @@
 FROM mattrayner/lamp:latest-1404-php5
-WORKDIR /root/www/html/
+WORKDIR /root/www/html/www/
 ##选择add 自带解压
-ADD biquge.tar.gz .
+ADD code .
+ADD dsc .
 COPY import.sh /root/
 COPY start.sh /root/
 COPY install.sql /root/

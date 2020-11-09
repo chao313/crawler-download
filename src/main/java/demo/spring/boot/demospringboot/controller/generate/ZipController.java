@@ -3,6 +3,7 @@ package demo.spring.boot.demospringboot.controller.generate;
 import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
+import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
 import demo.spring.boot.demospringboot.util.SevenZipUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
@@ -11,6 +12,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.sevenzipjbinding.ArchiveFormat;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,12 +21,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
 /**
  * 准备步骤:（目前还未成熟，多做几个之后再总结）
@@ -40,6 +47,10 @@ import java.util.function.BiFunction;
 @RequestMapping(value = "/ZipController")
 public class ZipController {
 
+    private static final String sourceDir = "docker/model";
+
+    private static final String sourceAbsolutePathDir = ZipController.class.getResource("/docker/model").getPath();
+
     @Autowired
     private ResourceService resourceService;
 
@@ -51,16 +62,22 @@ public class ZipController {
                     MultipartFile zipFile) {
         Response response = new Response<>();
         try {
+            //复制docker的model到目标文件夹下
+            String uuid = UUID.randomUUID().toString().replace("-", "");//操作文件夹名称
+//            String workOperateDir = resourceService.getTmpDir() + "_" + zipFile.getOriginalFilename() + "/" + uuid;
+            String workOperateDir = resourceService.getTmpDir() + "_" + zipFile.getOriginalFilename().replace(" ", "") + "/" + uuid;
+            org.apache.commons.io.FileUtils.copyDirectory(new File(sourceAbsolutePathDir), new File(workOperateDir));//项目复制到目标文件夹下
+
 
             String fileName = zipFile.getOriginalFilename();
             boolean b = resourceService.addFile(zipFile.getBytes(), fileName);
             zipFile.getInputStream();
             String zipFilePath = resourceService.getTmpDir();
             String zipFileName = fileName;
-            String targetFileDir = "_" + fileName;
+            String targetFileDir = zipFilePath + "__" + fileName;
             List<String> fileNames = new ArrayList<>();//存放所有文件的名称
             StringBuilder sqlBuilder = new StringBuilder();//存放sql数据
-            SevenZipUtils.unzip(zipFilePath, zipFileName, zipFilePath + targetFileDir, ArchiveFormat.RAR,
+            SevenZipUtils.unzip(zipFilePath, zipFileName, targetFileDir, ArchiveFormat.RAR,
                     new BiFunction<byte[], String, byte[]>() {
                         @SneakyThrows
                         @Override
@@ -75,7 +92,7 @@ public class ZipController {
                                 encodedBytes = bytes;
                             }
                             if (fileName.endsWith("sql")) {
-                                sqlBuilder.append(new String(bytes, charset));
+                                sqlBuilder.append(new String(encodedBytes));
                             }
                             return encodedBytes;
                         }
@@ -89,6 +106,66 @@ public class ZipController {
                 });
             });
             log.info("检测到sql:{}", sqlBuilder.toString());
+            AtomicReference<String> atomicReference = new AtomicReference<>();
+            this.find(new File(targetFileDir), atomicReference);
+            org.apache.commons.io.FileUtils.copyDirectory(new File(atomicReference.get()), new File(workOperateDir + "/code/"));//项目复制到目标文件夹下
+            String shellPath = new File(workOperateDir).getAbsolutePath();
+            String shell = " docker build --rm -t tmp " + shellPath;
+//            shell = "docker build --rm -t tmp /Users/chao/IdeaWorkspace/crawler-download/locationResourcePath/e012c44049744210a7f6713e38952d57 ";
+//            ShellUtil.run(shell);
+//            new ShellSDK("127.0.0.1", "chao", "Ys20140913", 22).login().executeSup(shell);
+//            ShellUtil.getResult(shell);
+            ShellUtil.executeLinuxShell(shell, new Function<InputStream, Object>() {
+                @Override
+                public Object apply(InputStream inputStream) {
+                    try {
+                        String response = IOUtils.toString(inputStream, "UTF-8");
+                        log.info("执行结果:{}", response);
+                    } catch (IOException e) {
+                        log.error("e:{}", e.toString(), e.toString());
+                    }
+                    return null;
+                }
+            });
+
+            ShellUtil.executeLinuxShell("docker stop tmp ", new Function<InputStream, Object>() {
+                @Override
+                public Object apply(InputStream inputStream) {
+                    try {
+                        String response = IOUtils.toString(inputStream, "UTF-8");
+                        log.info("执行结果:{}", response);
+                    } catch (IOException e) {
+                        log.error("e:{}", e.toString(), e.toString());
+                    }
+                    return null;
+                }
+            });
+
+            ShellUtil.executeLinuxShell("docker rm tmp ", new Function<InputStream, Object>() {
+                @Override
+                public Object apply(InputStream inputStream) {
+                    try {
+                        String response = IOUtils.toString(inputStream, "UTF-8");
+                        log.info("执行结果:{}", response);
+                    } catch (IOException e) {
+                        log.error("e:{}", e.toString(), e.toString());
+                    }
+                    return null;
+                }
+            });
+
+            ShellUtil.executeLinuxShell("docker run --rm  --name tmp -p 8901:80 tmp", new Function<InputStream, Object>() {
+                @Override
+                public Object apply(InputStream inputStream) {
+                    try {
+                        String response = IOUtils.toString(inputStream, "UTF-8");
+                        log.info("执行结果:{}", response);
+                    } catch (IOException e) {
+                        log.error("e:{}", e.toString(), e.toString());
+                    }
+                    return null;
+                }
+            });
             return Response.Ok(languageTypeResult.get());
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
@@ -99,5 +176,37 @@ public class ZipController {
         return response;
 
     }
+
+    /**
+     * 找到真正的项目
+     *
+     * @param fileParent
+     * @param atomicReference
+     */
+    private void find(File fileParent, AtomicReference<String> atomicReference) {
+        if (fileParent.listFiles().length == 1) {
+            //如果size为1
+            if (fileParent.listFiles()[0].isDirectory()) {
+                //如果是文件夹
+                find(fileParent.listFiles()[0], atomicReference);
+            }
+        } else {
+            atomicReference.set(fileParent.getAbsolutePath());
+        }
+    }
+
+    /**
+     * 生成shell的路径
+     */
+    private String generatePath(String path) {
+        StringBuilder shellPath = new StringBuilder();
+        Arrays.stream(path.split("/")).forEach(tmp -> {
+            if (StringUtils.isNotBlank(tmp)) {
+                shellPath.append("/\"").append(tmp).append("\"");
+            }
+        });
+        return shellPath.toString();
+    }
+
 
 }
