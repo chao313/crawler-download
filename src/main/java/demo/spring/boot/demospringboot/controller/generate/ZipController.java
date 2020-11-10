@@ -4,6 +4,7 @@ import demo.spring.boot.demospringboot.controller.resource.service.ResourceServi
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.ShellUtil;
+import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
 import demo.spring.boot.demospringboot.util.SevenZipUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
@@ -47,12 +48,16 @@ import java.util.function.Function;
 @RequestMapping(value = "/ZipController")
 public class ZipController {
 
+
     private static final String sourceDir = "docker/model";
 
     private static final String sourceAbsolutePathDir = ZipController.class.getResource("/docker/model").getPath();
 
     @Autowired
     private ResourceService resourceService;
+
+    @Autowired
+    private UnzipToDocker unzipToDocker;
 
     @ApiOperation(value = "处理压缩包")
     @PostMapping("/deal")
@@ -77,7 +82,7 @@ public class ZipController {
             String targetFileDir = zipFilePath + "__" + fileName;
             List<String> fileNames = new ArrayList<>();//存放所有文件的名称
             StringBuilder sqlBuilder = new StringBuilder();//存放sql数据
-            SevenZipUtils.unzip(zipFilePath, zipFileName, targetFileDir, ArchiveFormat.RAR,
+            SevenZipUtils.unzip(zipFilePath, zipFileName, targetFileDir,
                     new BiFunction<byte[], String, byte[]>() {
                         @SneakyThrows
                         @Override
@@ -206,6 +211,32 @@ public class ZipController {
             }
         });
         return shellPath.toString();
+    }
+
+    @ApiOperation(value = "处理压缩包")
+    @PostMapping("/deal2")
+    public Response deal2(
+            @ApiParam(value = "这里上传zip包")
+            @RequestParam(name = "zipFile")
+                    MultipartFile zipFile) {
+        Response response = new Response<>();
+        try {
+            String tmpFileName = zipFile.getOriginalFilename();
+            boolean b = resourceService.addFile(zipFile.getBytes(), tmpFileName);
+            String fileInDirAbsolutePath = resourceService.getTmpDir();
+            String workDirAbsolutePath = resourceService.getTmpDir();
+            String fileName = tmpFileName;
+            String dockerModelDirPath = sourceAbsolutePathDir;
+            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath);
+            return Response.Ok(true);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
     }
 
 

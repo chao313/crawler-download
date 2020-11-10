@@ -123,22 +123,28 @@ public class SevenZipUtils {
         return flag;
     }
 
-    public static boolean unzip(String zipFilePath,
+    /**
+     * @param fileInDirAbsolutePath 压缩包所文件夹绝对路径
+     * @param zipFileName           压缩包名称
+     * @param targetFileDir
+     * @param encodeFunction
+     * @return
+     */
+    public static boolean unzip(String fileInDirAbsolutePath,
                                 String zipFileName,
                                 String targetFileDir,
-                                ArchiveFormat archiveFormat,
                                 BiFunction<byte[], String, byte[]> encodeFunction) {
         boolean flag = false;
         //1.判断压缩文件是否存在，以及里面的内容是否为空
         File file = null;//压缩文件(带路径)
         ZipFile zipFile = null;
-        file = new File(zipFilePath + "/" + zipFileName);
-        log.info(">>>>>>解压文件【{}/{}】到【{}】目录下<<<<<<", zipFilePath, zipFileName, targetFileDir);
+        file = new File(fileInDirAbsolutePath + "/" + zipFileName);
+        log.info(">>>>>>解压文件【{}/{}】到【{}】目录下<<<<<<", fileInDirAbsolutePath, zipFileName, targetFileDir);
         if (false == file.exists()) {
-            log.info(">>>>>>解压文件【{}/{}】不存在<<<<<<", zipFilePath, zipFileName);
+            log.info(">>>>>>解压文件【{}/{}】不存在<<<<<<", fileInDirAbsolutePath, zipFileName);
             return false;
         } else if (0 == file.length()) {
-            log.info(">>>>>>解压文件【{}/{}】大小为0不需要解压<<<<<<", zipFilePath, zipFileName);
+            log.info(">>>>>>解压文件【{}/{}】大小为0不需要解压<<<<<<", fileInDirAbsolutePath, zipFileName);
             return false;
         } else {
             //2.开始解压ZIP压缩文件的处理
@@ -157,7 +163,7 @@ public class SevenZipUtils {
                     newdir.mkdirs();
                     newdir = null;
                 }
-                randomAccessFile = new RandomAccessFile(zipFilePath + "/" + zipFileName, "r");
+                randomAccessFile = new RandomAccessFile(fileInDirAbsolutePath + "/" + zipFileName, "r");
                 RandomAccessFileInStream t = new RandomAccessFileInStream(randomAccessFile);
 //                inArchive = SevenZip.openInArchive(archiveFormat, t);
                 inArchive = SevenZip.openInArchive(null, t);//修改为null 就可以
