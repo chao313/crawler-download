@@ -118,7 +118,7 @@ public abstract class UnzipToDocker {
          */
         String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, languageType);
         log.info("解压的路径:{}", rootPath);
-        if (!languageType.get().equals(LanguageType.PHP)) {
+        if (null != languageType && !languageType.get().equals(LanguageType.PHP)) {
             log.info("当前项目不是PHP项目:{}", languageType.get());
             return false;
         }
