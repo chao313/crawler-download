@@ -71,11 +71,10 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                         return encodedBytes;
                     }
                 });
-        AtomicReference<LanguageType> languageTypeResult = new AtomicReference<>();
         Arrays.stream(LanguageType.values()).forEach(vo -> {
             fileNames.forEach(fileNameTmp -> {
                 if (fileNameTmp.endsWith(vo.getType())) {
-                    languageTypeResult.set(vo);
+                    languageType.set(vo);
                 }
             });
         });
