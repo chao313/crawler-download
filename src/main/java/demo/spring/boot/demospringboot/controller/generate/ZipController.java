@@ -229,7 +229,7 @@ public class ZipController {
             String workDirAbsolutePath = resourceService.getTmpDir();
             String fileName = tmpFileName;
             String dockerModelDirPath = sourceAbsolutePathDir;
-            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath);
+            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port);
             return Response.Ok(true);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
