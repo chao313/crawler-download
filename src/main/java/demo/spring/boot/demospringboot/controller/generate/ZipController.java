@@ -261,7 +261,7 @@ public class ZipController {
             AtomicInteger port = new AtomicInteger();
             port.set(portMin);
             Arrays.stream(file.listFiles()).forEach(tmp -> {
-                String fileInDirAbsolutePath = resourceService.getTmpDir();
+                String fileInDirAbsolutePath = dir;
                 String workDirAbsolutePath = resourceService.getTmpDir();
                 String fileName = tmp.getName();
                 String dockerModelDirPath = sourceAbsolutePathDir;
