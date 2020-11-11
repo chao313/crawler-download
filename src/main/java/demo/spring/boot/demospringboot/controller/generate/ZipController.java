@@ -218,7 +218,9 @@ public class ZipController {
     public Response deal2(
             @ApiParam(value = "这里上传zip包")
             @RequestParam(name = "zipFile")
-                    MultipartFile zipFile) {
+                    MultipartFile zipFile,
+            @RequestParam(name = "port")
+                    Integer port) {
         Response response = new Response<>();
         try {
             String tmpFileName = zipFile.getOriginalFilename();

@@ -93,7 +93,7 @@ public abstract class UnzipToDocker {
      * @param imageName 镜像名称
      * @return
      */
-    protected abstract Boolean buildRunDockerContainer(String imageName);
+    protected abstract Boolean buildRunDockerContainer(String imageName, Integer port);
 
 
     /**
@@ -101,11 +101,13 @@ public abstract class UnzipToDocker {
      * @param workDirAbsolutePath   工作文件夹
      * @param fileName              待解压的文件名称
      * @param dockerModelDirPath    docker的model的地址
+     * @param port                  docker的端口号
      */
     public void doWork(String fileInDirAbsolutePath,
                        String workDirAbsolutePath,
                        String fileName,
-                       String dockerModelDirPath) throws IOException {
+                       String dockerModelDirPath,
+                       Integer port) throws IOException {
 
         StringBuilder sql = new StringBuilder();//存放sql的地址
 
@@ -153,8 +155,8 @@ public abstract class UnzipToDocker {
         /**
          * 构建运行docker容器 容器名称默认为_+容器名称
          */
-        Boolean runFlag = this.buildRunDockerContainer(imageName);
-        log.info("镜像容器运行推送:{}", runFlag);
+        Boolean runFlag = this.buildRunDockerContainer(imageName, port);
+        log.info("镜像容器运行:{}", runFlag);
     }
 
 }

@@ -125,9 +125,9 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected Boolean buildRunDockerContainer(String imageName) {
+    protected Boolean buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = " docker run --rm  --name " + containerName + " -p 8901:80  " + imageName;
+        String shell = " docker run -d  --name " + containerName + " -p " + port + ":80  " + imageName;
         ShellUtil.executeLinuxShell(shell, new LocalFun());
         return true;
     }
