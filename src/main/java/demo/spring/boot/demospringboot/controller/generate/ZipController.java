@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import scala.Int;
 
 import java.io.File;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -230,6 +232,54 @@ public class ZipController {
             String fileName = tmpFileName;
             String dockerModelDirPath = sourceAbsolutePathDir;
             unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port);
+            return Response.Ok(true);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+    @ApiOperation(value = "批量处理压缩包")
+    @PostMapping("/deal3")
+    public Response deal3(
+            @RequestParam(name = "dir") String dir,
+            @RequestParam(name = "portMin") Integer portMin,
+            @RequestParam(name = "portMax") Integer portMax) {
+        Response response = new Response<>();
+        try {
+            File file = new File(dir);
+            if (!file.exists()) {
+                throw new RuntimeException("文件存在");
+            }
+            if (!file.isDirectory()) {
+                throw new RuntimeException("不是文件夹");
+            }
+            AtomicInteger port = new AtomicInteger();
+            port.set(portMin);
+            Arrays.stream(file.listFiles()).forEach(tmp -> {
+                String fileInDirAbsolutePath = resourceService.getTmpDir();
+                String workDirAbsolutePath = resourceService.getTmpDir();
+                String fileName = tmp.getName();
+                String dockerModelDirPath = sourceAbsolutePathDir;
+                Integer tmpPort = port.get();
+                if (tmpPort > portMax) {
+                    throw new RuntimeException("达到最大的端口");
+                }
+                try {
+                    boolean b = unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, tmpPort);
+                    if (b == true) {
+                        port.getAndIncrement();
+                        log.info("创建成功,当前端口号+1:{}", port.get());
+                    }
+                } catch (IOException e) {
+                    log.error("e:{}", e.toString(), e);
+                }
+            });
+
             return Response.Ok(true);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);

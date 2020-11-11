@@ -103,11 +103,11 @@ public abstract class UnzipToDocker {
      * @param dockerModelDirPath    docker的model的地址
      * @param port                  docker的端口号
      */
-    public void doWork(String fileInDirAbsolutePath,
-                       String workDirAbsolutePath,
-                       String fileName,
-                       String dockerModelDirPath,
-                       Integer port) throws IOException {
+    public boolean doWork(String fileInDirAbsolutePath,
+                          String workDirAbsolutePath,
+                          String fileName,
+                          String dockerModelDirPath,
+                          Integer port) throws IOException {
 
         StringBuilder sql = new StringBuilder();//存放sql的地址
 
@@ -118,6 +118,10 @@ public abstract class UnzipToDocker {
          */
         String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, languageType);
         log.info("解压的路径:{}", rootPath);
+        if (!languageType.get().equals(LanguageType.PHP)) {
+            log.info("当前项目不是PHP项目:{}", languageType.get());
+            return false;
+        }
         /**
          * 找到真正的数据路径
          */
@@ -157,6 +161,8 @@ public abstract class UnzipToDocker {
          */
         Boolean runFlag = this.buildRunDockerContainer(imageName, port);
         log.info("镜像容器运行:{}", runFlag);
+
+        return true;
     }
 
 }
