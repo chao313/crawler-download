@@ -1,6 +1,7 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
+import demo.spring.boot.demospringboot.framework.exception.catcher.TypeInterruptException;
 import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
@@ -37,6 +38,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     protected String unzipAndGetRoot(String fileInDirAbsolutePath,
                                      String fileName,
                                      StringBuilder sql,
+                                     LanguageType checkLanguageType,
                                      AtomicReference<LanguageType> languageType) {
         List<String> fileNames = new ArrayList<>();//存放所有文件的名称
         String targetFileDir = fileInDirAbsolutePath + "_" + fileName;
@@ -56,6 +58,15 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                         }
                         if (fileName.endsWith("sql")) {
                             sql.append(new String(encodedBytes));
+                        }
+                        if (null != checkLanguageType) {
+                            for (LanguageType vo : LanguageType.values()) {
+                                if (fileName.endsWith(vo.getType())) {
+                                    if (!vo.equals(checkLanguageType)) {
+                                        throw new TypeInterruptException("不是期望类型,期望类型是:" + checkLanguageType.getType() + "，实际类型是:" + vo.getType());
+                                    }
+                                }
+                            }
                         }
                         return encodedBytes;
                     }

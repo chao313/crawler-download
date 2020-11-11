@@ -23,12 +23,14 @@ public abstract class UnzipToDocker {
      * @param fileInDirAbsolutePath 压缩包所文件夹绝对路径
      * @param fileName              压缩包的
      * @param sql                   压缩包内SQL
+     * @param checkLanguageType     期望压缩包语言类型(为空不做判断)
      * @param languageType          压缩包语言类型
      * @return 返回解压缩的根目录 - 绝对路径
      */
     protected abstract String unzipAndGetRoot(String fileInDirAbsolutePath,
                                               String fileName,
                                               StringBuilder sql,
+                                              LanguageType checkLanguageType,
                                               AtomicReference<LanguageType> languageType);
 
     /**
@@ -116,7 +118,7 @@ public abstract class UnzipToDocker {
         /**
          * 解压并且获取解压缩的根目录
          */
-        String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, languageType);
+        String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, LanguageType.PHP, languageType);
         log.info("解压的路径:{}", rootPath);
         if (null == languageType.get() || (null != languageType.get() && !languageType.get().equals(LanguageType.PHP))) {
             log.info("当前项目不是PHP项目:{}", languageType.get());
