@@ -275,7 +275,7 @@ public class ZipController {
                         port.getAndIncrement();
                         log.info("创建成功,当前端口号+1:{}", port.get());
                     }
-                } catch (IOException e) {
+                } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);
                 }
             });
