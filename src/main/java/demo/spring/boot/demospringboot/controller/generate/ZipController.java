@@ -5,8 +5,11 @@ import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
+import demo.spring.boot.demospringboot.service.zip.impl.DefaultUnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
 import demo.spring.boot.demospringboot.util.SevenZipUtils;
+import demo.spring.boot.demospringboot.util.UUIDUtils;
+import demo.spring.boot.demospringboot.util.ZipUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -16,14 +19,13 @@ import net.sf.sevenzipjbinding.ArchiveFormat;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import scala.Int;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -281,6 +283,46 @@ public class ZipController {
             });
 
             return Response.Ok(true);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+
+    /**
+     * docker cp 237_:/app ./xx
+     *
+     * @param containerName
+     * @param path
+     * @return
+     */
+    @ApiOperation(value = "从容器中提取code")
+    @PostMapping("/getDataFromContainer")
+    public Response getCodeFromContainer(
+            @RequestParam(name = "containerName") String containerName,
+            @ApiParam(value = "", defaultValue = "/app") @RequestParam(name = "path") String path,
+            @ApiParam(hidden = true) @RequestHeader(value = "host") String host,
+            HttpServletRequest httpServletRequest) {
+        Response response = new Response<>();
+        try {
+            String tmpDir = resourceService.getTmpDir();//获取工作目录
+            String UUIDDirPath = tmpDir + UUID.randomUUID();
+            File UUIDDir = new File(UUIDDirPath);
+            if (!UUIDDir.exists()) {
+                UUIDDir.mkdirs();
+            }
+            String shell = "docker cp " + containerName + ":/app " + UUIDDir.getAbsolutePath();
+            ShellUtil.executeLinuxShell(shell, new DefaultUnzipToDocker.LocalFun());
+            String zipTmpWillRemovedName = UUIDUtils.generateUUID() + ".zip";
+            File zipTmpWillRemoved = resourceService.addNewFile(zipTmpWillRemovedName);
+            ZipUtils.toZip(UUIDDir.getAbsolutePath(), new FileOutputStream(zipTmpWillRemoved), true);
+            String url = "http://" + host + resourceService.getContextPath() + "/ResourceController/downloadByFileName?fileName=" + zipTmpWillRemovedName;
+            return Response.Ok(url);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());

@@ -1,7 +1,8 @@
 ## dev环境使用是配置
 server:
   port: 8083
-  context-path: /download
+  servlet:
+    context-path: /download
 
 
 

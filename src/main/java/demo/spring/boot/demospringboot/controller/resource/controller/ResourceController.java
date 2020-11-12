@@ -34,7 +34,7 @@ public class ResourceController {
     private static String preByFileName = "/ResourceController/preByFileName";
     private static String downloadByFileName = "/ResourceController/downloadByFileName";
 
-    @Value("${server.context-path}")
+    @Value("${server.servlet.context-path}")
     private String rootPath;//项目的
 
 

@@ -160,7 +160,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
         }
     }
 
-    class LocalFun implements Function<InputStream, Object> {
+    public static class LocalFun implements Function<InputStream, Object> {
         @Override
         public Object apply(InputStream inputStream) {
             try {
