@@ -1,5 +1,6 @@
 package demo.spring.boot.demospringboot.util;
 
+import demo.spring.boot.demospringboot.framework.exception.catcher.TypeInterruptException;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.sevenzipjbinding.*;
 import net.sf.sevenzipjbinding.impl.RandomAccessFileInStream;
@@ -190,6 +191,9 @@ public class SevenZipUtils {
                                     log.info(">>>>>>保存文件至：{}", targetFileDir + File.separator + item.getPath());
                                     fos.write(encodeFunction.apply(data, item.getPath()));
                                     fos.close();
+                                } catch (TypeInterruptException e) {
+                                    log.error("e:{}", e.toString(), e);
+                                    throw e;
                                 } catch (Exception e) {
                                     log.error("e:{}", e.toString(), e);
                                 }

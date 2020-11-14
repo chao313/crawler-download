@@ -13,4 +13,6 @@ http://127.0.0.1:8083/swagger-ui.html#!/asp45controller/downloadDetailUsingGET
    * 生成请求的地址
   * 上传本地文件管理服务
    * 生成文件的地址
+* 辅助功能
+  *直接从容器中获取code,压缩下载
 

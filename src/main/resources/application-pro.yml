@@ -1,7 +1,8 @@
 ## dev环境使用是配置
 server:
     port: 443
-    context-path: /juan
+    servlet:
+      context-path: /download
     ssl:
       key-store: classpath:mac666.cn.jks
       key-store-password: 90dtjh0wc9o2

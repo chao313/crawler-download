@@ -1,6 +1,7 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
+import demo.spring.boot.demospringboot.framework.exception.catcher.TypeInterruptException;
 import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
@@ -37,6 +38,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     protected String unzipAndGetRoot(String fileInDirAbsolutePath,
                                      String fileName,
                                      StringBuilder sql,
+                                     LanguageType checkLanguageType,
                                      AtomicReference<LanguageType> languageType) {
         List<String> fileNames = new ArrayList<>();//存放所有文件的名称
         String targetFileDir = fileInDirAbsolutePath + "_" + fileName;
@@ -57,14 +59,22 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                         if (fileName.endsWith("sql")) {
                             sql.append(new String(encodedBytes));
                         }
+                        if (null != checkLanguageType) {
+                            for (LanguageType vo : LanguageType.values()) {
+                                if (fileName.endsWith(vo.getType())) {
+                                    if (!vo.equals(checkLanguageType)) {
+                                        throw new TypeInterruptException("不是期望类型,期望类型是:" + checkLanguageType.getType() + "，实际类型是:" + vo.getType());
+                                    }
+                                }
+                            }
+                        }
                         return encodedBytes;
                     }
                 });
-        AtomicReference<LanguageType> languageTypeResult = new AtomicReference<>();
         Arrays.stream(LanguageType.values()).forEach(vo -> {
             fileNames.forEach(fileNameTmp -> {
                 if (fileNameTmp.endsWith(vo.getType())) {
-                    languageTypeResult.set(vo);
+                    languageType.set(vo);
                 }
             });
         });
@@ -125,9 +135,9 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected Boolean buildRunDockerContainer(String imageName) {
+    protected Boolean buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = " docker run --rm  --name " + containerName + " -p 8901:80  " + imageName;
+        String shell = " docker run -d  --name " + containerName + " -p " + port + ":80  " + imageName;
         ShellUtil.executeLinuxShell(shell, new LocalFun());
         return true;
     }
@@ -150,7 +160,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
         }
     }
 
-    class LocalFun implements Function<InputStream, Object> {
+    public static class LocalFun implements Function<InputStream, Object> {
         @Override
         public Object apply(InputStream inputStream) {
             try {
