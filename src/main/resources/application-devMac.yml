@@ -71,7 +71,7 @@ resources:
 local:
   chrome:
     driverPath: /driver/chromedriver_mac64/chromedriver
-    dataPath: /Users/chao/Library/Application Support/Google/Chrome/
+    dataPath: /Users/chao/Library/Application Support/Google/Chrome/1
 
 
 
