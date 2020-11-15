@@ -4,6 +4,7 @@ import demo.spring.boot.demospringboot.controller.resource.service.ResourceServi
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.ShellUtil;
+import demo.spring.boot.demospringboot.service.zip.UnzipFilter;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.service.zip.impl.DefaultUnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
@@ -15,13 +16,11 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.sevenzipjbinding.ArchiveFormat;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import scala.Int;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -62,6 +61,9 @@ public class ZipController {
 
     @Autowired
     private UnzipToDocker unzipToDocker;
+
+    @Autowired
+    private UnzipFilter unzipFilter;
 
     @ApiOperation(value = "处理压缩包")
     @PostMapping("/deal")
@@ -276,6 +278,54 @@ public class ZipController {
                     if (b == true) {
                         port.getAndIncrement();
                         log.info("创建成功,当前端口号+1:{}", port.get());
+                    }
+                } catch (Exception e) {
+                    log.error("e:{}", e.toString(), e);
+                }
+            });
+
+            return Response.Ok(true);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+    @ApiOperation(value = "过滤压缩包")
+    @PostMapping("/filterZip")
+    public Response filterZip(@RequestParam(name = "dir") String dir,
+                              @RequestParam(name = "targetDir") String targetDir,
+                              @RequestParam(name = "checkLanguageType") LanguageType checkLanguageType) {
+        Response response = new Response<>();
+        try {
+            File file = new File(dir);
+            File targetFileDir = new File(targetDir);
+            if (!file.exists()) {
+                throw new RuntimeException("源文件不存在");
+            }
+            if (!file.isDirectory()) {
+                throw new RuntimeException("源文件不是文件夹");
+            }
+            if (!targetFileDir.exists()) {
+                throw new RuntimeException("目标文件不存在");
+            }
+            if (!targetFileDir.isDirectory()) {
+                throw new RuntimeException("目标文件不是文件夹");
+            }
+            Arrays.stream(file.listFiles()).forEach(tmp -> {
+                String fileInDirAbsolutePath = dir;
+                String workDirAbsolutePath = targetDir;
+                String fileName = tmp.getName();
+
+                AtomicReference<LanguageType> languageType = new AtomicReference<>();
+                try {
+                    boolean b = unzipFilter.doWork(fileInDirAbsolutePath, fileName, checkLanguageType, languageType, workDirAbsolutePath);
+                    if (b == true) {
+                        log.info("过滤成功:{}", fileName);
                     }
                 } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);

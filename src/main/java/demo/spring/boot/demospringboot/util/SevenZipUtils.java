@@ -169,7 +169,7 @@ public class SevenZipUtils {
 //                inArchive = SevenZip.openInArchive(archiveFormat, t);
                 inArchive = SevenZip.openInArchive(null, t);//修改为null 就可以
                 ISimpleInArchive simpleInArchive = inArchive.getSimpleInterface();
-                System.out.println("-----Hash-----+------Size------+-----FileName----");
+//                System.out.println("-----Hash-----+------Size------+-----FileName----");
                 for (final ISimpleInArchiveItem item : simpleInArchive.getArchiveItems()) {
                     final int[] hash = new int[]{0};
                     if (!item.isFolder()) {
@@ -188,7 +188,7 @@ public class SevenZipUtils {
                                     }
 
                                     fos = new FileOutputStream(targetFileDir + File.separator + item.getPath(), true);
-                                    log.info(">>>>>>保存文件至：{}", targetFileDir + File.separator + item.getPath());
+//                                    log.info(">>>>>>保存文件至：{}", targetFileDir + File.separator + item.getPath());
                                     fos.write(encodeFunction.apply(data, item.getPath()));
                                     fos.close();
                                 } catch (TypeInterruptException e) {
@@ -203,7 +203,7 @@ public class SevenZipUtils {
                             }
                         });
                         if (result == ExtractOperationResult.OK) {
-                            log.error("Success extracting item: :{}", item.getPath());
+//                            log.info("Success extracting item: :{}", item.getPath());
                         } else {
                             log.error("Error extracting item: :{}", result);
                         }
@@ -231,7 +231,7 @@ public class SevenZipUtils {
 
 
         }
-
+        log.info("解压成功:{}", zipFileName);
         return flag;
     }
 

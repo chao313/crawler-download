@@ -1,7 +1,6 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
-import demo.spring.boot.demospringboot.framework.exception.catcher.TypeInterruptException;
 import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.EncoderUtils;
@@ -25,6 +24,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 默认的解压函数
@@ -41,7 +41,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                                      LanguageType checkLanguageType,
                                      AtomicReference<LanguageType> languageType) {
         List<String> fileNames = new ArrayList<>();//存放所有文件的名称
-        String targetFileDir = fileInDirAbsolutePath + "_" + fileName;
+        String targetFileDir = fileInDirAbsolutePath + "/tmp/" + "_" + fileName;
         SevenZipUtils.unzip(fileInDirAbsolutePath, fileName, targetFileDir,
                 new BiFunction<byte[], String, byte[]>() {
                     @SneakyThrows
@@ -49,25 +49,17 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                     public byte[] apply(byte[] bytes, String fileName) {
                         fileNames.add(fileName);
                         String charset = EncoderUtils.getCharset(bytes);
-                        log.info("判断编码:{}", charset);
+//                        log.info("判断编码:{}", charset);
                         byte[] encodedBytes = null;
                         if (StringUtils.isNotBlank(charset)) {
-                            encodedBytes = new String(bytes, charset).getBytes(StandardCharsets.UTF_8);
+                            encodedBytes = new String(bytes, charset).replace("gb2312", "UTF-8").getBytes(StandardCharsets.UTF_8);
                         } else {
                             encodedBytes = bytes;
                         }
                         if (fileName.endsWith("sql")) {
                             sql.append(new String(encodedBytes));
                         }
-                        if (null != checkLanguageType) {
-                            for (LanguageType vo : LanguageType.values()) {
-                                if (fileName.endsWith(vo.getType())) {
-                                    if (!vo.equals(checkLanguageType)) {
-                                        throw new TypeInterruptException("不是期望类型,期望类型是:" + checkLanguageType.getType() + "，实际类型是:" + vo.getType());
-                                    }
-                                }
-                            }
-                        }
+                        LanguageType.check(fileName, checkLanguageType);
                         return encodedBytes;
                     }
                 });
@@ -78,7 +70,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                 }
             });
         });
-        log.info("检测到sql:{}", sql.toString());
+//        log.info("检测到sql:{}", sql.toString());
         return targetFileDir;
 
     }
@@ -137,7 +129,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     @Override
     protected Boolean buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = " docker run -d  --name " + containerName + " -p " + port + ":80  " + imageName;
+        String shell = " docker run -d --name " + containerName + " -p " + port + ":80  " + imageName;
         ShellUtil.executeLinuxShell(shell, new LocalFun());
         return true;
     }
@@ -149,7 +141,17 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
      * @param atomicReference
      */
     private void find(File fileParent, AtomicReference<String> atomicReference) {
-        if (fileParent.listFiles().length == 1) {
+        /**
+         * 添加移除.url文件
+         */
+        List<File> collect = Arrays.stream(fileParent.listFiles()).filter(file -> {
+            if (!file.getName().endsWith(".url")) {
+                return true;
+            } else {
+                return false;
+            }
+        }).collect(Collectors.toList());
+        if (collect.size() == 1) {
             //如果size为1
             if (fileParent.listFiles()[0].isDirectory()) {
                 //如果是文件夹
