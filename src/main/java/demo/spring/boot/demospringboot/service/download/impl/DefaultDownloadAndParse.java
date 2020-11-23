@@ -1,6 +1,5 @@
 package demo.spring.boot.demospringboot.service.download.impl;
 
-import com.jcraft.jsch.IO;
 import demo.spring.boot.demospringboot.service.asp.Asp300FeignService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
 import demo.spring.boot.demospringboot.service.download.DownloadService;
@@ -9,7 +8,6 @@ import demo.spring.boot.demospringboot.util.URLUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +15,11 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 
 /**
  * 默认的下载和解析类
@@ -135,10 +130,10 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
         }
 
 //        String loginSource = asp300FeignService.login("hcwang-docker", "Ys20140913!", "+++%B5%C7+%C2%BC+++");
-        String cookieByLogin = URLUtils.getCookieByLogin("http://www.asp300.net/2012user/login.asp?action=chk&url=http://www.asp300.net/", "hcwang-docker", "Ys20140913!");
+//        String cookieByLogin = URLUtils.getCookieByLogin("http://www.asp300.net/2012user/login.asp?action=chk", "hcwang-docker", "Ys20140913!");
 
-        String cookieValue = cookieByLogin + ";UserType=5;";
-        String pageSourceResult = URLUtils.toString(urlToDownload, cookieValue, "gb2312");
+        String cookieValue = "ASPSESSIONIDACQTTSAQ=CBDFLHJBGGCEINJOBAPCOPGL; path=/;username=hcwang%2Ddocker; path=/;loginok=True; path=/;Enddate=2040%2F9%2F8; path=/;lastLoginDate=2020%2F11%2F23+23%3A58%3A00; path=/;UserType=5; path=/;";
+        String pageSourceResult = URLUtils.getDataByType(urlToDownload, cookieValue, "gb2312");
 
         byte[] bytes = DownloadService.downloadToBytesByUrl(urlToDownload);
         String filePath = workDirAbsolutePath + "/" + criteriaId;

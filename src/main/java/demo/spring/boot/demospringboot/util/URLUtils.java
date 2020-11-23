@@ -5,7 +5,9 @@ import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,15 @@ public class URLUtils {
     }
 
     public static String toString(String uri, String cookieValue, String encoding) throws IOException {
+        URL url = new URL(uri);
+        URLConnection conn = url.openConnection();
+//        conn.setReadTimeout(3000);
+        conn.setRequestProperty("Cookie", cookieValue);
+        InputStream inputStream = conn.getInputStream();
+        return IOUtils.toString(inputStream, encoding);
+    }
+
+    public static String toString2(String uri, String cookieValue, String encoding) throws IOException {
         URL url = new URL(uri);
         URLConnection conn = url.openConnection();
 //        conn.setReadTimeout(3000);
@@ -63,12 +74,13 @@ public class URLUtils {
     }
 
     public static String getCookieByLogin(String uri, String name, String pwd) throws IOException {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         URL url = new URL(uri);
         URLConnection conn = url.openConnection();
         if (conn instanceof HttpURLConnection) {
             HttpURLConnection httpURLConnection = (HttpURLConnection) conn;
             httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.setInstanceFollowRedirects(false);
             String data = "username=" + name + "&password=" + pwd + "&loginsubmit=" + "+++%B5%C7+%C2%BC+++"; //请求体的内容
             //设置头信息
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
@@ -78,15 +90,47 @@ public class URLUtils {
             conn.getOutputStream().write(data.getBytes());
             //(5)获取服务器返回的状态码
             int code = httpURLConnection.getResponseCode(); //200  代表获取服务器资源全部成功  206请求部分资源
-            if (code == 200) {
+            if (code == 200 || code == 302) {
                 //(6)获取服务器返回的数据  以流的形式返回
                 InputStream inputStream = conn.getInputStream();
                 //(6.1)把inputstream 转换成 string
                 String content = IOUtils.toString(inputStream, "GB2312");
-                result = httpURLConnection.getHeaderField("Set-Cookie");
+                List<String> list = httpURLConnection.getHeaderFields().get("Set-Cookie");
+                list.forEach(line -> {
+                    result.append(line).append(";");
+                });
             }
         }
-        return result;
+        return result.toString();
+    }
+
+    public static String getDataByType(String uri, String cookieValue, String encoding) throws IOException {
+        StringBuilder result = new StringBuilder();
+        URL url = new URL(uri);
+        URLConnection conn = url.openConnection();
+        conn.setRequestProperty("Cookie", cookieValue);
+        if (conn instanceof HttpURLConnection) {
+            HttpURLConnection httpURLConnection = (HttpURLConnection) conn;
+//            httpURLConnection.setInstanceFollowRedirects(false);
+            //设置头信息
+            conn.setDoOutput(true);// 设置一个标记 允许输出
+            //(5)获取服务器返回的状态码
+            int code = httpURLConnection.getResponseCode(); //200  代表获取服务器资源全部成功  206请求部分资源
+            if (code == 200) {
+                String contentType = httpURLConnection.getHeaderField("Content-Type");
+                if (contentType.equalsIgnoreCase("application/octet-stream")) {
+                    //响应的是流
+                    InputStream inputStream = conn.getInputStream();
+                } else {
+
+                }
+                //(6)获取服务器返回的数据  以流的形式返回
+                InputStream inputStream = conn.getInputStream();
+                //(6.1)把inputstream 转换成 string
+                String content = IOUtils.toString(inputStream, "GB2312");
+            }
+        }
+        return result.toString();
     }
 
 
