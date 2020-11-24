@@ -41,7 +41,7 @@ public abstract class DownloadAndParse {
      * 注意:这里需要注意是是百度云如何处理
      * 返回的包的真实路径
      */
-    protected abstract String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath) throws IOException;
+    protected abstract String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie) throws IOException;
 
 
     /**
@@ -56,7 +56,8 @@ public abstract class DownloadAndParse {
      */
     public boolean doWork(String url,
                           String encoding,
-                          String workDirAbsolutePath) throws Exception {
+                          String workDirAbsolutePath,
+                          String cookie) throws Exception {
 
         String regex = "(.*?)/SoftView/(.*?).html";
         String host = url.replaceAll(regex, "$1");
@@ -70,7 +71,7 @@ public abstract class DownloadAndParse {
         log.info("下载图片:{}", imgByHtmlDetail.keySet());
         List<String> downloadListByHtmlDetail = this.getDownloadListByHtmlDetail(htmlDetail, host, encoding);
         log.info("下载下载列表:{}", downloadListByHtmlDetail);
-        String filePath = this.downloadZipByList(downloadListByHtmlDetail, host, criteriaId, workDirAbsolutePath);
+        String filePath = this.downloadZipByList(downloadListByHtmlDetail, host, criteriaId, workDirAbsolutePath, cookie);
         log.info("zip包下载绝对地址:{}", filePath);
         String filePathAfterTransformed = this.transformToZip(filePath, workDirAbsolutePath);
         log.info("zip转换后的绝对地址:{}", filePathAfterTransformed);

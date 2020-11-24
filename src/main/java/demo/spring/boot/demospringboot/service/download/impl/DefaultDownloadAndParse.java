@@ -6,20 +6,22 @@ import demo.spring.boot.demospringboot.service.download.DownloadService;
 import demo.spring.boot.demospringboot.util.DownLoadUtil;
 import demo.spring.boot.demospringboot.util.URLUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 默认的下载和解析类
@@ -123,21 +125,24 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     }
 
     @Override
-    protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath) throws IOException {
+    protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie) throws IOException {
+        String filePath = workDirAbsolutePath + "/" + criteriaId;
         String urlToDownload = downloadList.get(0);
         if (!urlToDownload.startsWith("http")) {
             urlToDownload = host + urlToDownload;
         }
-
-//        String loginSource = asp300FeignService.login("hcwang-docker", "Ys20140913!", "+++%B5%C7+%C2%BC+++");
-//        String cookieByLogin = URLUtils.getCookieByLogin("http://www.asp300.net/2012user/login.asp?action=chk", "hcwang-docker", "Ys20140913!");
-
-        String cookieValue = "ASPSESSIONIDACQTTSAQ=CBDFLHJBGGCEINJOBAPCOPGL; path=/;username=hcwang%2Ddocker; path=/;loginok=True; path=/;Enddate=2040%2F9%2F8; path=/;lastLoginDate=2020%2F11%2F23+23%3A58%3A00; path=/;UserType=5; path=/;";
-        String pageSourceResult = URLUtils.getDataByType(urlToDownload, cookieValue, "gb2312");
-
-        byte[] bytes = DownloadService.downloadToBytesByUrl(urlToDownload);
-        String filePath = workDirAbsolutePath + "/" + criteriaId;
-        IOUtils.write(bytes, new FileOutputStream(filePath));
+        AtomicReference<URLUtils.Type> type = new AtomicReference<>();
+        InputStream inputStream = URLUtils.getDataByType(urlToDownload, cookie, type);
+        OutputStream outputStream = new FileOutputStream(filePath);
+        //处理流
+        if (URLUtils.Type.stream.equals(type.get())) {
+            IOUtils.copy(inputStream, outputStream);
+        } else if (URLUtils.Type.text.equals(type.get())) {
+            String html = IOUtils.toString(inputStream, "GB2312");
+            String urlAndPass = this.getUrlAndPass(html);
+            log.info("url+密码:{}", urlAndPass);
+        }
+        outputStream.close();
         return filePath;
     }
 
@@ -145,4 +150,29 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     protected String transformToZip(String filePath, String workDirAbsolutePath) throws IOException {
         return null;
     }
+
+
+    /**
+     * 获取pan的下载地址和url
+     *
+     * @param pageSourceResult
+     * @return
+     */
+    public String getUrlAndPass(String pageSourceResult) {
+        Document document = Jsoup.parse(pageSourceResult);
+
+        Elements ps = document.getElementsByTag("p");
+
+        String href = "";
+        String passwd = "";
+        for (Element p : ps) {
+            if (p.text().contains("百度网盘链接")) {
+                href = p.text();
+            } else if (p.text().contains("提取码")) {
+                passwd = p.text();
+            }
+        }
+        return href + "," + passwd;
+    }
+
 }

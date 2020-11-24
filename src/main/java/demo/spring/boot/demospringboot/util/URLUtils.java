@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public class URLUtils {
@@ -104,8 +105,14 @@ public class URLUtils {
         return result.toString();
     }
 
-    public static String getDataByType(String uri, String cookieValue, String encoding) throws IOException {
-        StringBuilder result = new StringBuilder();
+    /**
+     * @param uri
+     * @param cookieValue
+     * @return
+     * @throws IOException
+     */
+    public static InputStream getDataByType(String uri, String cookieValue, AtomicReference<Type> type) throws IOException {
+        InputStream inputStream = null;
         URL url = new URL(uri);
         URLConnection conn = url.openConnection();
         conn.setRequestProperty("Cookie", cookieValue);
@@ -116,21 +123,32 @@ public class URLUtils {
             conn.setDoOutput(true);// 设置一个标记 允许输出
             //(5)获取服务器返回的状态码
             int code = httpURLConnection.getResponseCode(); //200  代表获取服务器资源全部成功  206请求部分资源
+            inputStream = conn.getInputStream();
             if (code == 200) {
                 String contentType = httpURLConnection.getHeaderField("Content-Type");
                 if (contentType.equalsIgnoreCase("application/octet-stream")) {
                     //响应的是流
-                    InputStream inputStream = conn.getInputStream();
+                    type.set(Type.stream);
+                } else if (contentType.equalsIgnoreCase("text/html")) {
+                    //响应的是网页
+                    type.set(Type.text);
                 } else {
-
+                    throw new RuntimeException("遇到未知的类型:" + contentType);
                 }
-                //(6)获取服务器返回的数据  以流的形式返回
-                InputStream inputStream = conn.getInputStream();
-                //(6.1)把inputstream 转换成 string
-                String content = IOUtils.toString(inputStream, "GB2312");
             }
         }
-        return result.toString();
+        return inputStream;
+    }
+
+    public static enum Type {
+        stream("application/octet-stream"),
+        text("text/html"),
+        ;
+        private String type;
+
+        Type(String type) {
+            this.type = type;
+        }
     }
 
 
