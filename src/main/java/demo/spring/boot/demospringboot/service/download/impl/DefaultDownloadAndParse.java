@@ -1,12 +1,10 @@
 package demo.spring.boot.demospringboot.service.download.impl;
 
+import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.service.asp.Asp300FeignService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
-import demo.spring.boot.demospringboot.service.download.DownloadService;
-import demo.spring.boot.demospringboot.util.DownLoadUtil;
-import demo.spring.boot.demospringboot.util.URLUtils;
+import demo.spring.boot.demospringboot.util.*;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -15,6 +13,7 @@ import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,12 +32,15 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     private static final String tag = "blockquote";
 
 
-    @Autowired
+    @Resource
     private Asp300FeignService asp300FeignService;
 
 
     @Autowired
     private DefaultDownloadService defaultDownloadService;
+
+    @Autowired
+    private ResourceService resourceService;
 
     /**
      * 根据指定的url来下载详情页
@@ -126,14 +128,18 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
 
     @Override
     protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie) throws IOException {
-        String filePath = workDirAbsolutePath + "/" + criteriaId;
+        String filePath = workDirAbsolutePath + "/" + criteriaId;//下载包的真实路径
+        File file = new File(filePath);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         String urlToDownload = downloadList.get(0);
         if (!urlToDownload.startsWith("http")) {
             urlToDownload = host + urlToDownload;
         }
         AtomicReference<URLUtils.Type> type = new AtomicReference<>();
         InputStream inputStream = URLUtils.getDataByType(urlToDownload, cookie, type);
-        OutputStream outputStream = new FileOutputStream(filePath);
+        OutputStream outputStream = new FileOutputStream(file);
         //处理流
         if (URLUtils.Type.stream.equals(type.get())) {
             IOUtils.copy(inputStream, outputStream);
@@ -147,8 +153,12 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     }
 
     @Override
-    protected String transformToZip(String filePath, String workDirAbsolutePath) throws IOException {
-        return null;
+    protected String transformToZip(String filePath, String workDirAbsolutePath, String zipName) throws IOException {
+        String dirPath = workDirAbsolutePath + UUIDUtils.generateUUID();
+        String toZipFilePath = workDirAbsolutePath + zipName + ".zip";
+        SevenZipUtils.unzip(filePath, dirPath, null);
+        ZipUtils.toZip(dirPath, new FileOutputStream(toZipFilePath), true);
+        return toZipFilePath;
     }
 
 

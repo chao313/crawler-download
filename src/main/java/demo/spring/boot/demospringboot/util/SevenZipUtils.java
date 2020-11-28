@@ -189,7 +189,11 @@ public class SevenZipUtils {
 
                                     fos = new FileOutputStream(targetFileDir + File.separator + item.getPath(), true);
 //                                    log.info(">>>>>>保存文件至：{}", targetFileDir + File.separator + item.getPath());
-                                    fos.write(encodeFunction.apply(data, item.getPath()));
+                                    if (null != encodeFunction) {
+                                        fos.write(encodeFunction.apply(data, item.getPath()));
+                                    } else {
+                                        fos.write(data);
+                                    }
                                     fos.close();
                                 } catch (TypeInterruptException e) {
                                     log.error("e:{}", e.toString(), e);
@@ -232,6 +236,119 @@ public class SevenZipUtils {
 
         }
         log.info("解压成功:{}", zipFileName);
+        return flag;
+    }
+
+    /**
+     * @param fileAbsolutePath 压缩包绝对路径
+     * @param targetFileDir
+     * @param encodeFunction
+     * @return
+     */
+    public static boolean unzip(String fileAbsolutePath,
+                                String targetFileDir,
+                                BiFunction<byte[], String, byte[]> encodeFunction) {
+        boolean flag = false;
+        //1.判断压缩文件是否存在，以及里面的内容是否为空
+        File file = null;//压缩文件(带路径)
+        ZipFile zipFile = null;
+        file = new File(fileAbsolutePath);
+        log.info(">>>>>>解压文件【{}】到【{}】目录下<<<<<<", fileAbsolutePath, targetFileDir);
+        if (false == file.exists()) {
+            log.info(">>>>>>解压文件【{}】不存在<<<<<<", fileAbsolutePath);
+            return false;
+        } else if (0 == file.length()) {
+            log.info(">>>>>>解压文件【{}】大小为0不需要解压<<<<<<", fileAbsolutePath);
+            return false;
+        } else {
+            //2.开始解压ZIP压缩文件的处理
+            byte[] buf = new byte[1024];
+            int readSize = -1;
+            ZipInputStream zis = null;
+            FileOutputStream fos = null;
+
+            //解压7zip文件
+            RandomAccessFile randomAccessFile = null;
+            IInArchive inArchive = null;
+            try {
+                // 判断目标目录是否存在，不存在则创建
+                File newdir = new File(targetFileDir);
+                if (false == newdir.exists()) {
+                    newdir.mkdirs();
+                    newdir = null;
+                }
+                randomAccessFile = new RandomAccessFile(fileAbsolutePath, "r");
+                RandomAccessFileInStream t = new RandomAccessFileInStream(randomAccessFile);
+//                inArchive = SevenZip.openInArchive(archiveFormat, t);
+                inArchive = SevenZip.openInArchive(null, t);//修改为null 就可以
+                ISimpleInArchive simpleInArchive = inArchive.getSimpleInterface();
+//                System.out.println("-----Hash-----+------Size------+-----FileName----");
+                for (final ISimpleInArchiveItem item : simpleInArchive.getArchiveItems()) {
+                    final int[] hash = new int[]{0};
+                    if (!item.isFolder()) {
+                        ExtractOperationResult result;
+                        final long[] sizeArray = new long[1];
+                        result = item.extractSlow(new ISequentialOutStream() {
+                            public int write(byte[] data) {
+                                //写入指定文件
+                                FileOutputStream fos;
+                                try {
+                                    if (item.getPath().indexOf(File.separator) > 0) {
+                                        String path = targetFileDir + File.separator + item.getPath().substring(0, item.getPath().lastIndexOf(File.separator));
+                                        File folderExisting = new File(path);
+                                        if (!folderExisting.exists())
+                                            new File(path).mkdirs();
+                                    }
+
+                                    fos = new FileOutputStream(targetFileDir + File.separator + item.getPath(), true);
+//                                    log.info(">>>>>>保存文件至：{}", targetFileDir + File.separator + item.getPath());
+                                    if (null != encodeFunction) {
+                                        fos.write(encodeFunction.apply(data, item.getPath()));
+                                    } else {
+                                        fos.write(data);
+                                    }
+                                    fos.close();
+                                } catch (TypeInterruptException e) {
+                                    log.error("e:{}", e.toString(), e);
+                                    throw e;
+                                } catch (Exception e) {
+                                    log.error("e:{}", e.toString(), e);
+                                }
+                                hash[0] ^= Arrays.hashCode(data); // Consume data
+                                sizeArray[0] += data.length;
+                                return data.length; // Return amount of consumed data
+                            }
+                        });
+                        if (result == ExtractOperationResult.OK) {
+//                            log.info("Success extracting item: :{}", item.getPath());
+                        } else {
+                            log.error("Error extracting item: :{}", result);
+                        }
+                    }
+                }
+                flag = true;
+            } catch (Exception e) {
+                log.error("Error occurs:{}", e.toString(), e);
+            } finally {
+                if (inArchive != null) {
+                    try {
+                        inArchive.close();
+                    } catch (SevenZipException e) {
+                        log.error("Error closing archive:{}", e.toString(), e);
+                    }
+                }
+                if (randomAccessFile != null) {
+                    try {
+                        randomAccessFile.close();
+                    } catch (IOException e) {
+                        log.error("Error closing file:{}", e.toString(), e);
+                    }
+                }
+            }
+
+
+        }
+        log.info("解压成功:{}", fileAbsolutePath);
         return flag;
     }
 

@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +47,7 @@ public abstract class DownloadAndParse {
      * 统一把rar转换成zip
      * 返回的包的真实路径
      */
-    protected abstract String transformToZip(String filePath, String workDirAbsolutePath) throws IOException;
+    protected abstract String transformToZip(String filePath, String workDirAbsolutePath, String zipName) throws IOException;
 
     /**
      * @param url                 需要处理的url
@@ -73,8 +72,10 @@ public abstract class DownloadAndParse {
         log.info("下载下载列表:{}", downloadListByHtmlDetail);
         String filePath = this.downloadZipByList(downloadListByHtmlDetail, host, criteriaId, workDirAbsolutePath, cookie);
         log.info("zip包下载绝对地址:{}", filePath);
-        String filePathAfterTransformed = this.transformToZip(filePath, workDirAbsolutePath);
+        String filePathAfterTransformed = this.transformToZip(filePath, workDirAbsolutePath, criteriaId);
         log.info("zip转换后的绝对地址:{}", filePathAfterTransformed);
+        //整合结果
+
         return true;
     }
 
