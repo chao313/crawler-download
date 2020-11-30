@@ -1,29 +1,24 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
-import demo.spring.boot.demospringboot.service.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
-import demo.spring.boot.demospringboot.util.EncoderUtils;
-import demo.spring.boot.demospringboot.util.SevenZipUtils;
-import demo.spring.boot.demospringboot.util.UUIDUtils;
+import demo.spring.boot.demospringboot.util.*;
 import demo.spring.boot.demospringboot.vo.LanguageType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -59,7 +54,9 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                         if (fileName.endsWith("sql")) {
                             sql.append(new String(encodedBytes));
                         }
-                        LanguageType.check(fileName, checkLanguageType);
+                        if (null != checkLanguageType) {
+                            LanguageType.check(fileName, checkLanguageType);
+                        }
                         return encodedBytes;
                     }
                 });
@@ -101,7 +98,15 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected void makeUpDecPath(String dockerRealPath) {
+    protected void makeUpDecPath(String dockerRealPath, Map<String, byte[]> descMap) throws IOException {
+        if (null != descMap) {
+            File DescFileDir = new File(dockerRealPath + DockerStructure.DSC);
+            for (Map.Entry<String, byte[]> entry : descMap.entrySet()) {
+                String fileName = entry.getKey();
+                byte[] bytes = entry.getValue();
+                FileUtils.writeByteArrayToFile(new File(DescFileDir + "/" + fileName), bytes);
+            }
+        }
         return;
     }
 
@@ -115,23 +120,23 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                 .replaceAll("(.*?)\\..*", "$1")
                 .toLowerCase();
         String shell = " docker build --rm -t " + imageName + " " + dockerRealPath;
-        ShellUtil.executeLinuxShell(shell, new LocalFun());
+        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return imageName;
     }
 
     @Override
     protected Boolean pushDockerImage(String imageName) {
         String shell = " docker push " + imageName;
-        ShellUtil.executeLinuxShell(shell, new LocalFun());
+        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return true;
     }
 
     @Override
-    protected Boolean buildRunDockerContainer(String imageName, Integer port) {
+    protected String buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = " docker run -d --name " + containerName + " -p " + port + ":80  " + imageName;
-        ShellUtil.executeLinuxShell(shell, new LocalFun());
-        return true;
+        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
+        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+        return containerName;
     }
 
     /**
@@ -159,19 +164,6 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
             }
         } else {
             atomicReference.set(fileParent.getAbsolutePath());
-        }
-    }
-
-    public static class LocalFun implements Function<InputStream, Object> {
-        @Override
-        public Object apply(InputStream inputStream) {
-            try {
-                String response = IOUtils.toString(inputStream, "UTF-8");
-                log.info("执行结果:{}", response);
-            } catch (IOException e) {
-                log.error("e:{}", e.toString(), e.toString());
-            }
-            return null;
         }
     }
 }

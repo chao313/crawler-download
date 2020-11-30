@@ -21,6 +21,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -34,7 +35,7 @@ import java.util.zip.ZipOutputStream;
 @Component
 public class ASPService {
 
-    @Autowired
+    @Resource
     private Asp300FeignService asp300FeignService;
 
     /**
@@ -43,6 +44,7 @@ public class ASPService {
     public final int max = 540;
     public String host = "http://www.asp300.net";
     public String listPre = "http://www.asp300.net/SoftList/27/27_";
+    public static final String PHP_LIST_PRE = "http://www.asp300.net/SoftList/11/11_";
     public String listSuffix = ".html";
 
     @Autowired
@@ -54,6 +56,22 @@ public class ASPService {
     public Collection<String> getListUrl(int max) throws IOException {
         Set<String> result = new LinkedHashSet<>();
         for (int j = 1; j <= max; j++) {
+            String url = listPre + j + listSuffix;
+            String pageSource = IOUtils.toString(new URL(url), StandardCharsets.UTF_8);
+            this.getListHref(pageSource).forEach(detailUrl -> {
+                log.info("获取listUrl:{}", detailUrl);
+                result.add(host + detailUrl);
+            });
+        }
+        return result;
+    }
+
+    /**
+     * 获取List任务
+     */
+    public Collection<String> getListUrl(String listPre, int fromPageSize, int toPageSize) throws IOException {
+        Set<String> result = new LinkedHashSet<>();
+        for (int j = fromPageSize; j <= toPageSize; j++) {
             String url = listPre + j + listSuffix;
             String pageSource = IOUtils.toString(new URL(url), StandardCharsets.UTF_8);
             this.getListHref(pageSource).forEach(detailUrl -> {

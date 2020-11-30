@@ -220,7 +220,7 @@ public class ASPController {
     ) {
         Response response = new Response<>();
         try {
-            boolean result = panService.savePan(url, passwd);//获取list任务
+            boolean result = panService.savePan(url, passwd,null);//获取list任务
             response.setContent(result);
             response.setCode(Code.System.OK);
             log.info("获取完成");
@@ -234,47 +234,6 @@ public class ASPController {
 
     }
 
-
-    @ApiOperation(value = "批量保存网盘")
-    @PostMapping("/batchSavePan")
-    public Response batchSavePan(
-            @ApiParam(value = "这里上传特定格式的数据" +
-                    "<br>1.百度网盘链接：https://pan.baidu.com/s/1a1qbM4kgl8YeDBH-9Pmmtw,提取码：c6um" +
-                    "<br>2.https://pan.baidu.com/s/1xnBt2zpqKbPFvVoDaw09dA")
-            @RequestParam(name = "listFile")
-                    MultipartFile listFile) {
-        Response response = new Response<>();
-        try {
-            String regex = "百度网盘链接：(.*?),提取码：(.*)";
-            List<String> list = IOUtils.readLines(listFile.getInputStream(), "UTF-8");
-            for (String line : list) {
-                try {
-                    if (line.matches(regex)) {
-                        String url = line.replaceAll(regex, "$1");
-                        String passwd = line.replaceAll(regex, "$2");
-                        boolean result = panService.savePan(url, passwd);//保存
-                        log.info("{}保存：{}", line, result);
-                    } else {
-                        boolean result = panService.savePan(line);//保存
-                        log.info("{}保存：{}", line, result);
-                    }
-                } catch (Exception e) {
-                    log.info("{}保存失败：{}", line, e);
-                }
-
-            }
-//            response.setContent(result);
-            response.setCode(Code.System.OK);
-            log.info("获取完成");
-        } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
-            response.setMsg(e.getMessage());
-            response.addException(e);
-            log.error("异常 ：{} ", e.getMessage(), e);
-        }
-        return response;
-
-    }
 
     @ApiOperation(value = "批量获取网盘账号密码")
     @PostMapping("/batchGetPanUrl")

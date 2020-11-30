@@ -8,12 +8,15 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 public class URLUtils {
+
+    private static final List<String> STREAMS = Arrays.asList("application/x-zip-compressed", "application/octet-stream");//流的头
 
     public static byte[] toByteArray(String uri, String cookieValue) throws IOException {
         URL url = new URL(uri);
@@ -126,7 +129,7 @@ public class URLUtils {
             inputStream = conn.getInputStream();
             if (code == 200) {
                 String contentType = httpURLConnection.getHeaderField("Content-Type");
-                if (contentType.equalsIgnoreCase("application/octet-stream")) {
+                if (STREAMS.contains(contentType)) {
                     //响应的是流
                     type.set(Type.stream);
                 } else if (contentType.equalsIgnoreCase("text/html")) {
@@ -140,14 +143,33 @@ public class URLUtils {
         return inputStream;
     }
 
-    public static enum Type {
-        stream("application/octet-stream"),
-        text("text/html"),
+    public enum Type {
+        stream("stream"),
+        text("text"),
         ;
         private String type;
 
+        private String panAddress;
+
         Type(String type) {
             this.type = type;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        /**
+         * 存放盘的地址
+         *
+         * @param panAddress
+         */
+        public void setPanAddress(String panAddress) {
+            this.panAddress = panAddress;
+        }
+
+        public String getPanAddress() {
+            return panAddress;
         }
     }
 

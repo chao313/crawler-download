@@ -1,31 +1,24 @@
 package demo.spring.boot.demospringboot.service.asp;
 
-import demo.spring.boot.demospringboot.util.RegexUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
+import org.jsoup.Jsoup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
 @Component
@@ -66,7 +59,7 @@ public class PanService {
     /**
      * 获取List任务
      */
-    public boolean savePan(String url, String passwd) throws IOException, InterruptedException {
+    public boolean savePan(String url, String passwd, AtomicReference<String> fileRealName) throws IOException, InterruptedException {
         synchronized (this) {
             if (null == driver) {
                 this.init();
@@ -88,6 +81,10 @@ public class PanService {
         }
         new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("保存到网盘")));
         chromeDriver.findElementByPartialLinkText("保存到网盘").click();
+        new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.className("save-chk-io")));
+        chromeDriver.findElementsByClassName("save-chk-io").get(0).click();
+        String fileName = Jsoup.parse(chromeDriver.getPageSource()).getElementsByClass("file-name").text().trim();
+        fileRealName.set(fileName);
         new WebDriverWait(chromeDriver, 100).until(ExpectedConditions.presenceOfElementLocated(By.partialLinkText("确定")));
         chromeDriver.findElementByPartialLinkText("确定").click();
         return true;

@@ -1,10 +1,13 @@
 package demo.spring.boot.demospringboot.service.zip;
 
+import demo.spring.boot.demospringboot.util.DockerCmdUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
+import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -65,9 +68,10 @@ public abstract class UnzipToDocker {
      * 补全描述文件
      *
      * @param dockerRealPath docker组合后的路径
+     * @param descMap        描述的路径
      * @return 数据路径
      */
-    protected abstract void makeUpDecPath(String dockerRealPath);
+    protected abstract void makeUpDecPath(String dockerRealPath, Map<String, byte[]> descMap) throws IOException;
 
 
     /**
@@ -95,7 +99,7 @@ public abstract class UnzipToDocker {
      * @param imageName 镜像名称
      * @return
      */
-    protected abstract Boolean buildRunDockerContainer(String imageName, Integer port);
+    protected abstract String buildRunDockerContainer(String imageName, Integer port);
 
 
     /**
@@ -104,12 +108,15 @@ public abstract class UnzipToDocker {
      * @param fileName              待解压的文件名称
      * @param dockerModelDirPath    docker的model的地址
      * @param port                  docker的端口号
+     * @param descMap               描述的map
      */
     public boolean doWork(String fileInDirAbsolutePath,
                           String workDirAbsolutePath,
                           String fileName,
                           String dockerModelDirPath,
-                          Integer port) throws IOException {
+                          Integer port,
+                          Map<String, byte[]> descMap,
+                          ProjectVo projectVo) throws IOException {
 
         StringBuilder sql = new StringBuilder();//存放sql的地址
 
@@ -118,12 +125,12 @@ public abstract class UnzipToDocker {
         /**
          * 解压并且获取解压缩的根目录
          */
-        String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, LanguageType.PHP, languageType);
+        String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, null, languageType);
         log.info("解压的路径:{}", rootPath);
-        if (null == languageType.get() || (null != languageType.get() && !languageType.get().equals(LanguageType.PHP))) {
-            log.info("当前项目不是PHP项目:{}", languageType.get());
-            return false;
-        }
+//        if (null == languageType.get() || (null != languageType.get() && !languageType.get().equals(LanguageType.PHP))) {
+//            log.info("当前项目不是PHP项目:{}", languageType.get());
+//            return false;
+//        }
         /**
          * 找到真正的数据路径
          */
@@ -140,17 +147,18 @@ public abstract class UnzipToDocker {
          * 补全sql文件
          */
         this.makeUpSqlPath(dockerRealPath, sql);
-        log.info("补全sql数据:{}", sql);
+        log.info("补全sql数据:{}", sql.toString().length());
         /**
          * 补全描述文件
          */
-        this.makeUpDecPath(dockerRealPath);
+        this.makeUpDecPath(dockerRealPath, descMap);
 
         /**
          * 构建docker镜像
          */
         String imageName = this.buildDockerImage(dockerRealPath, fileName);
         log.info("镜像名称:{}", imageName);
+
 
         /**
          * 推送docker镜像
@@ -161,9 +169,26 @@ public abstract class UnzipToDocker {
         /**
          * 构建运行docker容器 容器名称默认为_+容器名称
          */
-        Boolean runFlag = this.buildRunDockerContainer(imageName, port);
-        log.info("镜像容器运行:{}", runFlag);
+        String containerName = this.buildRunDockerContainer(imageName, port);
+        log.info("镜像容器运行:{}", containerName);
 
+        if (null != projectVo) {
+            if (null != languageType.get()) {
+                projectVo.setLanguage(languageType.get().getType());
+            }
+            projectVo.setDockerImageName(imageName);
+            projectVo.setDockerContainerName(containerName);
+            projectVo.setDockerPort(port.toString());
+            projectVo.setHttpInnerAddress(ProjectVo.INNER_HOST + ":" + port);
+            projectVo.setHttpOutAddress(ProjectVo.OUT_HOST + ":" + port);
+            projectVo.setDockerShellCreate(DockerCmdUtils.create(containerName, port, 80, imageName));
+            projectVo.setDockerShellRun(DockerCmdUtils.run(containerName));
+            projectVo.setDockerShellStop(DockerCmdUtils.stopContainer(containerName));
+            projectVo.setDockerShellContainerRemove(DockerCmdUtils.removeContainer(containerName));
+            projectVo.setDockerShellImageRemove(DockerCmdUtils.removeImage(imageName));
+            projectVo.setProjectStatus(ProjectVo.Status.CREATED.getStatus());
+            projectVo.setDockerStatus(DockerCmdUtils.Status.CREATED.getStatus());
+        }
         return true;
     }
 

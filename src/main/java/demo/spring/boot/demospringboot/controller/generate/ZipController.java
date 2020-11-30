@@ -1,9 +1,10 @@
 package demo.spring.boot.demospringboot.controller.generate;
 
+import demo.spring.boot.demospringboot.config.DockerStructure;
 import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.service.ShellUtil;
+import demo.spring.boot.demospringboot.util.ShellUtil;
 import demo.spring.boot.demospringboot.service.zip.UnzipFilter;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.service.zip.impl.DefaultUnzipToDocker;
@@ -54,7 +55,6 @@ public class ZipController {
 
     private static final String sourceDir = "docker/model";
 
-    private static final String sourceAbsolutePathDir = ZipController.class.getResource("/docker/model").getPath();
 
     @Autowired
     private ResourceService resourceService;
@@ -77,7 +77,7 @@ public class ZipController {
             String uuid = UUID.randomUUID().toString().replace("-", "");//操作文件夹名称
 //            String workOperateDir = resourceService.getTmpDir() + "_" + zipFile.getOriginalFilename() + "/" + uuid;
             String workOperateDir = resourceService.getTmpDir() + "_" + zipFile.getOriginalFilename().replace(" ", "") + "/" + uuid;
-            org.apache.commons.io.FileUtils.copyDirectory(new File(sourceAbsolutePathDir), new File(workOperateDir));//项目复制到目标文件夹下
+            org.apache.commons.io.FileUtils.copyDirectory(new File(DockerStructure.DOCKER_MODEL_Dir_Path), new File(workOperateDir));//项目复制到目标文件夹下
 
 
             String fileName = zipFile.getOriginalFilename();
@@ -234,8 +234,8 @@ public class ZipController {
             String fileInDirAbsolutePath = resourceService.getTmpDir();
             String workDirAbsolutePath = resourceService.getTmpDir();
             String fileName = tmpFileName;
-            String dockerModelDirPath = sourceAbsolutePathDir;
-            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port);
+            String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
+            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port,null,null);
             return Response.Ok(true);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
@@ -268,13 +268,13 @@ public class ZipController {
                 String fileInDirAbsolutePath = dir;
                 String workDirAbsolutePath = resourceService.getTmpDir();
                 String fileName = tmp.getName();
-                String dockerModelDirPath = sourceAbsolutePathDir;
+                String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
                 Integer tmpPort = port.get();
                 if (tmpPort > portMax) {
                     throw new RuntimeException("达到最大的端口");
                 }
                 try {
-                    boolean b = unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, tmpPort);
+                    boolean b = unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, tmpPort,null,null);
                     if (b == true) {
                         port.getAndIncrement();
                         log.info("创建成功,当前端口号+1:{}", port.get());
@@ -367,7 +367,7 @@ public class ZipController {
                 UUIDDir.mkdirs();
             }
             String shell = "docker cp " + containerName + ":/app " + UUIDDir.getAbsolutePath();
-            ShellUtil.executeLinuxShell(shell, new DefaultUnzipToDocker.LocalFun());
+            ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
             String zipTmpWillRemovedName = UUIDUtils.generateUUID() + ".zip";
             File zipTmpWillRemoved = resourceService.addNewFile(zipTmpWillRemovedName);
             ZipUtils.toZip(UUIDDir.getAbsolutePath(), new FileOutputStream(zipTmpWillRemoved), true);

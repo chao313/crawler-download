@@ -1,8 +1,76 @@
-##控制使用哪个配置
+## dev环境使用是配置
+server:
+  port: 8083
+  servlet:
+    context-path: /download
+
+
+
+
 spring:
   profiles:
-    active: dev
-  servlet:
-    multipart:
-      max-file-size: 900000000
-      max-request-size: 900000000
+    active: devMac
+    servlet:
+      multipart:
+        max-file-size: 900000000
+        max-request-size: 900000000
+  ## thymeleaf的默认配置
+  #spring.thymeleaf.prefix=classpath:/templates/
+  #spring.thymeleaf.suffix=.html
+  #spring.thymeleaf.mode=HTML5
+  #spring.thymeleaf.encoding=UTF-8
+  #spring.thymeleaf.content-type=text/html
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    encoding: utf-8
+    content-type: text/html
+    mode: HTML5
+    cache: false
+  ## freemarker
+  #spring.freemarker.allow-request-override=false
+  #spring.freemarker.cache=true
+  #spring.freemarker.check-template-location=true
+  #spring.freemarker.charset=UTF-8
+  #spring.freemarker.content-type=text/html
+  #spring.freemarker.expose-request-attributes=false
+  #spring.freemarker.expose-session-attributes=false
+  #spring.freemarker.expose-spring-macro-helpers=false
+  freemarker:
+    charset: UTF-8
+    content-type: text/html
+    cache: false
+    suffix: .html
+
+      #  ##数据sql
+      #     datasource:z
+      #       driver-class-name: com.mysql.jdbc.Driver
+    #       url: jdbc:mysql://127.0.0.1:3306/information_schema
+    #       username: root
+    #       password: 123456
+    #数据sql
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: 123456
+#     datasource:
+#       driver-class-name: com.mysql.jdbc.Driver
+#       url: jdbc:mysql://10.202.16.9:3306/information?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+#       username: root
+#       password: root
+#  可以在application 上面加注解
+#  效果相同
+#  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*Mapper.xml,classpath*:demomaster/mapper/*Mapper.xml
+  config-location: classpath:mybatis/config/mybatis-config.xml
+
+  ##静态资源
+resources:
+  ##静态资源
+  ## -- 如果不配置，都可以访问
+  ## -- 如果配置，都可以只能访问指定路径下的
+  ## http://localhost:8081/chao/static.txt
+  ## http://localhost:8081/chao/public.txt
+  static-locations: classpath:/static/,classpath:/public/

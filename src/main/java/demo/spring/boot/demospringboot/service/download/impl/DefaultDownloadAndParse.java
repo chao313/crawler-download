@@ -4,11 +4,14 @@ import demo.spring.boot.demospringboot.controller.resource.service.ResourceServi
 import demo.spring.boot.demospringboot.service.asp.Asp300FeignService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
 import demo.spring.boot.demospringboot.util.*;
+import demomaster.service.ProjectService;
+import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.safety.Whitelist;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,6 +45,11 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     @Autowired
     private ResourceService resourceService;
 
+    @Autowired
+    private ProjectService projectService;
+
+    private static final String PHP_PATH = "/Users/chao/Downloads/PHP";
+
     /**
      * 根据指定的url来下载详情页
      */
@@ -55,12 +63,16 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
      */
     @Override
     protected String getDescByHtmlDetail(String htmlDetail) {
-        String descByHtmlDetail = Jsoup.parse(htmlDetail).getElementsByTag(tag).text();
-        return descByHtmlDetail;
+        String descByHtmlDetail = Jsoup.parse(htmlDetail).getElementsByTag(tag).toString();
+
+        String baseContent = Jsoup.clean(descByHtmlDetail, "", Whitelist.none(), new Document.OutputSettings().prettyPrint(false));
+        String newText = baseContent.replaceAll("\\s{2,}", "\n");
+        String trueContent = newText.replaceFirst("\n", "").trim();
+        return trueContent;
     }
 
     @Override
-    protected Map<String, byte[]> getImgByHtmlDetail(String htmlDetail, String host) throws IOException {
+    protected Map<String, byte[]> getImgByHtmlDetail(String htmlDetail, String host, String criteriaId) throws IOException {
         Map<String, byte[]> result = new HashMap<>();
         Elements imgs = new Elements();
         Jsoup.parse(htmlDetail).getElementsByTag(tag).forEach(element -> {
@@ -72,12 +84,14 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
             String src = imgElement.attr("src");
             imgUrls.add(src);
         });
+        String regex = ".*(\\..*)";//用于提取后缀名称
+        int i = 0;
         for (String url : imgUrls) {
             if (!url.startsWith("http")) {
                 //如果不是https开头,补全
                 url = host + url;
             }
-            result.put(url, DownLoadUtil.downloadFileByUrl(url));
+            result.put(criteriaId + "_" + String.valueOf(i++) + url.replaceAll(regex, "$1"), DownLoadUtil.downloadFileByUrl(url));
         }
         return result;
     }
@@ -127,7 +141,7 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     }
 
     @Override
-    protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie) throws IOException {
+    protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie, AtomicReference<URLUtils.Type> type) throws IOException {
         String filePath = workDirAbsolutePath + "/" + criteriaId;//下载包的真实路径
         File file = new File(filePath);
         if (!file.exists()) {
@@ -137,7 +151,6 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
         if (!urlToDownload.startsWith("http")) {
             urlToDownload = host + urlToDownload;
         }
-        AtomicReference<URLUtils.Type> type = new AtomicReference<>();
         InputStream inputStream = URLUtils.getDataByType(urlToDownload, cookie, type);
         OutputStream outputStream = new FileOutputStream(file);
         //处理流
@@ -146,7 +159,22 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
         } else if (URLUtils.Type.text.equals(type.get())) {
             String html = IOUtils.toString(inputStream, "GB2312");
             String urlAndPass = this.getUrlAndPass(html);
+            type.get().setPanAddress(urlAndPass);//存放盘的地址
             log.info("url+密码:{}", urlAndPass);
+            /**
+             * 这里兼容本地获取文件
+             */
+            ProjectVo query = new ProjectVo();
+            query.setCriteriaid(criteriaId);
+            List<ProjectVo> projectVos = projectService.queryBase(query);
+            if (projectVos.size() > 0) {
+                String projectPanRealName = projectVos.get(0).getProjectPanRealName();
+                File file_php = new File(PHP_PATH + "/" + projectPanRealName);
+                if (file_php.exists()) {
+                    IOUtils.copy(new FileInputStream(file_php), outputStream);
+                }
+
+            }
         }
         outputStream.close();
         return filePath;
