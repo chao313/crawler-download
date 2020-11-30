@@ -10,7 +10,8 @@
         <result column="project_type" property="projectType"/>
         <result column="project_zip_status" property="projectZipStatus"/>
         <result column="project_pan_address" property="projectPanAddress"/>
-        <result column="project_pan_real_name" property="projectPanRealName"/>
+        <result column="file_real_name" property="fileRealName"/>
+        <result column="docker_zip_name" property="dockerZipName"/>
         <result column="html_body" property="htmlBody"/>
         <result column="source_url" property="sourceUrl"/>
         <result column="language" property="language"/>
@@ -48,7 +49,8 @@
         `project_type` ,
         `project_zip_status` ,
         `project_pan_address` ,
-        `project_pan_real_name` ,
+        `file_real_name` ,
+        `docker_zip_name` ,
         `html_body` ,
         `source_url` ,
         `language` ,
@@ -82,7 +84,8 @@
           #{projectType}  ,
           #{projectZipStatus}  ,
           #{projectPanAddress}  ,
-          #{projectPanRealName}  ,
+          #{fileRealName}  ,
+          #{dockerZipName}  ,
           #{htmlBody}  ,
           #{sourceUrl}  ,
           #{language}  ,
@@ -121,7 +124,8 @@
         `project_type`,
         `project_zip_status`,
         `project_pan_address`,
-        `project_pan_real_name`,
+        `file_real_name`,
+        `docker_zip_name`,
         `html_body`,
         `source_url`,
         `language`,
@@ -157,7 +161,8 @@
             #{item.projectType},
             #{item.projectZipStatus},
             #{item.projectPanAddress},
-            #{item.projectPanRealName},
+            #{item.fileRealName},
+            #{item.dockerZipName},
             #{item.htmlBody},
             #{item.sourceUrl},
             #{item.language},
@@ -198,7 +203,8 @@
         `project_type`,
         `project_zip_status`,
         `project_pan_address`,
-        `project_pan_real_name`,
+        `file_real_name`,
+        `docker_zip_name`,
         `html_body`,
         `source_url`,
         `language`,
@@ -248,8 +254,11 @@
             <if test="projectPanAddress != null">
                 AND `project_pan_address` = #{projectPanAddress}
             </if>
-            <if test="projectPanRealName != null">
-                AND `project_pan_real_name` = #{projectPanRealName}
+            <if test="fileRealName != null">
+                AND `file_real_name` = #{fileRealName}
+            </if>
+            <if test="dockerZipName != null">
+                AND `docker_zip_name` = #{dockerZipName}
             </if>
             <if test="htmlBody != null">
                 AND `html_body` = #{htmlBody}
@@ -340,7 +349,8 @@
         `project_type`,
         `project_zip_status`,
         `project_pan_address`,
-        `project_pan_real_name`,
+        `file_real_name`,
+        `docker_zip_name`,
         `html_body`,
         `source_url`,
         `language`,
@@ -691,50 +701,96 @@
                       AND `project_pan_address` <![CDATA[ >= ]]>  #{{project_pan_address._lt}
                  </if>
             </if>
-            <if test="projectPanRealName != null">
-                 <if test="projectPanRealName._in != null">
-                     AND `project_pan_real_name` in
-                     <foreach collection="project_pan_real_name._in" item="item" separator="," open="(" close=")">
+            <if test="fileRealName != null">
+                 <if test="fileRealName._in != null">
+                     AND `file_real_name` in
+                     <foreach collection="file_real_name._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._notIn != null">
-                     AND `project_pan_real_name`  not in
-                     <foreach collection="project_pan_real_name._notIn" item="item" separator="," open="(" close=")">
+                 <if test="fileRealName._notIn != null">
+                     AND `file_real_name`  not in
+                     <foreach collection="file_real_name._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._like != null">
-                     <foreach collection="project_pan_real_name._like" item="item">
-                       AND `project_pan_real_name` like #{item}
+                 <if test="fileRealName._like != null">
+                     <foreach collection="file_real_name._like" item="item">
+                       AND `file_real_name` like #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._notLike != null">
-                     <foreach collection="project_pan_real_name._notLike" item="item">
-                       AND `project_pan_real_name` not like #{item}
+                 <if test="fileRealName._notLike != null">
+                     <foreach collection="file_real_name._notLike" item="item">
+                       AND `file_real_name` not like #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._regex != null">
-                     <foreach collection="project_pan_real_name._regex" item="item">
-                       AND `project_pan_real_name` REGEXP #{item}
+                 <if test="fileRealName._regex != null">
+                     <foreach collection="file_real_name._regex" item="item">
+                       AND `file_real_name` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._regex != null">
-                     <foreach collection="project_pan_real_name._regex" item="item">
-                       AND `project_pan_real_name` not REGEXP #{item}
+                 <if test="fileRealName._regex != null">
+                     <foreach collection="file_real_name._regex" item="item">
+                       AND `file_real_name` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="projectPanRealName._lt != null">
-                      AND `project_pan_real_name` <![CDATA[ < ]]>  #{project_pan_real_name._lt}
+                 <if test="fileRealName._lt != null">
+                      AND `file_real_name` <![CDATA[ < ]]>  #{file_real_name._lt}
                  </if>
-                  <if test="projectPanRealName._le != null">
-                      AND `project_pan_real_name` <![CDATA[ <= ]]>  #{{project_pan_real_name._lt}
+                  <if test="fileRealName._le != null">
+                      AND `file_real_name` <![CDATA[ <= ]]>  #{{file_real_name._lt}
                  </if>
-                  <if test="projectPanRealName._gt != null">
-                      AND `project_pan_real_name` <![CDATA[ > ]]>  #{{project_pan_real_name._lt}
+                  <if test="fileRealName._gt != null">
+                      AND `file_real_name` <![CDATA[ > ]]>  #{{file_real_name._lt}
                  </if>
-                  <if test="projectPanRealName._ge != null">
-                      AND `project_pan_real_name` <![CDATA[ >= ]]>  #{{project_pan_real_name._lt}
+                  <if test="fileRealName._ge != null">
+                      AND `file_real_name` <![CDATA[ >= ]]>  #{{file_real_name._lt}
+                 </if>
+            </if>
+            <if test="dockerZipName != null">
+                 <if test="dockerZipName._in != null">
+                     AND `docker_zip_name` in
+                     <foreach collection="docker_zip_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._notIn != null">
+                     AND `docker_zip_name`  not in
+                     <foreach collection="docker_zip_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._like != null">
+                     <foreach collection="docker_zip_name._like" item="item">
+                       AND `docker_zip_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._notLike != null">
+                     <foreach collection="docker_zip_name._notLike" item="item">
+                       AND `docker_zip_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._regex != null">
+                     <foreach collection="docker_zip_name._regex" item="item">
+                       AND `docker_zip_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._regex != null">
+                     <foreach collection="docker_zip_name._regex" item="item">
+                       AND `docker_zip_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerZipName._lt != null">
+                      AND `docker_zip_name` <![CDATA[ < ]]>  #{docker_zip_name._lt}
+                 </if>
+                  <if test="dockerZipName._le != null">
+                      AND `docker_zip_name` <![CDATA[ <= ]]>  #{{docker_zip_name._lt}
+                 </if>
+                  <if test="dockerZipName._gt != null">
+                      AND `docker_zip_name` <![CDATA[ > ]]>  #{{docker_zip_name._lt}
+                 </if>
+                  <if test="dockerZipName._ge != null">
+                      AND `docker_zip_name` <![CDATA[ >= ]]>  #{{docker_zip_name._lt}
                  </if>
             </if>
             <if test="htmlBody != null">
@@ -1915,8 +1971,11 @@
             <if test="source.projectPanAddress != null">
                 `project_pan_address` = #{source.projectPanAddress},
             </if>
-            <if test="source.projectPanRealName != null">
-                `project_pan_real_name` = #{source.projectPanRealName},
+            <if test="source.fileRealName != null">
+                `file_real_name` = #{source.fileRealName},
+            </if>
+            <if test="source.dockerZipName != null">
+                `docker_zip_name` = #{source.dockerZipName},
             </if>
             <if test="source.htmlBody != null">
                 `html_body` = #{source.htmlBody},
@@ -2017,8 +2076,11 @@
             <if test="target.projectPanAddress != null">
                 AND `project_pan_address` = #{target.projectPanAddress}
             </if>
-            <if test="target.projectPanRealName != null">
-                AND `project_pan_real_name` = #{target.projectPanRealName}
+            <if test="target.fileRealName != null">
+                AND `file_real_name` = #{target.fileRealName}
+            </if>
+            <if test="target.dockerZipName != null">
+                AND `docker_zip_name` = #{target.dockerZipName}
             </if>
             <if test="target.htmlBody != null">
                 AND `html_body` = #{target.htmlBody}
@@ -2109,7 +2171,8 @@
             `project_type` = #{source.projectType},
             `project_zip_status` = #{source.projectZipStatus},
             `project_pan_address` = #{source.projectPanAddress},
-            `project_pan_real_name` = #{source.projectPanRealName},
+            `file_real_name` = #{source.fileRealName},
+            `docker_zip_name` = #{source.dockerZipName},
             `html_body` = #{source.htmlBody},
             `source_url` = #{source.sourceUrl},
             `language` = #{source.language},
@@ -2159,8 +2222,11 @@
             <if test="target.projectPanAddress != null">
                 AND `project_pan_address` = #{target.projectPanAddress}
             </if>
-            <if test="target.projectPanRealName != null">
-                AND `project_pan_real_name` = #{target.projectPanRealName}
+            <if test="target.fileRealName != null">
+                AND `file_real_name` = #{target.fileRealName}
+            </if>
+            <if test="target.dockerZipName != null">
+                AND `docker_zip_name` = #{target.dockerZipName}
             </if>
             <if test="target.htmlBody != null">
                 AND `html_body` = #{target.htmlBody}
@@ -2266,8 +2332,11 @@
             <if test="projectPanAddress != null">
                 AND `project_pan_address` = #{projectPanAddress}
             </if>
-            <if test="projectPanRealName != null">
-                AND `project_pan_real_name` = #{projectPanRealName}
+            <if test="fileRealName != null">
+                AND `file_real_name` = #{fileRealName}
+            </if>
+            <if test="dockerZipName != null">
+                AND `docker_zip_name` = #{dockerZipName}
             </if>
             <if test="htmlBody != null">
                 AND `html_body` = #{htmlBody}
@@ -2358,7 +2427,8 @@
         `project_type`,
         `project_zip_status`,
         `project_pan_address`,
-        `project_pan_real_name`,
+        `file_real_name`,
+        `docker_zip_name`,
         `html_body`,
         `source_url`,
         `language`,
@@ -2421,8 +2491,11 @@
                <if test="source.projectPanAddress != null">
                    `project_pan_address` = #{source.projectPanAddress},
                </if>
-               <if test="source.projectPanRealName != null">
-                   `project_pan_real_name` = #{source.projectPanRealName},
+               <if test="source.fileRealName != null">
+                   `file_real_name` = #{source.fileRealName},
+               </if>
+               <if test="source.dockerZipName != null">
+                   `docker_zip_name` = #{source.dockerZipName},
                </if>
                <if test="source.htmlBody != null">
                    `html_body` = #{source.htmlBody},

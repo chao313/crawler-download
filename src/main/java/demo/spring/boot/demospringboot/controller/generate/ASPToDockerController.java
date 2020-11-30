@@ -231,7 +231,7 @@ public class ASPToDockerController {
                             boolean result = panService.savePan(url, passwd, fileRealName);//保存
                             if (StringUtils.isNotBlank(fileRealName.get())) {
                                 ProjectNoPriVo source = new ProjectNoPriVo();
-                                source.setProjectPanRealName(fileRealName.get());
+                                source.setFileRealName(fileRealName.get());
                                 ProjectPriVo target = new ProjectPriVo();
                                 target.setId(vo.getId());
                                 projectService.updateByPrimaryKey(source, target);//更新

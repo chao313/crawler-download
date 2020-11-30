@@ -15,7 +15,7 @@ import demomaster.vo.ProjectMultiTermVo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-11-29
+ * 表创建      :2020-11-30
  * 字符集      :utf8_bin
  * 表注释      :
  */

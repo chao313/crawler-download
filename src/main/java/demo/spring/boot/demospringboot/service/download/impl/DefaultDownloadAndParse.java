@@ -168,7 +168,7 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
             query.setCriteriaid(criteriaId);
             List<ProjectVo> projectVos = projectService.queryBase(query);
             if (projectVos.size() > 0) {
-                String projectPanRealName = projectVos.get(0).getProjectPanRealName();
+                String projectPanRealName = projectVos.get(0).getFileRealName();
                 File file_php = new File(PHP_PATH + "/" + projectPanRealName);
                 if (file_php.exists()) {
                     IOUtils.copy(new FileInputStream(file_php), outputStream);

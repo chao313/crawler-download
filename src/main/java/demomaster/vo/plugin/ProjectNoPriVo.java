@@ -9,7 +9,7 @@ package demomaster.vo.plugin;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-11-29
+ * 表创建      :2020-11-30
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -21,7 +21,8 @@ public class ProjectNoPriVo {
     private String projectType;  // 类型(VIP/COMMON) 
     private String projectZipStatus;  // 项目的下载包类型(流/盘) 
     private String projectPanAddress;  // 项目的网盘地址 
-    private String projectPanRealName;  // pan的真实文件名称 
+    private String fileRealName;  // 真实文件名称 
+    private String dockerZipName;  // docker压缩包的真实名称 
     private String htmlBody;  // 网页Body 
     private String sourceUrl;  // ASPURL 
     private String language;  // 项目语言 
@@ -115,15 +116,26 @@ public class ProjectNoPriVo {
         this.projectPanAddress = projectPanAddress;
 
     }
-    public String getProjectPanRealName() {
+    public String getFileRealName() {
 
-        return projectPanRealName;
+        return fileRealName;
 
     }
 
-    public void setProjectPanRealName(String projectPanRealName) {
+    public void setFileRealName(String fileRealName) {
 
-        this.projectPanRealName = projectPanRealName;
+        this.fileRealName = fileRealName;
+
+    }
+    public String getDockerZipName() {
+
+        return dockerZipName;
+
+    }
+
+    public void setDockerZipName(String dockerZipName) {
+
+        this.dockerZipName = dockerZipName;
 
     }
     public String getHtmlBody() {
@@ -411,7 +423,8 @@ public class ProjectNoPriVo {
                 ", projectType '" + projectType + '\'' +
                 ", projectZipStatus '" + projectZipStatus + '\'' +
                 ", projectPanAddress '" + projectPanAddress + '\'' +
-                ", projectPanRealName '" + projectPanRealName + '\'' +
+                ", fileRealName '" + fileRealName + '\'' +
+                ", dockerZipName '" + dockerZipName + '\'' +
                 ", htmlBody '" + htmlBody + '\'' +
                 ", sourceUrl '" + sourceUrl + '\'' +
                 ", language '" + language + '\'' +

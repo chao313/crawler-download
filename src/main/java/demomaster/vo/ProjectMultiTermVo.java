@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-11-29
+ * 表创建      :2020-11-30
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -21,7 +21,8 @@ public class ProjectMultiTermVo {
     private MultiTerm<String> projectType;  // 类型(VIP/COMMON)
     private MultiTerm<String> projectZipStatus;  // 项目的下载包类型(流/盘)
     private MultiTerm<String> projectPanAddress;  // 项目的网盘地址
-    private MultiTerm<String> projectPanRealName;  // pan的真实文件名称
+    private MultiTerm<String> fileRealName;  // 真实文件名称
+    private MultiTerm<String> dockerZipName;  // docker压缩包的真实名称
     private MultiTerm<String> htmlBody;  // 网页Body
     private MultiTerm<String> sourceUrl;  // ASPURL
     private MultiTerm<String> language;  // 项目语言
@@ -126,15 +127,26 @@ public class ProjectMultiTermVo {
         this.projectPanAddress = projectPanAddress;
 
     }
-    public MultiTerm<String> getProjectPanRealName() {
+    public MultiTerm<String> getFileRealName() {
 
-        return projectPanRealName;
+        return fileRealName;
 
     }
 
-    public void setProjectPanRealName(MultiTerm<String> projectPanRealName) {
+    public void setFileRealName(MultiTerm<String> fileRealName) {
 
-        this.projectPanRealName = projectPanRealName;
+        this.fileRealName = fileRealName;
+
+    }
+    public MultiTerm<String> getDockerZipName() {
+
+        return dockerZipName;
+
+    }
+
+    public void setDockerZipName(MultiTerm<String> dockerZipName) {
+
+        this.dockerZipName = dockerZipName;
 
     }
     public MultiTerm<String> getHtmlBody() {
@@ -423,7 +435,8 @@ public class ProjectMultiTermVo {
                 ", projectType '" + projectType + '\'' +
                 ", projectZipStatus '" + projectZipStatus + '\'' +
                 ", projectPanAddress '" + projectPanAddress + '\'' +
-                ", projectPanRealName '" + projectPanRealName + '\'' +
+                ", fileRealName '" + fileRealName + '\'' +
+                ", dockerZipName '" + dockerZipName + '\'' +
                 ", htmlBody '" + htmlBody + '\'' +
                 ", sourceUrl '" + sourceUrl + '\'' +
                 ", language '" + language + '\'' +
