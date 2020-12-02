@@ -5,7 +5,6 @@ import demo.spring.boot.demospringboot.service.asp.Asp300FeignService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
 import demo.spring.boot.demospringboot.util.*;
 import demomaster.service.ProjectService;
-import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
@@ -143,19 +142,20 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
     @Override
     protected String downloadZipByList(List<String> downloadList, String host, String criteriaId, String workDirAbsolutePath, String cookie, AtomicReference<URLUtils.Type> type) throws IOException {
         String filePath = workDirAbsolutePath + "/" + criteriaId;//下载包的真实路径
-        File file = new File(filePath);
-        if (!file.exists()) {
-            file.createNewFile();
-        }
         String urlToDownload = downloadList.get(0);
         if (!urlToDownload.startsWith("http")) {
             urlToDownload = host + urlToDownload;
         }
         InputStream inputStream = URLUtils.getDataByType(urlToDownload, cookie, type);
-        OutputStream outputStream = new FileOutputStream(file);
         //处理流
         if (URLUtils.Type.stream.equals(type.get())) {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            OutputStream outputStream = new FileOutputStream(file);
             IOUtils.copy(inputStream, outputStream);
+            outputStream.close();
         } else if (URLUtils.Type.text.equals(type.get())) {
             String html = IOUtils.toString(inputStream, "GB2312");
             String urlAndPass = this.getUrlAndPass(html);
@@ -176,14 +176,13 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
 //
 //            }
         }
-        outputStream.close();
         return filePath;
     }
 
     @Override
     protected String transformToZip(String filePath, String workDirAbsolutePath, String localFsPathTmp, String zipName) throws IOException {
         String dirPath = localFsPathTmp + "/" + UUIDUtils.generateUUID();
-        String toZipFilePath = workDirAbsolutePath + "/" + zipName + ".zip";
+        String toZipFilePath = workDirAbsolutePath + "/" + zipName;
         SevenZipUtils.unzip(filePath, dirPath, null);
         ZipUtils.toZip(dirPath, new FileOutputStream(toZipFilePath), true);
         try {

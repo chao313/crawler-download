@@ -1,23 +1,19 @@
 package demo.spring.boot.demospringboot.service.download;
 
-import demo.spring.boot.demospringboot.config.DockerStructure;
 import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.URLUtils;
 import demomaster.vo.ProjectVoBase;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -107,9 +103,10 @@ public abstract class DownloadAndParse {
         ProjectVoBase projectVoBase = new ProjectVoBase();
         if (type.get().equals(URLUtils.Type.stream)) {
             //输出为流 -> 转换为zip -> 存入真实地址
-            String filePathAfterTransformed = this.transformToZip(fileAbsolutePath, localFsPathOriginZip, localFsPathTmp, criteriaId);
+            String zipName = criteriaId + ".zip";
+            String filePathAfterTransformed = this.transformToZip(fileAbsolutePath, localFsPathOriginZip, localFsPathTmp, zipName);
             log.info("zip转换后的绝对地址:{}", filePathAfterTransformed);
-            projectVoBase.setFileRealName(filePathAfterTransformed);
+            projectVoBase.setFileRealName(zipName);//这里存放的是文件名称(路径会发生变化)
         } else {
             //输出为非流 -> 基本就是pan -> 存入盘地址
             projectVoBase.setProjectPanAddress(type.get().getPanAddress());

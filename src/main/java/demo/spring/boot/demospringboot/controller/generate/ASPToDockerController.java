@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
@@ -61,8 +62,10 @@ public class ASPToDockerController {
             @RequestHeader(value = "host") String host) {
         Response response = new Response<>();
         try {
-            ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
-//            projectService.insert(projectVo);
+            ProjectVoBase projectVoBase = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
+            ProjectVo projectVo = new ProjectVo();
+            BeanUtils.copyProperties(projectVoBase,projectVo);
+            projectService.insert(projectVo);
             response.setCode(Code.System.OK);
             log.info("下载完成");
         } catch (Exception e) {

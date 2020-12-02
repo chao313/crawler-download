@@ -4,7 +4,8 @@ local:
     dataPath: /Users/chao/Library/Application Support/Google/Chrome
 
   fsPath:
-    img: /data/img
-    originZip: /data/originZip
+    tmp: /Users/chao/data/tmp
+    img: /Users/chao/data/img
+    originZip: /Users/chao/data/originZip
 
 
