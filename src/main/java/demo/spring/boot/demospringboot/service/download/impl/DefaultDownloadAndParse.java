@@ -164,28 +164,36 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
             /**
              * 这里兼容本地获取文件
              */
-            ProjectVo query = new ProjectVo();
-            query.setCriteriaid(criteriaId);
-            List<ProjectVo> projectVos = projectService.queryBase(query);
-            if (projectVos.size() > 0) {
-                String projectPanRealName = projectVos.get(0).getFileRealName();
-                File file_php = new File(PHP_PATH + "/" + projectPanRealName);
-                if (file_php.exists()) {
-                    IOUtils.copy(new FileInputStream(file_php), outputStream);
-                }
-
-            }
+//            ProjectVo query = new ProjectVo();
+//            query.setCriteriaid(criteriaId);
+//            List<ProjectVo> projectVos = projectService.queryBase(query);
+//            if (projectVos.size() > 0) {
+//                String projectPanRealName = projectVos.get(0).getFileRealName();
+//                File file_php = new File(PHP_PATH + "/" + projectPanRealName);
+//                if (file_php.exists()) {
+//                    IOUtils.copy(new FileInputStream(file_php), outputStream);
+//                }
+//
+//            }
         }
         outputStream.close();
         return filePath;
     }
 
     @Override
-    protected String transformToZip(String filePath, String workDirAbsolutePath, String zipName) throws IOException {
-        String dirPath = workDirAbsolutePath + UUIDUtils.generateUUID();
-        String toZipFilePath = workDirAbsolutePath + zipName + ".zip";
+    protected String transformToZip(String filePath, String workDirAbsolutePath, String localFsPathTmp, String zipName) throws IOException {
+        String dirPath = localFsPathTmp + "/" + UUIDUtils.generateUUID();
+        String toZipFilePath = workDirAbsolutePath + "/" + zipName + ".zip";
         SevenZipUtils.unzip(filePath, dirPath, null);
         ZipUtils.toZip(dirPath, new FileOutputStream(toZipFilePath), true);
+        try {
+            //后续删除操作
+            FileUtils.deleteFile(filePath);//删除原始文件
+            FileUtils.deleteDirectory(dirPath);//删除临时文件
+        } catch (Exception e) {
+            log.error("删除文件夹失败 e:{}", e.toString(), e);
+        }
+
         return toZipFilePath;
     }
 

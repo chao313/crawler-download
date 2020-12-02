@@ -119,8 +119,8 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                 .replaceAll("【.*?】", "")
                 .replaceAll("(.*?)\\..*", "$1")
                 .toLowerCase();
-        String shell = " docker build --rm -t " + imageName + " " + dockerRealPath;
-        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+//        String shell = " docker build --rm -t " + imageName + " " + dockerRealPath;
+//        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return imageName;
     }
 
@@ -134,8 +134,8 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     @Override
     protected String buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
-        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+//        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
+//        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return containerName;
     }
 

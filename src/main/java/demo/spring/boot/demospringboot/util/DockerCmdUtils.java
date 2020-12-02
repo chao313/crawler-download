@@ -38,6 +38,10 @@ public class DockerCmdUtils {
         }
     }
 
+    public static String build(String imageName, String dockerRealPath) {
+        return MessageFormat.format("docker build --rm -t  {0}  {1}  --name {0} -p {1}:{2} {3}", imageName, dockerRealPath);
+    }
+
     public static String create(String containerName, Integer outPort, Integer innerPort, String imageName) {
         return MessageFormat.format("docker create  --name {0} -p {1}:{2} {3}", containerName, String.valueOf(outPort), String.valueOf(innerPort), imageName);
     }

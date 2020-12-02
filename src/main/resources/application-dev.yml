@@ -3,6 +3,12 @@ local:
     driverPath: /chromedriver_win32/chromedriver72.0.3626.69.exe
     dataPath: C:/Users/hcwang.docker/AppData/Local/Google/Chrome/User Data
 
+  fsPath:
+    tmp: D:/fsPath/tmp
+    img: D:/fsPath/img
+    originZip: D:/fsPath/originZip
+
+
 
 
 

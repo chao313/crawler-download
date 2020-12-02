@@ -153,6 +153,8 @@ public abstract class UnzipToDocker {
          */
         this.makeUpDecPath(dockerRealPath, descMap);
 
+        //压缩真实的docker文件为zip -> 目的是转储 留作后期统一处理
+
         /**
          * 构建docker镜像
          */

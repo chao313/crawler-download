@@ -3,6 +3,8 @@ local:
     driverPath: /driver/chromedriver_mac64/chromedriver
     dataPath: /Users/chao/Library/Application Support/Google/Chrome
 
-
+  fsPath:
+    img: /data/img
+    originZip: /data/originZip
 
 

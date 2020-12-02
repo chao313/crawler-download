@@ -9,7 +9,7 @@ server:
 
 spring:
   profiles:
-    active: devMac
+    active: dev
     servlet:
       multipart:
         max-file-size: 900000000
@@ -44,21 +44,21 @@ spring:
 
       #  ##数据sql
       #     datasource:z
-      #       driver-class-name: com.mysql.jdbc.Driver
+    #       driver-class-name: com.mysql.jdbc.Driver
     #       url: jdbc:mysql://127.0.0.1:3306/information_schema
     #       username: root
     #       password: 123456
     #数据sql
+#  datasource:
+#    driver-class-name: com.mysql.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+#    username: root
+#    password: 123456
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    url: jdbc:mysql://10.202.16.9:3306/information?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     username: root
-    password: 123456
-#     datasource:
-#       driver-class-name: com.mysql.jdbc.Driver
-#       url: jdbc:mysql://10.202.16.9:3306/information?useUnicode=true&characterEncoding=utf8&autoReconnect=true
-#       username: root
-#       password: root
+    password: root
 #  可以在application 上面加注解
 #  效果相同
 #  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")
