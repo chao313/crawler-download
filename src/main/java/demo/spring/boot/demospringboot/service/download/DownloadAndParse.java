@@ -1,16 +1,21 @@
 package demo.spring.boot.demospringboot.service.download;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
+import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.util.URLUtils;
-import demomaster.vo.ProjectVo;
+import demomaster.vo.ProjectVoBase;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +24,9 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * 模板方法 -> 指定步骤
+ * 内聚当前的功能:只做数据收集工作
+ * 只包含:1.页面数据,图片数据,介绍,下载包地址,pan地址
+ * 其他的一概不设计要高内聚
  */
 @Slf4j
 @Component
@@ -27,6 +34,9 @@ public abstract class DownloadAndParse {
 
     @Autowired
     private UnzipToDocker unzipToDocker;
+
+    @Autowired
+    private StartConfig startConfig;
 
     /**
      * 根据指定的url来下载详情页
@@ -60,20 +70,23 @@ public abstract class DownloadAndParse {
     /**
      * 统一把rar转换成zip
      * 返回的包的真实路径
+     *
+     * @param filePath 真实文件地址
      */
-    protected abstract String transformToZip(String filePath, String workDirAbsolutePath, String zipName) throws IOException;
+    protected abstract String transformToZip(String filePath, String workDirAbsolutePath, String localFsPathTmp, String zipName) throws IOException;
 
 
     /**
      * @param url                 需要处理的url
      * @param workDirAbsolutePath 工作文件夹
      */
-    public ProjectVo doWork(String url,
-                            String encoding,
-                            String workDirAbsolutePath,
-                            String cookie,
-                            Integer port) throws Exception {
-        Map<String, byte[]> descMap = new HashMap<>();
+    public ProjectVoBase doWork(String url,
+                                String encoding,
+                                String workDirAbsolutePath,
+                                String cookie,
+                                Integer port) throws Exception {
+        String localFsPathOriginZip = startConfig.getLocalFsPathOriginZip();
+        String localFsPathTmp = startConfig.getLocalFsPathTmp();
         String regex = "(.*?)/SoftView/(.*?).html";
         String host = url.replaceAll(regex, "$1");
         String criteriaId = url.replaceAll(regex, "$2");
@@ -81,28 +94,36 @@ public abstract class DownloadAndParse {
         String htmlDetail = this.getHtmlDetail(url, encoding);
         log.info("获取htmlDetail");
         String descByHtmlDetail = this.getDescByHtmlDetail(htmlDetail);
-        descMap.put(DockerStructure.DSC_TXT_NAME, descByHtmlDetail.getBytes());//存放描述的map
         log.info("获取描述:{}", descByHtmlDetail);
         Map<String, byte[]> imgByHtmlDetail = this.getImgByHtmlDetail(htmlDetail, host, criteriaId);
-        descMap.putAll(imgByHtmlDetail);
+        //图片存储到指定的路径
+        this.saveImg(imgByHtmlDetail);
         log.info("下载图片:{}", imgByHtmlDetail.keySet());
         List<String> downloadListByHtmlDetail = this.getDownloadListByHtmlDetail(htmlDetail, host, encoding);
         log.info("下载下载列表:{}", downloadListByHtmlDetail);
         AtomicReference<URLUtils.Type> type = new AtomicReference<>();
-        String filePath = this.downloadZipByList(downloadListByHtmlDetail, host, criteriaId, workDirAbsolutePath, cookie, type);
-        log.info("zip包下载绝对地址:{}", filePath);
-        String filePathAfterTransformed = this.transformToZip(filePath, workDirAbsolutePath, criteriaId);
-        log.info("zip转换后的绝对地址:{}", filePathAfterTransformed);
+        String fileAbsolutePath = this.downloadZipByList(downloadListByHtmlDetail, host, criteriaId, localFsPathTmp, cookie, type);
+        log.info("zip包下载绝对地址:{}", fileAbsolutePath);
+        ProjectVoBase projectVoBase = new ProjectVoBase();
+        if (type.get().equals(URLUtils.Type.stream)) {
+            //输出为流 -> 转换为zip -> 存入真实地址
+            String filePathAfterTransformed = this.transformToZip(fileAbsolutePath, localFsPathOriginZip, localFsPathTmp, criteriaId);
+            log.info("zip转换后的绝对地址:{}", filePathAfterTransformed);
+            projectVoBase.setFileRealName(filePathAfterTransformed);
+        } else {
+            //输出为非流 -> 基本就是pan -> 存入盘地址
+            projectVoBase.setProjectPanAddress(type.get().getPanAddress());
+        }
         //入库
-        ProjectVo projectVo = new ProjectVo();
-        //整合结果
-        unzipToDocker.doWork(workDirAbsolutePath, workDirAbsolutePath, criteriaId + ".zip", DockerStructure.DOCKER_MODEL_Dir_Path, port, descMap, projectVo);
+
+//        //整合结果
+//        unzipToDocker.doWork(workDirAbsolutePath, workDirAbsolutePath, criteriaId + ".zip", DockerStructure.DOCKER_MODEL_Dir_Path, port, descMap, ProjectVoBase);
         //补全项目
-        this.makeUpProjectVo(projectVo, htmlDetail, url, criteriaId, descByHtmlDetail, imgByHtmlDetail.keySet(), type);
-        return projectVo;
+        this.makeUpProjectVoBase(projectVoBase, htmlDetail, url, criteriaId, descByHtmlDetail, imgByHtmlDetail.keySet(), type);
+        return projectVoBase;
     }
 
-    private void makeUpProjectVo(ProjectVo vo, String body, String url, String criteriaId, String desc, Set<String> images, AtomicReference<URLUtils.Type> type) {
+    private void makeUpProjectVoBase(ProjectVoBase vo, String body, String url, String criteriaId, String desc, Set<String> images, AtomicReference<URLUtils.Type> type) {
         Document parse = Jsoup.parse(body);
         Element goodsInfo = parse.getElementById("goodsInfo");
         String projectName = goodsInfo.getElementsByTag("h2").text();
@@ -139,5 +160,34 @@ public abstract class DownloadAndParse {
         vo.setProjectZipStatus(type.get().getType());
         vo.setProjectPanAddress(type.get().getPanAddress());//存放pan的地址
     }
+
+    /**
+     * 保存至文件系统
+     */
+    private void saveImg(Map<String, byte[]> imgByHtmlDetail) throws IOException {
+        String localFsPathImg = startConfig.getLocalFsPathImg();
+        for (Map.Entry<String, byte[]> entry : imgByHtmlDetail.entrySet()) {
+            String name = entry.getKey();
+            byte[] bts = entry.getValue();
+            String s = localFsPathImg + "/" + name;
+            FileOutputStream outputStream = new FileOutputStream(s);
+            IOUtils.write(bts, outputStream);
+            outputStream.close();
+        }
+    }
+
+    /**
+     * 保存至文件系统
+     */
+//    private void saveZip(IN) throws IOException {
+//        String localFsPathImg = startConfig.getLocalFsPathImg();
+//        for (Map.Entry<String, byte[]> entry : imgByHtmlDetail.entrySet()) {
+//            String name = entry.getKey();
+//            byte[] bts = entry.getValue();
+//            String s = localFsPathImg + "/" + name;
+//            IOUtils.write(bts, new FileOutputStream(s));
+//        }
+//    }
+
 
 }

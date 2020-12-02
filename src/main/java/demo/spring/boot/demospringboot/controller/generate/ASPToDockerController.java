@@ -10,6 +10,7 @@ import demo.spring.boot.demospringboot.util.ShellUtil;
 import demo.spring.boot.demospringboot.util.URLUtils;
 import demomaster.service.ProjectService;
 import demomaster.vo.ProjectVo;
+import demomaster.vo.ProjectVoBase;
 import demomaster.vo.plugin.ProjectNoPriVo;
 import demomaster.vo.plugin.ProjectPriVo;
 import io.swagger.annotations.ApiOperation;
@@ -60,8 +61,8 @@ public class ASPToDockerController {
             @RequestHeader(value = "host") String host) {
         Response response = new Response<>();
         try {
-            ProjectVo projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
-            projectService.insert(projectVo);
+            ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
+//            projectService.insert(projectVo);
             response.setCode(Code.System.OK);
             log.info("下载完成");
         } catch (Exception e) {
@@ -125,8 +126,8 @@ public class ASPToDockerController {
             Collection<String> listUrl = aspService.getListUrl(ASPService.PHP_LIST_PRE, from, to);
             for (String url : listUrl) {
                 try {
-                    ProjectVo projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
-                    projectService.insert(projectVo);
+                    ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
+//                    projectService.insert(projectVo);
                     port++;
                 } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);
@@ -155,7 +156,7 @@ public class ASPToDockerController {
             projectVos.forEach(vo -> {
                 String url = vo.getSourceUrl();
                 try {
-                    ProjectVo projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, Integer.valueOf(vo.getDockerPort()));
+                    ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, Integer.valueOf(vo.getDockerPort()));
                 } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);
                 }
