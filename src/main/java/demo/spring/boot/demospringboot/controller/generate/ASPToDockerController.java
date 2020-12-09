@@ -56,15 +56,12 @@ public class ASPToDockerController {
     public Response aspToDocker(
             @ApiParam(defaultValue = "http://www.asp300.net/SoftView/27/SoftView_69985.html")
             @RequestParam(value = "url") String url,
-            @RequestParam(value = "cookie") String cookie,
-            @RequestParam(value = "port") Integer port,
-            @ApiParam(hidden = true)
-            @RequestHeader(value = "host") String host) {
+            @RequestParam(value = "cookie") String cookie) {
         Response response = new Response<>();
         try {
-            ProjectVoBase projectVoBase = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
+            ProjectVoBase projectVoBase = downloadAndParse.doWork(url, "GB2312", cookie);
             ProjectVo projectVo = new ProjectVo();
-            BeanUtils.copyProperties(projectVoBase,projectVo);
+            BeanUtils.copyProperties(projectVoBase, projectVo);
             projectService.insert(projectVo);
             response.setCode(Code.System.OK);
             log.info("下载完成");
@@ -122,16 +119,24 @@ public class ASPToDockerController {
     @GetMapping("/batchDeal")
     public Response batchDeal(@ApiParam(defaultValue = "0") @RequestParam(value = "from") int from,
                               @ApiParam(defaultValue = "10") @RequestParam(value = "to") int to,
-                              @RequestParam(value = "cookie") String cookie,
-                              @RequestParam(value = "port") Integer port) {
+                              @RequestParam(value = "cookie") String cookie) {
         Response response = new Response<>();
         try {
             Collection<String> listUrl = aspService.getListUrl(ASPService.PHP_LIST_PRE, from, to);
+            ProjectVo query = new ProjectVo();
+            List<ProjectVo> projectVos = projectService.queryBase(query);
             for (String url : listUrl) {
+                for (ProjectVo vo : projectVos) {
+                    if (vo.getSourceUrl().equalsIgnoreCase(url)) {
+                        //数据库已经存在 -> 跳入下一次循环
+                        continue;
+                    }
+                }
                 try {
-                    ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, port);
-//                    projectService.insert(projectVo);
-                    port++;
+                    ProjectVoBase projectVoBase = downloadAndParse.doWork(url, "GB2312", cookie);
+                    ProjectVo projectVo = new ProjectVo();
+                    BeanUtils.copyProperties(projectVoBase, projectVo);
+                    projectService.insert(projectVo);
                 } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);
                 }
@@ -159,7 +164,7 @@ public class ASPToDockerController {
             projectVos.forEach(vo -> {
                 String url = vo.getSourceUrl();
                 try {
-                    ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", resourceService.getTmpDir(), cookie, Integer.valueOf(vo.getDockerPort()));
+                    ProjectVoBase projectVo = downloadAndParse.doWork(url, "GB2312", cookie);
                 } catch (Exception e) {
                     log.error("e:{}", e.toString(), e);
                 }

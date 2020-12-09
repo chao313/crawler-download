@@ -4,9 +4,9 @@ local:
     dataPath: /Users/chao/Library/Application Support/Google/Chrome
 
   fsPath:
-    tmp: /Users/chao/data/tmp
-    img: /Users/chao/data/img
-    originZip: /Users/chao/data/originZip
+    tmp: /data/fsPath/tmp
+    img: /data/fsPath/img
+    originZip: /data/fsPath/originZip
 
 spring:
   datasource:
@@ -14,4 +14,3 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     username: root
     password: 123456
-

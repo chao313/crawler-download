@@ -5,8 +5,6 @@ server:
     context-path: /download
 
 
-
-
 spring:
   profiles:
     active: dev
@@ -14,12 +12,6 @@ spring:
       multipart:
         max-file-size: 900000000
         max-request-size: 900000000
-  ## thymeleaf的默认配置
-  #spring.thymeleaf.prefix=classpath:/templates/
-  #spring.thymeleaf.suffix=.html
-  #spring.thymeleaf.mode=HTML5
-  #spring.thymeleaf.encoding=UTF-8
-  #spring.thymeleaf.content-type=text/html
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
@@ -42,23 +34,7 @@ spring:
     cache: false
     suffix: .html
 
-      #  ##数据sql
-      #     datasource:z
-    #       driver-class-name: com.mysql.jdbc.Driver
-    #       url: jdbc:mysql://127.0.0.1:3306/information_schema
-    #       username: root
-    #       password: 123456
-    #数据sql
-#  datasource:
-#    driver-class-name: com.mysql.jdbc.Driver
-#    url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
-#    username: root
-#    password: 123456
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://10.202.16.9:3306/information?useUnicode=true&characterEncoding=utf8&autoReconnect=true
-    username: root
-    password: root
+
 #  可以在application 上面加注解
 #  效果相同
 #  @MapperScan(value = "demo.spring.boot.demospringboot.mybatis.mapper")

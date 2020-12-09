@@ -74,13 +74,10 @@ public abstract class DownloadAndParse {
 
     /**
      * @param url                 需要处理的url
-     * @param workDirAbsolutePath 工作文件夹
      */
     public ProjectVoBase doWork(String url,
                                 String encoding,
-                                String workDirAbsolutePath,
-                                String cookie,
-                                Integer port) throws Exception {
+                                String cookie) throws Exception {
         String localFsPathOriginZip = startConfig.getLocalFsPathOriginZip();
         String localFsPathTmp = startConfig.getLocalFsPathTmp();
         String regex = "(.*?)/SoftView/(.*?).html";
@@ -172,19 +169,5 @@ public abstract class DownloadAndParse {
             outputStream.close();
         }
     }
-
-    /**
-     * 保存至文件系统
-     */
-//    private void saveZip(IN) throws IOException {
-//        String localFsPathImg = startConfig.getLocalFsPathImg();
-//        for (Map.Entry<String, byte[]> entry : imgByHtmlDetail.entrySet()) {
-//            String name = entry.getKey();
-//            byte[] bts = entry.getValue();
-//            String s = localFsPathImg + "/" + name;
-//            IOUtils.write(bts, new FileOutputStream(s));
-//        }
-//    }
-
 
 }
