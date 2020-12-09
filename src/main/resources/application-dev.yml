@@ -8,7 +8,11 @@ local:
     img: D:/fsPath/img
     originZip: D:/fsPath/originZip
 
-
-
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://10.202.16.9:3306/information?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    username: root
+    password: root
 
 
