@@ -10,6 +10,7 @@ import demo.spring.boot.demospringboot.service.asp.PanService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
+import demo.spring.boot.demospringboot.util.URLUtils;
 import demomaster.service.ProjectService;
 import demomaster.vo.ProjectVo;
 import demomaster.vo.ProjectVoBase;
@@ -234,6 +235,34 @@ public class ASPToDockerController {
         }
         return response;
 
+    }
+
+    @ApiOperation(value = "构建Docker镜像批量")
+    @GetMapping("/buildToDockerBatch")
+    public Response buildToDockerBatch() throws Exception {
+        Response response = new Response<>();
+        ProjectVo query = new ProjectVo();
+        query.setProjectZipStatus(URLUtils.Type.stream.getType());
+        List<ProjectVo> projectVos = projectService.queryBase(query);
+        for (ProjectVo vo : projectVos) {
+            if (StringUtils.isBlank(vo.getDockerImageName())) {
+                buildToDocker(vo.getCriteriaid());
+//                threadPoolExecutorService.addWork(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        try {
+//                            buildToDocker(vo.getCriteriaid());
+//                        } catch (Exception e) {
+//                            log.error("构建异常:{}", e.toString(), e);
+//                        }
+//
+//                    }
+//                });
+
+            }
+        }
+//        threadPoolExecutorService.waitComplete();
+        return response;
     }
 
     @ApiOperation(value = "batchDealIndb")

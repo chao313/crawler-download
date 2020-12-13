@@ -62,6 +62,13 @@ public class DockerCmdUtils {
         return MessageFormat.format("docker rmi {0}", imageName);
     }
 
+    /**
+     * 获取容器完整的id
+     */
+    public static String getFullId(String containerName) {
+        return MessageFormat.format("docker  inspect {0} --format='{{.Id}}'", containerName);
+    }
+
     public static List<String> getContainerRunningNames() {
         String cmd = "docker ps -a -f status=running --format {{.Names}}";
         return ShellUtil.getResult(cmd.split(" "));

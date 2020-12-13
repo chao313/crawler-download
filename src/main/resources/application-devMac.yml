@@ -11,6 +11,9 @@ local:
   host:
     inner: http://127.0.0.2
     outer: http://39.107.236.187
+    portainer:
+      inner: http://127.0.0.1:9000/#/containers
+      outer: http://39.107.236.187:9000/#/containers
 
 spring:
   datasource:

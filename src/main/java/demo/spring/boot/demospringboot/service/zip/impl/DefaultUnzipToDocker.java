@@ -2,10 +2,7 @@ package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
-import demo.spring.boot.demospringboot.util.EncoderUtils;
-import demo.spring.boot.demospringboot.util.SevenZipUtils;
-import demo.spring.boot.demospringboot.util.ShellUtil;
-import demo.spring.boot.demospringboot.util.UUIDUtils;
+import demo.spring.boot.demospringboot.util.*;
 import demo.spring.boot.demospringboot.vo.LanguageType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -115,7 +112,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
 
 
     @Override
-    protected void buildDockerImage(String dockerRealPath, String imageName) {
+    protected synchronized void buildDockerImage(String dockerRealPath, String imageName) {
         String shell = " docker build --rm -t " + imageName + " " + dockerRealPath;
         ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
     }
@@ -128,10 +125,10 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected String buildRunDockerContainer(String imageName, Integer port) {
+    protected synchronized String buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-//        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
-//        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
+        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return containerName;
     }
 

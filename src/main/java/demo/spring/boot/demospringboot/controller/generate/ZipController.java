@@ -344,44 +344,7 @@ public class ZipController {
     }
 
 
-    /**
-     * docker cp 237_:/app ./xx
-     *
-     * @param containerName
-     * @param path
-     * @return
-     */
-    @ApiOperation(value = "从容器中提取code")
-    @PostMapping("/getDataFromContainer")
-    public Response getCodeFromContainer(
-            @RequestParam(name = "containerName") String containerName,
-            @ApiParam(value = "", defaultValue = "/app") @RequestParam(name = "path") String path,
-            @ApiParam(hidden = true) @RequestHeader(value = "host") String host,
-            HttpServletRequest httpServletRequest) {
-        Response response = new Response<>();
-        try {
-            String tmpDir = resourceService.getTmpDir();//获取工作目录
-            String UUIDDirPath = tmpDir + UUID.randomUUID();
-            File UUIDDir = new File(UUIDDirPath);
-            if (!UUIDDir.exists()) {
-                UUIDDir.mkdirs();
-            }
-            String shell = "docker cp " + containerName + ":/app " + UUIDDir.getAbsolutePath();
-            ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
-            String zipTmpWillRemovedName = UUIDUtils.generateUUID() + ".zip";
-            File zipTmpWillRemoved = resourceService.addNewFile(zipTmpWillRemovedName);
-            ZipUtils.toZip(UUIDDir.getAbsolutePath(), new FileOutputStream(zipTmpWillRemoved), true);
-            String url = "http://" + host + resourceService.getContextPath() + "/ResourceController/downloadByFileName?fileName=" + zipTmpWillRemovedName;
-            return Response.Ok(url);
-        } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
-            response.setMsg(e.getMessage());
-            response.addException(e);
-            log.error("异常 ：{} ", e.getMessage(), e);
-        }
-        return response;
 
-    }
 
 
 }

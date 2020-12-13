@@ -34,6 +34,12 @@ public class StartConfig implements InitializingBean {
     @Value(value = "${local.host.outer}")
     private String localHostOuter;
 
+    @Value(value = "${local.host.portainer.inner}")
+    private String localHostPortainerInner;
+
+    @Value(value = "${local.host.portainer.outer}")
+    private String localHostPortainerOuter;
+
     public String getLocalFsPathImg() {
         return localFsPathImg;
     }
@@ -52,6 +58,14 @@ public class StartConfig implements InitializingBean {
 
     public String getLocalHostOuter() {
         return localHostOuter;
+    }
+
+    public String getLocalHostPortainerInner() {
+        return localHostPortainerInner;
+    }
+
+    public String getLocalHostPortainerOuter() {
+        return localHostPortainerOuter;
     }
 
     @Override
