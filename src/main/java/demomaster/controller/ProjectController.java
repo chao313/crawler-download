@@ -138,7 +138,7 @@ public class ProjectController {
             PageInfo pageInfo = new PageInfo(result);
             response.setCode(Code.System.OK);
             response.setContent(pageInfo);
-            log.info("success pageInfo -> {} ", pageInfo);
+            log.info("success pageInfo -> {} ");
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());
@@ -174,7 +174,7 @@ public class ProjectController {
             PageInfo pageInfo = new PageInfo(result);
             response.setCode(Code.System.OK);
             response.setContent(pageInfo);
-            log.info("success pageInfo -> {} ", pageInfo);
+//            log.info("success pageInfo -> {} ", pageInfo);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());

@@ -219,81 +219,81 @@ public class ZipController {
         return shellPath.toString();
     }
 
-    @ApiOperation(value = "处理压缩包")
-    @PostMapping("/deal2")
-    public Response deal2(
-            @ApiParam(value = "这里上传zip包")
-            @RequestParam(name = "zipFile")
-                    MultipartFile zipFile,
-            @RequestParam(name = "port")
-                    Integer port) {
-        Response response = new Response<>();
-        try {
-            String tmpFileName = zipFile.getOriginalFilename();
-            boolean b = resourceService.addFile(zipFile.getBytes(), tmpFileName);
-            String fileInDirAbsolutePath = resourceService.getTmpDir();
-            String workDirAbsolutePath = resourceService.getTmpDir();
-            String fileName = tmpFileName;
-            String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
-            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port,null,null);
-            return Response.Ok(true);
-        } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
-            response.setMsg(e.getMessage());
-            response.addException(e);
-            log.error("异常 ：{} ", e.getMessage(), e);
-        }
-        return response;
+//    @ApiOperation(value = "处理压缩包")
+//    @PostMapping("/deal2")
+//    public Response deal2(
+//            @ApiParam(value = "这里上传zip包")
+//            @RequestParam(name = "zipFile")
+//                    MultipartFile zipFile,
+//            @RequestParam(name = "port")
+//                    Integer port) {
+//        Response response = new Response<>();
+//        try {
+//            String tmpFileName = zipFile.getOriginalFilename();
+//            boolean b = resourceService.addFile(zipFile.getBytes(), tmpFileName);
+//            String fileInDirAbsolutePath = resourceService.getTmpDir();
+//            String workDirAbsolutePath = resourceService.getTmpDir();
+//            String fileName = tmpFileName;
+//            String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
+//            unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, port,null,null);
+//            return Response.Ok(true);
+//        } catch (Exception e) {
+//            response.setCode(Code.System.FAIL);
+//            response.setMsg(e.getMessage());
+//            response.addException(e);
+//            log.error("异常 ：{} ", e.getMessage(), e);
+//        }
+//        return response;
+//
+//    }
 
-    }
-
-    @ApiOperation(value = "批量处理压缩包")
-    @PostMapping("/deal3")
-    public Response deal3(
-            @RequestParam(name = "dir") String dir,
-            @RequestParam(name = "portMin") Integer portMin,
-            @RequestParam(name = "portMax") Integer portMax) {
-        Response response = new Response<>();
-        try {
-            File file = new File(dir);
-            if (!file.exists()) {
-                throw new RuntimeException("文件存在");
-            }
-            if (!file.isDirectory()) {
-                throw new RuntimeException("不是文件夹");
-            }
-            AtomicInteger port = new AtomicInteger();
-            port.set(portMin);
-            Arrays.stream(file.listFiles()).forEach(tmp -> {
-                String fileInDirAbsolutePath = dir;
-                String workDirAbsolutePath = resourceService.getTmpDir();
-                String fileName = tmp.getName();
-                String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
-                Integer tmpPort = port.get();
-                if (tmpPort > portMax) {
-                    throw new RuntimeException("达到最大的端口");
-                }
-                try {
-                    boolean b = unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, tmpPort,null,null);
-                    if (b == true) {
-                        port.getAndIncrement();
-                        log.info("创建成功,当前端口号+1:{}", port.get());
-                    }
-                } catch (Exception e) {
-                    log.error("e:{}", e.toString(), e);
-                }
-            });
-
-            return Response.Ok(true);
-        } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
-            response.setMsg(e.getMessage());
-            response.addException(e);
-            log.error("异常 ：{} ", e.getMessage(), e);
-        }
-        return response;
-
-    }
+//    @ApiOperation(value = "批量处理压缩包")
+//    @PostMapping("/deal3")
+//    public Response deal3(
+//            @RequestParam(name = "dir") String dir,
+//            @RequestParam(name = "portMin") Integer portMin,
+//            @RequestParam(name = "portMax") Integer portMax) {
+//        Response response = new Response<>();
+//        try {
+//            File file = new File(dir);
+//            if (!file.exists()) {
+//                throw new RuntimeException("文件存在");
+//            }
+//            if (!file.isDirectory()) {
+//                throw new RuntimeException("不是文件夹");
+//            }
+//            AtomicInteger port = new AtomicInteger();
+//            port.set(portMin);
+//            Arrays.stream(file.listFiles()).forEach(tmp -> {
+//                String fileInDirAbsolutePath = dir;
+//                String workDirAbsolutePath = resourceService.getTmpDir();
+//                String fileName = tmp.getName();
+//                String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
+//                Integer tmpPort = port.get();
+//                if (tmpPort > portMax) {
+//                    throw new RuntimeException("达到最大的端口");
+//                }
+//                try {
+//                    boolean b = unzipToDocker.doWork(fileInDirAbsolutePath, workDirAbsolutePath, fileName, dockerModelDirPath, tmpPort,null,null);
+//                    if (b == true) {
+//                        port.getAndIncrement();
+//                        log.info("创建成功,当前端口号+1:{}", port.get());
+//                    }
+//                } catch (Exception e) {
+//                    log.error("e:{}", e.toString(), e);
+//                }
+//            });
+//
+//            return Response.Ok(true);
+//        } catch (Exception e) {
+//            response.setCode(Code.System.FAIL);
+//            response.setMsg(e.getMessage());
+//            response.addException(e);
+//            log.error("异常 ：{} ", e.getMessage(), e);
+//        }
+//        return response;
+//
+//    }
 
     @ApiOperation(value = "过滤压缩包")
     @PostMapping("/filterZip")

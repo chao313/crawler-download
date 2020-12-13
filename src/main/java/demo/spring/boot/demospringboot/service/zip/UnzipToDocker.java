@@ -1,11 +1,14 @@
 package demo.spring.boot.demospringboot.service.zip;
 
+import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.util.DockerCmdUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
 import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
@@ -78,11 +81,10 @@ public abstract class UnzipToDocker {
      * 构建docker镜像
      *
      * @param dockerRealPath docker真实的路径
-     * @param fileName       待解压的文件名称
-     * @return imageName     镜像名称
+     * @param imageName      待解压的文件名称
      */
-    protected abstract String buildDockerImage(String dockerRealPath,
-                                               String fileName);
+    protected abstract void buildDockerImage(String dockerRealPath,
+                                             String imageName);
 
     /**
      * 推送docker镜像
@@ -103,16 +105,16 @@ public abstract class UnzipToDocker {
 
 
     /**
-     * @param fileInDirAbsolutePath 待解压的文件所在文件夹的绝对地址
-     * @param workDirAbsolutePath   工作文件夹
-     * @param fileName              待解压的文件名称
-     * @param dockerModelDirPath    docker的model的地址
-     * @param port                  docker的端口号
-     * @param descMap               描述的map
+     * @param workDirAbsolutePath 待解压的文件所在文件夹的绝对地址
+     * @param workDirAbsolutePath 工作文件夹
+     * @param file                待解压的文件名称
+     * @param dockerModelDirPath  docker的model的地址
+     * @param port                docker的端口号
+     * @param descMap             描述的map
      */
-    public boolean doWork(String fileInDirAbsolutePath,
-                          String workDirAbsolutePath,
-                          String fileName,
+    public boolean doWork(String workDirAbsolutePath,
+                          File file,
+                          String imageName,
                           String dockerModelDirPath,
                           Integer port,
                           Map<String, byte[]> descMap,
@@ -122,10 +124,16 @@ public abstract class UnzipToDocker {
 
         AtomicReference<LanguageType> languageType = new AtomicReference<>();
 
+        File workFileDir = new File(workDirAbsolutePath);
+        //创造条件
+        FileUtils.copyFileToDirectory(file, workFileDir);
+        //记录临时文件 -> 为了删除
+        String tmpCopyFilePath = workDirAbsolutePath + "/" + file.getName();
+
         /**
          * 解压并且获取解压缩的根目录
          */
-        String rootPath = this.unzipAndGetRoot(fileInDirAbsolutePath, fileName, sql, null, languageType);
+        String rootPath = this.unzipAndGetRoot(workDirAbsolutePath, file.getName(), sql, null, languageType);
         log.info("解压的路径:{}", rootPath);
 //        if (null == languageType.get() || (null != languageType.get() && !languageType.get().equals(LanguageType.PHP))) {
 //            log.info("当前项目不是PHP项目:{}", languageType.get());
@@ -153,12 +161,10 @@ public abstract class UnzipToDocker {
          */
         this.makeUpDecPath(dockerRealPath, descMap);
 
-        //压缩真实的docker文件为zip -> 目的是转储 留作后期统一处理
-
         /**
          * 构建docker镜像
          */
-        String imageName = this.buildDockerImage(dockerRealPath, fileName);
+        this.buildDockerImage(dockerRealPath, imageName);
         log.info("镜像名称:{}", imageName);
 
 
@@ -181,8 +187,8 @@ public abstract class UnzipToDocker {
             projectVo.setDockerImageName(imageName);
             projectVo.setDockerContainerName(containerName);
             projectVo.setDockerPort(port.toString());
-            projectVo.setHttpInnerAddress(ProjectVo.INNER_HOST + ":" + port);
-            projectVo.setHttpOutAddress(ProjectVo.OUT_HOST + ":" + port);
+            projectVo.setHttpInnerAddress(StartConfig.INNER_HOST + ":" + port);
+            projectVo.setHttpOutAddress(StartConfig.OUT_HOST + ":" + port);
             projectVo.setDockerShellCreate(DockerCmdUtils.create(containerName, port, 80, imageName));
             projectVo.setDockerShellRun(DockerCmdUtils.run(containerName));
             projectVo.setDockerShellStop(DockerCmdUtils.stopContainer(containerName));
@@ -191,6 +197,13 @@ public abstract class UnzipToDocker {
             projectVo.setProjectStatus(ProjectVo.Status.CREATED.getStatus());
             projectVo.setDockerStatus(DockerCmdUtils.Status.CREATED.getStatus());
         }
+        //删除临时文件(为了防止误删,加上判断)
+        if (rootPath.contains("tmp") && dockerRealPath.contains("tmp") && tmpCopyFilePath.contains("tmp")) {
+            demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(rootPath);
+            demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(dockerRealPath);
+            demo.spring.boot.demospringboot.util.FileUtils.deleteFile(tmpCopyFilePath);
+        }
+
         return true;
     }
 

@@ -8,6 +8,10 @@ local:
     img: D:/fsPath/img
     originZip: D:/fsPath/originZip
 
+  host:
+    inner: http://127.0.0.1
+    outer: http://39.107.236.187
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

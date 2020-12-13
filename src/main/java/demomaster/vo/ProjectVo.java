@@ -47,10 +47,6 @@ public class ProjectVo {
     }
 
 
-    public static final String INNER_HOST = "http://127.0.0.1";
-    public static final String OUT_HOST = "http://39.107.236.187";
-
-
     private Integer id;
     private String criteriaid;  // ASP唯一id 
     private String projectName;  // 项目名称 

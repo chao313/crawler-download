@@ -1,15 +1,13 @@
 package demomaster.dao;
 
 
-import java.util.List;
-
-import demomaster.vo.ProjectVo;
-import demomaster.vo.plugin.ProjectPriVo;
-import demomaster.vo.plugin.ProjectNoPriVo;
 import demomaster.vo.ProjectMultiTermVo;
-
-
+import demomaster.vo.ProjectVo;
+import demomaster.vo.plugin.ProjectNoPriVo;
+import demomaster.vo.plugin.ProjectPriVo;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 表名称      :project
@@ -63,27 +61,27 @@ public interface ProjectDAO {
     /**
      * 根据PrimaryKey查询
      * <p>
-     * id : 
+     * id :
+     *
      * @param id
-     * 
      */
     ProjectVo queryByPrimaryKey(@Param(value = "id") Integer id);
 
     /**
      * 根据PrimaryKey删除
      * <p>
-     * id : 
+     * id :
+     *
      * @param id
-     * 
      */
     int deleteByPrimaryKey(@Param(value = "id") Integer id);
 
     /**
      * 根据PrimaryKey更新，会根据主键去更新其他的值(空值不覆盖有值)
      * <p>
-     * id : 
+     * id :
+     *
      * @param id
-     * 
      */
     int updateByPrimaryKey(@Param(value = "source") ProjectNoPriVo source, @Param(value = "target") ProjectPriVo target);
 

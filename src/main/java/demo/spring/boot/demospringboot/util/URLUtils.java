@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @Slf4j
 public class URLUtils {
 
-    private static final List<String> STREAMS = Arrays.asList("application/x-zip-compressed", "application/octet-stream");//流的头
+    private static final List<String> STREAMS = Arrays.asList("application/x-zip-compressed", "application/octet-stream", "application/x-gzip","application/x-tar");//流的头
 
     public static byte[] toByteArray(String uri, String cookieValue) throws IOException {
         URL url = new URL(uri);

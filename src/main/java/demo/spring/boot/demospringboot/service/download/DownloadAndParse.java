@@ -28,8 +28,6 @@ import java.util.concurrent.atomic.AtomicReference;
 @Component
 public abstract class DownloadAndParse {
 
-    @Autowired
-    private UnzipToDocker unzipToDocker;
 
     @Autowired
     private StartConfig startConfig;

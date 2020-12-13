@@ -3,6 +3,7 @@ package demo.spring.boot.demospringboot.controller.generate;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import demo.spring.boot.demospringboot.config.Bootstrap;
+import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.controller.wind.KafkaMsgRequest;
 import demo.spring.boot.demospringboot.controller.wind.ProducerUpload;
 import demo.spring.boot.demospringboot.controller.wind.kafka.KafkaProduceSendSyncService;
@@ -10,7 +11,6 @@ import demo.spring.boot.demospringboot.controller.wind.kafka.ProduceFactory;
 import demo.spring.boot.demospringboot.controller.wind.kafka.RecordMetadataResponse;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.service.asp.ASPService;
 import demo.spring.boot.demospringboot.service.asp.PanService;
 import demo.spring.boot.demospringboot.util.MapUtil;
@@ -43,6 +43,25 @@ public class ASPController {
 
     @Autowired
     private ResourceService resourceService;
+
+
+    @ApiOperation(value = "getLoginCookie")
+    @GetMapping("/getLoginCookie")
+    public Response getLoginCookie() {
+        Response response = new Response<>();
+        try {
+            String cookieByLogin = URLUtils.getCookieByLogin("http://www.asp300.net/2012user/login.asp?action=chk", "hcwang-docker", "Ys20140913!");
+            response.setCode(Code.System.OK);
+            response.setContent(cookieByLogin);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
 
 
     @ApiOperation(value = "下载详情页")
@@ -220,7 +239,7 @@ public class ASPController {
     ) {
         Response response = new Response<>();
         try {
-            boolean result = panService.savePan(url, passwd,null);//获取list任务
+            boolean result = panService.savePan(url, passwd, null);//获取list任务
             response.setContent(result);
             response.setCode(Code.System.OK);
             log.info("获取完成");

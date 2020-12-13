@@ -8,6 +8,10 @@ local:
     img: /Users/chao/data/img
     originZip: /Users/chao/data/originZip
 
+  host:
+    inner: http://127.0.0.2
+    outer: http://39.107.236.187
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

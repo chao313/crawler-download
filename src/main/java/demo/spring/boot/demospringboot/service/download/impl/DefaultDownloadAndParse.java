@@ -3,6 +3,7 @@ package demo.spring.boot.demospringboot.service.download.impl;
 import demo.spring.boot.demospringboot.controller.resource.service.ResourceService;
 import demo.spring.boot.demospringboot.service.asp.Asp300FeignService;
 import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
+import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
 import demo.spring.boot.demospringboot.util.*;
 import demomaster.service.ProjectService;
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,9 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ThreadPoolExecutorService threadPoolExecutorService;
 
     private static final String PHP_PATH = "/Users/chao/Downloads/PHP";
 
@@ -185,14 +189,20 @@ public class DefaultDownloadAndParse extends DownloadAndParse {
         String toZipFilePath = workDirAbsolutePath + "/" + zipName;
         SevenZipUtils.unzip(filePath, dirPath, null);
         ZipUtils.toZip(dirPath, new FileOutputStream(toZipFilePath), true);
-        try {
-            //后续删除操作
-            FileUtils.deleteFile(filePath);//删除原始文件
-            FileUtils.deleteDirectory(dirPath);//删除临时文件
-        } catch (Exception e) {
-            log.error("删除文件夹失败 e:{}", e.toString(), e);
-        }
-
+        FileUtils.deleteFile(filePath);//删除原始文件
+        FileUtils.deleteDirectory(dirPath);//删除临时文件
+        //删除文件夹占用很多时间 -> 线程池
+//        threadPoolExecutorService.addWork(new Runnable() {
+//            @Override
+//            public void run() {
+//                try {
+//                    //后续删除操作
+//
+//                } catch (Exception e) {
+//                    log.error("删除文件夹失败 e:{}", e.toString(), e);
+//                }
+//            }
+//        });
         return toZipFilePath;
     }
 

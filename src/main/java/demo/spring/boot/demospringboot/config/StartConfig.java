@@ -15,6 +15,10 @@ import java.io.File;
 @Component
 public class StartConfig implements InitializingBean {
 
+    public static final String INNER_HOST = "http://127.0.0.1";
+
+    public static final String OUT_HOST = "http://39.107.236.187";
+
     @Value(value = "${local.fsPath.img}")
     private String localFsPathImg;
 
@@ -23,6 +27,12 @@ public class StartConfig implements InitializingBean {
 
     @Value(value = "${local.fsPath.originZip}")
     private String localFsPathOriginZip;
+
+    @Value(value = "${local.host.inner}")
+    private String localHostInner;
+
+    @Value(value = "${local.host.outer}")
+    private String localHostOuter;
 
     public String getLocalFsPathImg() {
         return localFsPathImg;
@@ -34,6 +44,14 @@ public class StartConfig implements InitializingBean {
 
     public String getLocalFsPathTmp() {
         return localFsPathTmp;
+    }
+
+    public String getLocalHostInner() {
+        return localHostInner;
+    }
+
+    public String getLocalHostOuter() {
+        return localHostOuter;
     }
 
     @Override
