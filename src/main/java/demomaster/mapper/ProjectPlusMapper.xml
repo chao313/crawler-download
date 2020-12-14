@@ -1,0 +1,3166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="demomaster.dao.ProjectPlusDAO">
+
+    <resultMap id="resultMap" type="demomaster.vo.ProjectPlusVo">
+        <result column="id" property="id"/>
+        <result column="criteriaId" property="criteriaid"/>
+        <result column="project_name" property="projectName"/>
+        <result column="project_update_time" property="projectUpdateTime"/>
+        <result column="project_type" property="projectType"/>
+        <result column="project_price" property="projectPrice"/>
+        <result column="project_package_type" property="projectPackageType"/>
+        <result column="project_pan_address" property="projectPanAddress"/>
+        <result column="project_real_file_name" property="projectRealFileName"/>
+        <result column="project_html_body" property="projectHtmlBody"/>
+        <result column="project_source_url" property="projectSourceUrl"/>
+        <result column="project_language" property="projectLanguage"/>
+        <result column="project_size2" property="projectSize2"/>
+        <result column="project_size_num" property="projectSizeNum"/>
+        <result column="project_size_type" property="projectSizeType"/>
+        <result column="project_imgs" property="projectImgs"/>
+        <result column="project_imgs_default" property="projectImgsDefault"/>
+        <result column="project_runtime" property="projectRuntime"/>
+        <result column="project_official_website" property="projectOfficialWebsite"/>
+        <result column="project_show_website" property="projectShowWebsite"/>
+        <result column="project_download_urls" property="projectDownloadUrls"/>
+        <result column="project_download_sum" property="projectDownloadSum"/>
+        <result column="project_introduction" property="projectIntroduction"/>
+        <result column="project_status" property="projectStatus"/>
+        <result column="project_mark" property="projectMark"/>
+        <result column="project_can_running" property="projectCanRunning"/>
+        <result column="docker_image_name" property="dockerImageName"/>
+        <result column="docker_image_shell_remove" property="dockerImageShellRemove"/>
+        <result column="docker_status" property="dockerStatus"/>
+        <result column="docker_container_id" property="dockerContainerId"/>
+        <result column="docker_container_name" property="dockerContainerName"/>
+        <result column="docker_container_port" property="dockerContainerPort"/>
+        <result column="docker_container_shell_create" property="dockerContainerShellCreate"/>
+        <result column="docker_container_shell_run" property="dockerContainerShellRun"/>
+        <result column="docker_container_shell_stop" property="dockerContainerShellStop"/>
+        <result column="docker_container_shell_remove" property="dockerContainerShellRemove"/>
+        <result column="address_container_outer" property="addressContainerOuter"/>
+        <result column="address_container_inner" property="addressContainerInner"/>
+        <result column="address_project_front" property="addressProjectFront"/>
+        <result column="address_project_background" property="addressProjectBackground"/>
+        <result column="address_project_background_account_passwd" property="addressProjectBackgroundAccountPasswd"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <insert id="insert"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        INSERT INTO `project_plus`(
+        `id` ,
+        `criteriaId` ,
+        `project_name` ,
+        `project_update_time` ,
+        `project_type` ,
+        `project_price` ,
+        `project_package_type` ,
+        `project_pan_address` ,
+        `project_real_file_name` ,
+        `project_html_body` ,
+        `project_source_url` ,
+        `project_language` ,
+        `project_size2` ,
+        `project_size_num` ,
+        `project_size_type` ,
+        `project_imgs` ,
+        `project_imgs_default` ,
+        `project_runtime` ,
+        `project_official_website` ,
+        `project_show_website` ,
+        `project_download_urls` ,
+        `project_download_sum` ,
+        `project_introduction` ,
+        `project_status` ,
+        `project_mark` ,
+        `project_can_running` ,
+        `docker_image_name` ,
+        `docker_image_shell_remove` ,
+        `docker_status` ,
+        `docker_container_id` ,
+        `docker_container_name` ,
+        `docker_container_port` ,
+        `docker_container_shell_create` ,
+        `docker_container_shell_run` ,
+        `docker_container_shell_stop` ,
+        `docker_container_shell_remove` ,
+        `address_container_outer` ,
+        `address_container_inner` ,
+        `address_project_front` ,
+        `address_project_background` ,
+        `address_project_background_account_passwd` ,
+        `update_time` 
+        )VALUE(
+          #{id}  ,
+          #{criteriaid}  ,
+          #{projectName}  ,
+          #{projectUpdateTime}  ,
+          #{projectType}  ,
+          #{projectPrice}  ,
+          #{projectPackageType}  ,
+          #{projectPanAddress}  ,
+          #{projectRealFileName}  ,
+          #{projectHtmlBody}  ,
+          #{projectSourceUrl}  ,
+          #{projectLanguage}  ,
+          #{projectSize2}  ,
+          #{projectSizeNum}  ,
+          #{projectSizeType}  ,
+          #{projectImgs}  ,
+          #{projectImgsDefault}  ,
+          #{projectRuntime}  ,
+          #{projectOfficialWebsite}  ,
+          #{projectShowWebsite}  ,
+          #{projectDownloadUrls}  ,
+          #{projectDownloadSum}  ,
+          #{projectIntroduction}  ,
+          #{projectStatus}  ,
+          #{projectMark}  ,
+          #{projectCanRunning}  ,
+          #{dockerImageName}  ,
+          #{dockerImageShellRemove}  ,
+          #{dockerStatus}  ,
+          #{dockerContainerId}  ,
+          #{dockerContainerName}  ,
+          #{dockerContainerPort}  ,
+          #{dockerContainerShellCreate}  ,
+          #{dockerContainerShellRun}  ,
+          #{dockerContainerShellStop}  ,
+          #{dockerContainerShellRemove}  ,
+          #{addressContainerOuter}  ,
+          #{addressContainerInner}  ,
+          #{addressProjectFront}  ,
+          #{addressProjectBackground}  ,
+          #{addressProjectBackgroundAccountPasswd}  ,
+          #{updateTime}  
+        )
+    </insert>
+
+    <insert id="inserts"
+            parameterType="java.util.List">
+        INSERT INTO `project_plus`(
+        `id`,
+        `criteriaId`,
+        `project_name`,
+        `project_update_time`,
+        `project_type`,
+        `project_price`,
+        `project_package_type`,
+        `project_pan_address`,
+        `project_real_file_name`,
+        `project_html_body`,
+        `project_source_url`,
+        `project_language`,
+        `project_size2`,
+        `project_size_num`,
+        `project_size_type`,
+        `project_imgs`,
+        `project_imgs_default`,
+        `project_runtime`,
+        `project_official_website`,
+        `project_show_website`,
+        `project_download_urls`,
+        `project_download_sum`,
+        `project_introduction`,
+        `project_status`,
+        `project_mark`,
+        `project_can_running`,
+        `docker_image_name`,
+        `docker_image_shell_remove`,
+        `docker_status`,
+        `docker_container_id`,
+        `docker_container_name`,
+        `docker_container_port`,
+        `docker_container_shell_create`,
+        `docker_container_shell_run`,
+        `docker_container_shell_stop`,
+        `docker_container_shell_remove`,
+        `address_container_outer`,
+        `address_container_inner`,
+        `address_project_front`,
+        `address_project_background`,
+        `address_project_background_account_passwd`,
+        `update_time`
+        )VALUES
+        <foreach collection="vos" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.criteriaid},
+            #{item.projectName},
+            #{item.projectUpdateTime},
+            #{item.projectType},
+            #{item.projectPrice},
+            #{item.projectPackageType},
+            #{item.projectPanAddress},
+            #{item.projectRealFileName},
+            #{item.projectHtmlBody},
+            #{item.projectSourceUrl},
+            #{item.projectLanguage},
+            #{item.projectSize2},
+            #{item.projectSizeNum},
+            #{item.projectSizeType},
+            #{item.projectImgs},
+            #{item.projectImgsDefault},
+            #{item.projectRuntime},
+            #{item.projectOfficialWebsite},
+            #{item.projectShowWebsite},
+            #{item.projectDownloadUrls},
+            #{item.projectDownloadSum},
+            #{item.projectIntroduction},
+            #{item.projectStatus},
+            #{item.projectMark},
+            #{item.projectCanRunning},
+            #{item.dockerImageName},
+            #{item.dockerImageShellRemove},
+            #{item.dockerStatus},
+            #{item.dockerContainerId},
+            #{item.dockerContainerName},
+            #{item.dockerContainerPort},
+            #{item.dockerContainerShellCreate},
+            #{item.dockerContainerShellRun},
+            #{item.dockerContainerShellStop},
+            #{item.dockerContainerShellRemove},
+            #{item.addressContainerOuter},
+            #{item.addressContainerInner},
+            #{item.addressProjectFront},
+            #{item.addressProjectBackground},
+            #{item.addressProjectBackgroundAccountPasswd},
+            #{item.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <select id="queryBase" resultMap="resultMap"
+            resultType="demomaster.vo.ProjectPlusVo"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        SELECT
+        `id`,
+        `criteriaId`,
+        `project_name`,
+        `project_update_time`,
+        `project_type`,
+        `project_price`,
+        `project_package_type`,
+        `project_pan_address`,
+        `project_real_file_name`,
+        `project_html_body`,
+        `project_source_url`,
+        `project_language`,
+        `project_size2`,
+        `project_size_num`,
+        `project_size_type`,
+        `project_imgs`,
+        `project_imgs_default`,
+        `project_runtime`,
+        `project_official_website`,
+        `project_show_website`,
+        `project_download_urls`,
+        `project_download_sum`,
+        `project_introduction`,
+        `project_status`,
+        `project_mark`,
+        `project_can_running`,
+        `docker_image_name`,
+        `docker_image_shell_remove`,
+        `docker_status`,
+        `docker_container_id`,
+        `docker_container_name`,
+        `docker_container_port`,
+        `docker_container_shell_create`,
+        `docker_container_shell_run`,
+        `docker_container_shell_stop`,
+        `docker_container_shell_remove`,
+        `address_container_outer`,
+        `address_container_inner`,
+        `address_project_front`,
+        `address_project_background`,
+        `address_project_background_account_passwd`,
+        `update_time`
+        FROM `project_plus`
+        <where>
+            1 = 1
+            <if test="id != null">
+                AND `id` = #{id}
+            </if>
+            <if test="criteriaid != null">
+                AND `criteriaId` = #{criteriaid}
+            </if>
+            <if test="projectName != null">
+                AND `project_name` = #{projectName}
+            </if>
+            <if test="projectUpdateTime != null">
+                AND `project_update_time` = #{projectUpdateTime}
+            </if>
+            <if test="projectType != null">
+                AND `project_type` = #{projectType}
+            </if>
+            <if test="projectPrice != null">
+                AND `project_price` = #{projectPrice}
+            </if>
+            <if test="projectPackageType != null">
+                AND `project_package_type` = #{projectPackageType}
+            </if>
+            <if test="projectPanAddress != null">
+                AND `project_pan_address` = #{projectPanAddress}
+            </if>
+            <if test="projectRealFileName != null">
+                AND `project_real_file_name` = #{projectRealFileName}
+            </if>
+            <if test="projectHtmlBody != null">
+                AND `project_html_body` = #{projectHtmlBody}
+            </if>
+            <if test="projectSourceUrl != null">
+                AND `project_source_url` = #{projectSourceUrl}
+            </if>
+            <if test="projectLanguage != null">
+                AND `project_language` = #{projectLanguage}
+            </if>
+            <if test="projectSize2 != null">
+                AND `project_size2` = #{projectSize2}
+            </if>
+            <if test="projectSizeNum != null">
+                AND `project_size_num` = #{projectSizeNum}
+            </if>
+            <if test="projectSizeType != null">
+                AND `project_size_type` = #{projectSizeType}
+            </if>
+            <if test="projectImgs != null">
+                AND `project_imgs` = #{projectImgs}
+            </if>
+            <if test="projectImgsDefault != null">
+                AND `project_imgs_default` = #{projectImgsDefault}
+            </if>
+            <if test="projectRuntime != null">
+                AND `project_runtime` = #{projectRuntime}
+            </if>
+            <if test="projectOfficialWebsite != null">
+                AND `project_official_website` = #{projectOfficialWebsite}
+            </if>
+            <if test="projectShowWebsite != null">
+                AND `project_show_website` = #{projectShowWebsite}
+            </if>
+            <if test="projectDownloadUrls != null">
+                AND `project_download_urls` = #{projectDownloadUrls}
+            </if>
+            <if test="projectDownloadSum != null">
+                AND `project_download_sum` = #{projectDownloadSum}
+            </if>
+            <if test="projectIntroduction != null">
+                AND `project_introduction` = #{projectIntroduction}
+            </if>
+            <if test="projectStatus != null">
+                AND `project_status` = #{projectStatus}
+            </if>
+            <if test="projectMark != null">
+                AND `project_mark` = #{projectMark}
+            </if>
+            <if test="projectCanRunning != null">
+                AND `project_can_running` = #{projectCanRunning}
+            </if>
+            <if test="dockerImageName != null">
+                AND `docker_image_name` = #{dockerImageName}
+            </if>
+            <if test="dockerImageShellRemove != null">
+                AND `docker_image_shell_remove` = #{dockerImageShellRemove}
+            </if>
+            <if test="dockerStatus != null">
+                AND `docker_status` = #{dockerStatus}
+            </if>
+            <if test="dockerContainerId != null">
+                AND `docker_container_id` = #{dockerContainerId}
+            </if>
+            <if test="dockerContainerName != null">
+                AND `docker_container_name` = #{dockerContainerName}
+            </if>
+            <if test="dockerContainerPort != null">
+                AND `docker_container_port` = #{dockerContainerPort}
+            </if>
+            <if test="dockerContainerShellCreate != null">
+                AND `docker_container_shell_create` = #{dockerContainerShellCreate}
+            </if>
+            <if test="dockerContainerShellRun != null">
+                AND `docker_container_shell_run` = #{dockerContainerShellRun}
+            </if>
+            <if test="dockerContainerShellStop != null">
+                AND `docker_container_shell_stop` = #{dockerContainerShellStop}
+            </if>
+            <if test="dockerContainerShellRemove != null">
+                AND `docker_container_shell_remove` = #{dockerContainerShellRemove}
+            </if>
+            <if test="addressContainerOuter != null">
+                AND `address_container_outer` = #{addressContainerOuter}
+            </if>
+            <if test="addressContainerInner != null">
+                AND `address_container_inner` = #{addressContainerInner}
+            </if>
+            <if test="addressProjectFront != null">
+                AND `address_project_front` = #{addressProjectFront}
+            </if>
+            <if test="addressProjectBackground != null">
+                AND `address_project_background` = #{addressProjectBackground}
+            </if>
+            <if test="addressProjectBackgroundAccountPasswd != null">
+                AND `address_project_background_account_passwd` = #{addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="updateTime != null">
+                AND `update_time` = #{updateTime}
+            </if>
+        </where>
+    </select>
+
+     <select id="queryMultiTerm" resultMap="resultMap"
+             resultType="demomaster.vo.ProjectPlusVo"
+             parameterType="demomaster.vo.ProjectPlusMultiTermVo">
+        SELECT
+        `id`,
+        `criteriaId`,
+        `project_name`,
+        `project_update_time`,
+        `project_type`,
+        `project_price`,
+        `project_package_type`,
+        `project_pan_address`,
+        `project_real_file_name`,
+        `project_html_body`,
+        `project_source_url`,
+        `project_language`,
+        `project_size2`,
+        `project_size_num`,
+        `project_size_type`,
+        `project_imgs`,
+        `project_imgs_default`,
+        `project_runtime`,
+        `project_official_website`,
+        `project_show_website`,
+        `project_download_urls`,
+        `project_download_sum`,
+        `project_introduction`,
+        `project_status`,
+        `project_mark`,
+        `project_can_running`,
+        `docker_image_name`,
+        `docker_image_shell_remove`,
+        `docker_status`,
+        `docker_container_id`,
+        `docker_container_name`,
+        `docker_container_port`,
+        `docker_container_shell_create`,
+        `docker_container_shell_run`,
+        `docker_container_shell_stop`,
+        `docker_container_shell_remove`,
+        `address_container_outer`,
+        `address_container_inner`,
+        `address_project_front`,
+        `address_project_background`,
+        `address_project_background_account_passwd`,
+        `update_time`
+        FROM `project_plus`
+        <where>
+            1 = 1
+            <if test="id != null">
+                 <if test="id._in != null">
+                     AND `id` in
+                     <foreach collection="id._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._notIn != null">
+                     AND `id`  not in
+                     <foreach collection="id._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._like != null">
+                     <foreach collection="id._like" item="item">
+                       AND `id` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._notLike != null">
+                     <foreach collection="id._notLike" item="item">
+                       AND `id` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._regex != null">
+                     <foreach collection="id._regex" item="item">
+                       AND `id` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._regex != null">
+                     <foreach collection="id._regex" item="item">
+                       AND `id` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="id._lt != null">
+                      AND `id` <![CDATA[ < ]]>  #{id._lt}
+                 </if>
+                  <if test="id._le != null">
+                      AND `id` <![CDATA[ <= ]]>  #{{id._lt}
+                 </if>
+                  <if test="id._gt != null">
+                      AND `id` <![CDATA[ > ]]>  #{{id._lt}
+                 </if>
+                  <if test="id._ge != null">
+                      AND `id` <![CDATA[ >= ]]>  #{{id._lt}
+                 </if>
+            </if>
+            <if test="criteriaid != null">
+                 <if test="criteriaid._in != null">
+                     AND `criteriaId` in
+                     <foreach collection="criteriaId._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._notIn != null">
+                     AND `criteriaId`  not in
+                     <foreach collection="criteriaId._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._like != null">
+                     <foreach collection="criteriaId._like" item="item">
+                       AND `criteriaId` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._notLike != null">
+                     <foreach collection="criteriaId._notLike" item="item">
+                       AND `criteriaId` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._regex != null">
+                     <foreach collection="criteriaId._regex" item="item">
+                       AND `criteriaId` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._regex != null">
+                     <foreach collection="criteriaId._regex" item="item">
+                       AND `criteriaId` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="criteriaid._lt != null">
+                      AND `criteriaId` <![CDATA[ < ]]>  #{criteriaId._lt}
+                 </if>
+                  <if test="criteriaid._le != null">
+                      AND `criteriaId` <![CDATA[ <= ]]>  #{{criteriaId._lt}
+                 </if>
+                  <if test="criteriaid._gt != null">
+                      AND `criteriaId` <![CDATA[ > ]]>  #{{criteriaId._lt}
+                 </if>
+                  <if test="criteriaid._ge != null">
+                      AND `criteriaId` <![CDATA[ >= ]]>  #{{criteriaId._lt}
+                 </if>
+            </if>
+            <if test="projectName != null">
+                 <if test="projectName._in != null">
+                     AND `project_name` in
+                     <foreach collection="project_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._notIn != null">
+                     AND `project_name`  not in
+                     <foreach collection="project_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._like != null">
+                     <foreach collection="project_name._like" item="item">
+                       AND `project_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._notLike != null">
+                     <foreach collection="project_name._notLike" item="item">
+                       AND `project_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._regex != null">
+                     <foreach collection="project_name._regex" item="item">
+                       AND `project_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._regex != null">
+                     <foreach collection="project_name._regex" item="item">
+                       AND `project_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectName._lt != null">
+                      AND `project_name` <![CDATA[ < ]]>  #{project_name._lt}
+                 </if>
+                  <if test="projectName._le != null">
+                      AND `project_name` <![CDATA[ <= ]]>  #{{project_name._lt}
+                 </if>
+                  <if test="projectName._gt != null">
+                      AND `project_name` <![CDATA[ > ]]>  #{{project_name._lt}
+                 </if>
+                  <if test="projectName._ge != null">
+                      AND `project_name` <![CDATA[ >= ]]>  #{{project_name._lt}
+                 </if>
+            </if>
+            <if test="projectUpdateTime != null">
+                 <if test="projectUpdateTime._in != null">
+                     AND `project_update_time` in
+                     <foreach collection="project_update_time._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._notIn != null">
+                     AND `project_update_time`  not in
+                     <foreach collection="project_update_time._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._like != null">
+                     <foreach collection="project_update_time._like" item="item">
+                       AND `project_update_time` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._notLike != null">
+                     <foreach collection="project_update_time._notLike" item="item">
+                       AND `project_update_time` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._regex != null">
+                     <foreach collection="project_update_time._regex" item="item">
+                       AND `project_update_time` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._regex != null">
+                     <foreach collection="project_update_time._regex" item="item">
+                       AND `project_update_time` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectUpdateTime._lt != null">
+                      AND `project_update_time` <![CDATA[ < ]]>  #{project_update_time._lt}
+                 </if>
+                  <if test="projectUpdateTime._le != null">
+                      AND `project_update_time` <![CDATA[ <= ]]>  #{{project_update_time._lt}
+                 </if>
+                  <if test="projectUpdateTime._gt != null">
+                      AND `project_update_time` <![CDATA[ > ]]>  #{{project_update_time._lt}
+                 </if>
+                  <if test="projectUpdateTime._ge != null">
+                      AND `project_update_time` <![CDATA[ >= ]]>  #{{project_update_time._lt}
+                 </if>
+            </if>
+            <if test="projectType != null">
+                 <if test="projectType._in != null">
+                     AND `project_type` in
+                     <foreach collection="project_type._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._notIn != null">
+                     AND `project_type`  not in
+                     <foreach collection="project_type._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._like != null">
+                     <foreach collection="project_type._like" item="item">
+                       AND `project_type` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._notLike != null">
+                     <foreach collection="project_type._notLike" item="item">
+                       AND `project_type` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._regex != null">
+                     <foreach collection="project_type._regex" item="item">
+                       AND `project_type` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._regex != null">
+                     <foreach collection="project_type._regex" item="item">
+                       AND `project_type` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectType._lt != null">
+                      AND `project_type` <![CDATA[ < ]]>  #{project_type._lt}
+                 </if>
+                  <if test="projectType._le != null">
+                      AND `project_type` <![CDATA[ <= ]]>  #{{project_type._lt}
+                 </if>
+                  <if test="projectType._gt != null">
+                      AND `project_type` <![CDATA[ > ]]>  #{{project_type._lt}
+                 </if>
+                  <if test="projectType._ge != null">
+                      AND `project_type` <![CDATA[ >= ]]>  #{{project_type._lt}
+                 </if>
+            </if>
+            <if test="projectPrice != null">
+                 <if test="projectPrice._in != null">
+                     AND `project_price` in
+                     <foreach collection="project_price._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._notIn != null">
+                     AND `project_price`  not in
+                     <foreach collection="project_price._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._like != null">
+                     <foreach collection="project_price._like" item="item">
+                       AND `project_price` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._notLike != null">
+                     <foreach collection="project_price._notLike" item="item">
+                       AND `project_price` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._regex != null">
+                     <foreach collection="project_price._regex" item="item">
+                       AND `project_price` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._regex != null">
+                     <foreach collection="project_price._regex" item="item">
+                       AND `project_price` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPrice._lt != null">
+                      AND `project_price` <![CDATA[ < ]]>  #{project_price._lt}
+                 </if>
+                  <if test="projectPrice._le != null">
+                      AND `project_price` <![CDATA[ <= ]]>  #{{project_price._lt}
+                 </if>
+                  <if test="projectPrice._gt != null">
+                      AND `project_price` <![CDATA[ > ]]>  #{{project_price._lt}
+                 </if>
+                  <if test="projectPrice._ge != null">
+                      AND `project_price` <![CDATA[ >= ]]>  #{{project_price._lt}
+                 </if>
+            </if>
+            <if test="projectPackageType != null">
+                 <if test="projectPackageType._in != null">
+                     AND `project_package_type` in
+                     <foreach collection="project_package_type._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._notIn != null">
+                     AND `project_package_type`  not in
+                     <foreach collection="project_package_type._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._like != null">
+                     <foreach collection="project_package_type._like" item="item">
+                       AND `project_package_type` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._notLike != null">
+                     <foreach collection="project_package_type._notLike" item="item">
+                       AND `project_package_type` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._regex != null">
+                     <foreach collection="project_package_type._regex" item="item">
+                       AND `project_package_type` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._regex != null">
+                     <foreach collection="project_package_type._regex" item="item">
+                       AND `project_package_type` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPackageType._lt != null">
+                      AND `project_package_type` <![CDATA[ < ]]>  #{project_package_type._lt}
+                 </if>
+                  <if test="projectPackageType._le != null">
+                      AND `project_package_type` <![CDATA[ <= ]]>  #{{project_package_type._lt}
+                 </if>
+                  <if test="projectPackageType._gt != null">
+                      AND `project_package_type` <![CDATA[ > ]]>  #{{project_package_type._lt}
+                 </if>
+                  <if test="projectPackageType._ge != null">
+                      AND `project_package_type` <![CDATA[ >= ]]>  #{{project_package_type._lt}
+                 </if>
+            </if>
+            <if test="projectPanAddress != null">
+                 <if test="projectPanAddress._in != null">
+                     AND `project_pan_address` in
+                     <foreach collection="project_pan_address._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._notIn != null">
+                     AND `project_pan_address`  not in
+                     <foreach collection="project_pan_address._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._like != null">
+                     <foreach collection="project_pan_address._like" item="item">
+                       AND `project_pan_address` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._notLike != null">
+                     <foreach collection="project_pan_address._notLike" item="item">
+                       AND `project_pan_address` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._regex != null">
+                     <foreach collection="project_pan_address._regex" item="item">
+                       AND `project_pan_address` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._regex != null">
+                     <foreach collection="project_pan_address._regex" item="item">
+                       AND `project_pan_address` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectPanAddress._lt != null">
+                      AND `project_pan_address` <![CDATA[ < ]]>  #{project_pan_address._lt}
+                 </if>
+                  <if test="projectPanAddress._le != null">
+                      AND `project_pan_address` <![CDATA[ <= ]]>  #{{project_pan_address._lt}
+                 </if>
+                  <if test="projectPanAddress._gt != null">
+                      AND `project_pan_address` <![CDATA[ > ]]>  #{{project_pan_address._lt}
+                 </if>
+                  <if test="projectPanAddress._ge != null">
+                      AND `project_pan_address` <![CDATA[ >= ]]>  #{{project_pan_address._lt}
+                 </if>
+            </if>
+            <if test="projectRealFileName != null">
+                 <if test="projectRealFileName._in != null">
+                     AND `project_real_file_name` in
+                     <foreach collection="project_real_file_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._notIn != null">
+                     AND `project_real_file_name`  not in
+                     <foreach collection="project_real_file_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._like != null">
+                     <foreach collection="project_real_file_name._like" item="item">
+                       AND `project_real_file_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._notLike != null">
+                     <foreach collection="project_real_file_name._notLike" item="item">
+                       AND `project_real_file_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._regex != null">
+                     <foreach collection="project_real_file_name._regex" item="item">
+                       AND `project_real_file_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._regex != null">
+                     <foreach collection="project_real_file_name._regex" item="item">
+                       AND `project_real_file_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRealFileName._lt != null">
+                      AND `project_real_file_name` <![CDATA[ < ]]>  #{project_real_file_name._lt}
+                 </if>
+                  <if test="projectRealFileName._le != null">
+                      AND `project_real_file_name` <![CDATA[ <= ]]>  #{{project_real_file_name._lt}
+                 </if>
+                  <if test="projectRealFileName._gt != null">
+                      AND `project_real_file_name` <![CDATA[ > ]]>  #{{project_real_file_name._lt}
+                 </if>
+                  <if test="projectRealFileName._ge != null">
+                      AND `project_real_file_name` <![CDATA[ >= ]]>  #{{project_real_file_name._lt}
+                 </if>
+            </if>
+            <if test="projectHtmlBody != null">
+                 <if test="projectHtmlBody._in != null">
+                     AND `project_html_body` in
+                     <foreach collection="project_html_body._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._notIn != null">
+                     AND `project_html_body`  not in
+                     <foreach collection="project_html_body._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._like != null">
+                     <foreach collection="project_html_body._like" item="item">
+                       AND `project_html_body` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._notLike != null">
+                     <foreach collection="project_html_body._notLike" item="item">
+                       AND `project_html_body` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._regex != null">
+                     <foreach collection="project_html_body._regex" item="item">
+                       AND `project_html_body` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._regex != null">
+                     <foreach collection="project_html_body._regex" item="item">
+                       AND `project_html_body` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectHtmlBody._lt != null">
+                      AND `project_html_body` <![CDATA[ < ]]>  #{project_html_body._lt}
+                 </if>
+                  <if test="projectHtmlBody._le != null">
+                      AND `project_html_body` <![CDATA[ <= ]]>  #{{project_html_body._lt}
+                 </if>
+                  <if test="projectHtmlBody._gt != null">
+                      AND `project_html_body` <![CDATA[ > ]]>  #{{project_html_body._lt}
+                 </if>
+                  <if test="projectHtmlBody._ge != null">
+                      AND `project_html_body` <![CDATA[ >= ]]>  #{{project_html_body._lt}
+                 </if>
+            </if>
+            <if test="projectSourceUrl != null">
+                 <if test="projectSourceUrl._in != null">
+                     AND `project_source_url` in
+                     <foreach collection="project_source_url._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._notIn != null">
+                     AND `project_source_url`  not in
+                     <foreach collection="project_source_url._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._like != null">
+                     <foreach collection="project_source_url._like" item="item">
+                       AND `project_source_url` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._notLike != null">
+                     <foreach collection="project_source_url._notLike" item="item">
+                       AND `project_source_url` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._regex != null">
+                     <foreach collection="project_source_url._regex" item="item">
+                       AND `project_source_url` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._regex != null">
+                     <foreach collection="project_source_url._regex" item="item">
+                       AND `project_source_url` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSourceUrl._lt != null">
+                      AND `project_source_url` <![CDATA[ < ]]>  #{project_source_url._lt}
+                 </if>
+                  <if test="projectSourceUrl._le != null">
+                      AND `project_source_url` <![CDATA[ <= ]]>  #{{project_source_url._lt}
+                 </if>
+                  <if test="projectSourceUrl._gt != null">
+                      AND `project_source_url` <![CDATA[ > ]]>  #{{project_source_url._lt}
+                 </if>
+                  <if test="projectSourceUrl._ge != null">
+                      AND `project_source_url` <![CDATA[ >= ]]>  #{{project_source_url._lt}
+                 </if>
+            </if>
+            <if test="projectLanguage != null">
+                 <if test="projectLanguage._in != null">
+                     AND `project_language` in
+                     <foreach collection="project_language._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._notIn != null">
+                     AND `project_language`  not in
+                     <foreach collection="project_language._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._like != null">
+                     <foreach collection="project_language._like" item="item">
+                       AND `project_language` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._notLike != null">
+                     <foreach collection="project_language._notLike" item="item">
+                       AND `project_language` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._regex != null">
+                     <foreach collection="project_language._regex" item="item">
+                       AND `project_language` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._regex != null">
+                     <foreach collection="project_language._regex" item="item">
+                       AND `project_language` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectLanguage._lt != null">
+                      AND `project_language` <![CDATA[ < ]]>  #{project_language._lt}
+                 </if>
+                  <if test="projectLanguage._le != null">
+                      AND `project_language` <![CDATA[ <= ]]>  #{{project_language._lt}
+                 </if>
+                  <if test="projectLanguage._gt != null">
+                      AND `project_language` <![CDATA[ > ]]>  #{{project_language._lt}
+                 </if>
+                  <if test="projectLanguage._ge != null">
+                      AND `project_language` <![CDATA[ >= ]]>  #{{project_language._lt}
+                 </if>
+            </if>
+            <if test="projectSize2 != null">
+                 <if test="projectSize2._in != null">
+                     AND `project_size2` in
+                     <foreach collection="project_size2._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._notIn != null">
+                     AND `project_size2`  not in
+                     <foreach collection="project_size2._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._like != null">
+                     <foreach collection="project_size2._like" item="item">
+                       AND `project_size2` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._notLike != null">
+                     <foreach collection="project_size2._notLike" item="item">
+                       AND `project_size2` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._regex != null">
+                     <foreach collection="project_size2._regex" item="item">
+                       AND `project_size2` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._regex != null">
+                     <foreach collection="project_size2._regex" item="item">
+                       AND `project_size2` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSize2._lt != null">
+                      AND `project_size2` <![CDATA[ < ]]>  #{project_size2._lt}
+                 </if>
+                  <if test="projectSize2._le != null">
+                      AND `project_size2` <![CDATA[ <= ]]>  #{{project_size2._lt}
+                 </if>
+                  <if test="projectSize2._gt != null">
+                      AND `project_size2` <![CDATA[ > ]]>  #{{project_size2._lt}
+                 </if>
+                  <if test="projectSize2._ge != null">
+                      AND `project_size2` <![CDATA[ >= ]]>  #{{project_size2._lt}
+                 </if>
+            </if>
+            <if test="projectSizeNum != null">
+                 <if test="projectSizeNum._in != null">
+                     AND `project_size_num` in
+                     <foreach collection="project_size_num._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._notIn != null">
+                     AND `project_size_num`  not in
+                     <foreach collection="project_size_num._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._like != null">
+                     <foreach collection="project_size_num._like" item="item">
+                       AND `project_size_num` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._notLike != null">
+                     <foreach collection="project_size_num._notLike" item="item">
+                       AND `project_size_num` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._regex != null">
+                     <foreach collection="project_size_num._regex" item="item">
+                       AND `project_size_num` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._regex != null">
+                     <foreach collection="project_size_num._regex" item="item">
+                       AND `project_size_num` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeNum._lt != null">
+                      AND `project_size_num` <![CDATA[ < ]]>  #{project_size_num._lt}
+                 </if>
+                  <if test="projectSizeNum._le != null">
+                      AND `project_size_num` <![CDATA[ <= ]]>  #{{project_size_num._lt}
+                 </if>
+                  <if test="projectSizeNum._gt != null">
+                      AND `project_size_num` <![CDATA[ > ]]>  #{{project_size_num._lt}
+                 </if>
+                  <if test="projectSizeNum._ge != null">
+                      AND `project_size_num` <![CDATA[ >= ]]>  #{{project_size_num._lt}
+                 </if>
+            </if>
+            <if test="projectSizeType != null">
+                 <if test="projectSizeType._in != null">
+                     AND `project_size_type` in
+                     <foreach collection="project_size_type._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._notIn != null">
+                     AND `project_size_type`  not in
+                     <foreach collection="project_size_type._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._like != null">
+                     <foreach collection="project_size_type._like" item="item">
+                       AND `project_size_type` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._notLike != null">
+                     <foreach collection="project_size_type._notLike" item="item">
+                       AND `project_size_type` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._regex != null">
+                     <foreach collection="project_size_type._regex" item="item">
+                       AND `project_size_type` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._regex != null">
+                     <foreach collection="project_size_type._regex" item="item">
+                       AND `project_size_type` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectSizeType._lt != null">
+                      AND `project_size_type` <![CDATA[ < ]]>  #{project_size_type._lt}
+                 </if>
+                  <if test="projectSizeType._le != null">
+                      AND `project_size_type` <![CDATA[ <= ]]>  #{{project_size_type._lt}
+                 </if>
+                  <if test="projectSizeType._gt != null">
+                      AND `project_size_type` <![CDATA[ > ]]>  #{{project_size_type._lt}
+                 </if>
+                  <if test="projectSizeType._ge != null">
+                      AND `project_size_type` <![CDATA[ >= ]]>  #{{project_size_type._lt}
+                 </if>
+            </if>
+            <if test="projectImgs != null">
+                 <if test="projectImgs._in != null">
+                     AND `project_imgs` in
+                     <foreach collection="project_imgs._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._notIn != null">
+                     AND `project_imgs`  not in
+                     <foreach collection="project_imgs._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._like != null">
+                     <foreach collection="project_imgs._like" item="item">
+                       AND `project_imgs` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._notLike != null">
+                     <foreach collection="project_imgs._notLike" item="item">
+                       AND `project_imgs` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._regex != null">
+                     <foreach collection="project_imgs._regex" item="item">
+                       AND `project_imgs` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._regex != null">
+                     <foreach collection="project_imgs._regex" item="item">
+                       AND `project_imgs` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgs._lt != null">
+                      AND `project_imgs` <![CDATA[ < ]]>  #{project_imgs._lt}
+                 </if>
+                  <if test="projectImgs._le != null">
+                      AND `project_imgs` <![CDATA[ <= ]]>  #{{project_imgs._lt}
+                 </if>
+                  <if test="projectImgs._gt != null">
+                      AND `project_imgs` <![CDATA[ > ]]>  #{{project_imgs._lt}
+                 </if>
+                  <if test="projectImgs._ge != null">
+                      AND `project_imgs` <![CDATA[ >= ]]>  #{{project_imgs._lt}
+                 </if>
+            </if>
+            <if test="projectImgsDefault != null">
+                 <if test="projectImgsDefault._in != null">
+                     AND `project_imgs_default` in
+                     <foreach collection="project_imgs_default._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._notIn != null">
+                     AND `project_imgs_default`  not in
+                     <foreach collection="project_imgs_default._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._like != null">
+                     <foreach collection="project_imgs_default._like" item="item">
+                       AND `project_imgs_default` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._notLike != null">
+                     <foreach collection="project_imgs_default._notLike" item="item">
+                       AND `project_imgs_default` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._regex != null">
+                     <foreach collection="project_imgs_default._regex" item="item">
+                       AND `project_imgs_default` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._regex != null">
+                     <foreach collection="project_imgs_default._regex" item="item">
+                       AND `project_imgs_default` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectImgsDefault._lt != null">
+                      AND `project_imgs_default` <![CDATA[ < ]]>  #{project_imgs_default._lt}
+                 </if>
+                  <if test="projectImgsDefault._le != null">
+                      AND `project_imgs_default` <![CDATA[ <= ]]>  #{{project_imgs_default._lt}
+                 </if>
+                  <if test="projectImgsDefault._gt != null">
+                      AND `project_imgs_default` <![CDATA[ > ]]>  #{{project_imgs_default._lt}
+                 </if>
+                  <if test="projectImgsDefault._ge != null">
+                      AND `project_imgs_default` <![CDATA[ >= ]]>  #{{project_imgs_default._lt}
+                 </if>
+            </if>
+            <if test="projectRuntime != null">
+                 <if test="projectRuntime._in != null">
+                     AND `project_runtime` in
+                     <foreach collection="project_runtime._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._notIn != null">
+                     AND `project_runtime`  not in
+                     <foreach collection="project_runtime._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._like != null">
+                     <foreach collection="project_runtime._like" item="item">
+                       AND `project_runtime` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._notLike != null">
+                     <foreach collection="project_runtime._notLike" item="item">
+                       AND `project_runtime` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._regex != null">
+                     <foreach collection="project_runtime._regex" item="item">
+                       AND `project_runtime` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._regex != null">
+                     <foreach collection="project_runtime._regex" item="item">
+                       AND `project_runtime` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectRuntime._lt != null">
+                      AND `project_runtime` <![CDATA[ < ]]>  #{project_runtime._lt}
+                 </if>
+                  <if test="projectRuntime._le != null">
+                      AND `project_runtime` <![CDATA[ <= ]]>  #{{project_runtime._lt}
+                 </if>
+                  <if test="projectRuntime._gt != null">
+                      AND `project_runtime` <![CDATA[ > ]]>  #{{project_runtime._lt}
+                 </if>
+                  <if test="projectRuntime._ge != null">
+                      AND `project_runtime` <![CDATA[ >= ]]>  #{{project_runtime._lt}
+                 </if>
+            </if>
+            <if test="projectOfficialWebsite != null">
+                 <if test="projectOfficialWebsite._in != null">
+                     AND `project_official_website` in
+                     <foreach collection="project_official_website._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._notIn != null">
+                     AND `project_official_website`  not in
+                     <foreach collection="project_official_website._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._like != null">
+                     <foreach collection="project_official_website._like" item="item">
+                       AND `project_official_website` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._notLike != null">
+                     <foreach collection="project_official_website._notLike" item="item">
+                       AND `project_official_website` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._regex != null">
+                     <foreach collection="project_official_website._regex" item="item">
+                       AND `project_official_website` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._regex != null">
+                     <foreach collection="project_official_website._regex" item="item">
+                       AND `project_official_website` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectOfficialWebsite._lt != null">
+                      AND `project_official_website` <![CDATA[ < ]]>  #{project_official_website._lt}
+                 </if>
+                  <if test="projectOfficialWebsite._le != null">
+                      AND `project_official_website` <![CDATA[ <= ]]>  #{{project_official_website._lt}
+                 </if>
+                  <if test="projectOfficialWebsite._gt != null">
+                      AND `project_official_website` <![CDATA[ > ]]>  #{{project_official_website._lt}
+                 </if>
+                  <if test="projectOfficialWebsite._ge != null">
+                      AND `project_official_website` <![CDATA[ >= ]]>  #{{project_official_website._lt}
+                 </if>
+            </if>
+            <if test="projectShowWebsite != null">
+                 <if test="projectShowWebsite._in != null">
+                     AND `project_show_website` in
+                     <foreach collection="project_show_website._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._notIn != null">
+                     AND `project_show_website`  not in
+                     <foreach collection="project_show_website._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._like != null">
+                     <foreach collection="project_show_website._like" item="item">
+                       AND `project_show_website` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._notLike != null">
+                     <foreach collection="project_show_website._notLike" item="item">
+                       AND `project_show_website` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._regex != null">
+                     <foreach collection="project_show_website._regex" item="item">
+                       AND `project_show_website` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._regex != null">
+                     <foreach collection="project_show_website._regex" item="item">
+                       AND `project_show_website` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectShowWebsite._lt != null">
+                      AND `project_show_website` <![CDATA[ < ]]>  #{project_show_website._lt}
+                 </if>
+                  <if test="projectShowWebsite._le != null">
+                      AND `project_show_website` <![CDATA[ <= ]]>  #{{project_show_website._lt}
+                 </if>
+                  <if test="projectShowWebsite._gt != null">
+                      AND `project_show_website` <![CDATA[ > ]]>  #{{project_show_website._lt}
+                 </if>
+                  <if test="projectShowWebsite._ge != null">
+                      AND `project_show_website` <![CDATA[ >= ]]>  #{{project_show_website._lt}
+                 </if>
+            </if>
+            <if test="projectDownloadUrls != null">
+                 <if test="projectDownloadUrls._in != null">
+                     AND `project_download_urls` in
+                     <foreach collection="project_download_urls._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._notIn != null">
+                     AND `project_download_urls`  not in
+                     <foreach collection="project_download_urls._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._like != null">
+                     <foreach collection="project_download_urls._like" item="item">
+                       AND `project_download_urls` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._notLike != null">
+                     <foreach collection="project_download_urls._notLike" item="item">
+                       AND `project_download_urls` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._regex != null">
+                     <foreach collection="project_download_urls._regex" item="item">
+                       AND `project_download_urls` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._regex != null">
+                     <foreach collection="project_download_urls._regex" item="item">
+                       AND `project_download_urls` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadUrls._lt != null">
+                      AND `project_download_urls` <![CDATA[ < ]]>  #{project_download_urls._lt}
+                 </if>
+                  <if test="projectDownloadUrls._le != null">
+                      AND `project_download_urls` <![CDATA[ <= ]]>  #{{project_download_urls._lt}
+                 </if>
+                  <if test="projectDownloadUrls._gt != null">
+                      AND `project_download_urls` <![CDATA[ > ]]>  #{{project_download_urls._lt}
+                 </if>
+                  <if test="projectDownloadUrls._ge != null">
+                      AND `project_download_urls` <![CDATA[ >= ]]>  #{{project_download_urls._lt}
+                 </if>
+            </if>
+            <if test="projectDownloadSum != null">
+                 <if test="projectDownloadSum._in != null">
+                     AND `project_download_sum` in
+                     <foreach collection="project_download_sum._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._notIn != null">
+                     AND `project_download_sum`  not in
+                     <foreach collection="project_download_sum._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._like != null">
+                     <foreach collection="project_download_sum._like" item="item">
+                       AND `project_download_sum` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._notLike != null">
+                     <foreach collection="project_download_sum._notLike" item="item">
+                       AND `project_download_sum` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._regex != null">
+                     <foreach collection="project_download_sum._regex" item="item">
+                       AND `project_download_sum` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._regex != null">
+                     <foreach collection="project_download_sum._regex" item="item">
+                       AND `project_download_sum` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectDownloadSum._lt != null">
+                      AND `project_download_sum` <![CDATA[ < ]]>  #{project_download_sum._lt}
+                 </if>
+                  <if test="projectDownloadSum._le != null">
+                      AND `project_download_sum` <![CDATA[ <= ]]>  #{{project_download_sum._lt}
+                 </if>
+                  <if test="projectDownloadSum._gt != null">
+                      AND `project_download_sum` <![CDATA[ > ]]>  #{{project_download_sum._lt}
+                 </if>
+                  <if test="projectDownloadSum._ge != null">
+                      AND `project_download_sum` <![CDATA[ >= ]]>  #{{project_download_sum._lt}
+                 </if>
+            </if>
+            <if test="projectIntroduction != null">
+                 <if test="projectIntroduction._in != null">
+                     AND `project_introduction` in
+                     <foreach collection="project_introduction._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._notIn != null">
+                     AND `project_introduction`  not in
+                     <foreach collection="project_introduction._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._like != null">
+                     <foreach collection="project_introduction._like" item="item">
+                       AND `project_introduction` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._notLike != null">
+                     <foreach collection="project_introduction._notLike" item="item">
+                       AND `project_introduction` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._regex != null">
+                     <foreach collection="project_introduction._regex" item="item">
+                       AND `project_introduction` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._regex != null">
+                     <foreach collection="project_introduction._regex" item="item">
+                       AND `project_introduction` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectIntroduction._lt != null">
+                      AND `project_introduction` <![CDATA[ < ]]>  #{project_introduction._lt}
+                 </if>
+                  <if test="projectIntroduction._le != null">
+                      AND `project_introduction` <![CDATA[ <= ]]>  #{{project_introduction._lt}
+                 </if>
+                  <if test="projectIntroduction._gt != null">
+                      AND `project_introduction` <![CDATA[ > ]]>  #{{project_introduction._lt}
+                 </if>
+                  <if test="projectIntroduction._ge != null">
+                      AND `project_introduction` <![CDATA[ >= ]]>  #{{project_introduction._lt}
+                 </if>
+            </if>
+            <if test="projectStatus != null">
+                 <if test="projectStatus._in != null">
+                     AND `project_status` in
+                     <foreach collection="project_status._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._notIn != null">
+                     AND `project_status`  not in
+                     <foreach collection="project_status._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._like != null">
+                     <foreach collection="project_status._like" item="item">
+                       AND `project_status` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._notLike != null">
+                     <foreach collection="project_status._notLike" item="item">
+                       AND `project_status` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._regex != null">
+                     <foreach collection="project_status._regex" item="item">
+                       AND `project_status` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._regex != null">
+                     <foreach collection="project_status._regex" item="item">
+                       AND `project_status` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectStatus._lt != null">
+                      AND `project_status` <![CDATA[ < ]]>  #{project_status._lt}
+                 </if>
+                  <if test="projectStatus._le != null">
+                      AND `project_status` <![CDATA[ <= ]]>  #{{project_status._lt}
+                 </if>
+                  <if test="projectStatus._gt != null">
+                      AND `project_status` <![CDATA[ > ]]>  #{{project_status._lt}
+                 </if>
+                  <if test="projectStatus._ge != null">
+                      AND `project_status` <![CDATA[ >= ]]>  #{{project_status._lt}
+                 </if>
+            </if>
+            <if test="projectMark != null">
+                 <if test="projectMark._in != null">
+                     AND `project_mark` in
+                     <foreach collection="project_mark._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._notIn != null">
+                     AND `project_mark`  not in
+                     <foreach collection="project_mark._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._like != null">
+                     <foreach collection="project_mark._like" item="item">
+                       AND `project_mark` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._notLike != null">
+                     <foreach collection="project_mark._notLike" item="item">
+                       AND `project_mark` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._regex != null">
+                     <foreach collection="project_mark._regex" item="item">
+                       AND `project_mark` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._regex != null">
+                     <foreach collection="project_mark._regex" item="item">
+                       AND `project_mark` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectMark._lt != null">
+                      AND `project_mark` <![CDATA[ < ]]>  #{project_mark._lt}
+                 </if>
+                  <if test="projectMark._le != null">
+                      AND `project_mark` <![CDATA[ <= ]]>  #{{project_mark._lt}
+                 </if>
+                  <if test="projectMark._gt != null">
+                      AND `project_mark` <![CDATA[ > ]]>  #{{project_mark._lt}
+                 </if>
+                  <if test="projectMark._ge != null">
+                      AND `project_mark` <![CDATA[ >= ]]>  #{{project_mark._lt}
+                 </if>
+            </if>
+            <if test="projectCanRunning != null">
+                 <if test="projectCanRunning._in != null">
+                     AND `project_can_running` in
+                     <foreach collection="project_can_running._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._notIn != null">
+                     AND `project_can_running`  not in
+                     <foreach collection="project_can_running._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._like != null">
+                     <foreach collection="project_can_running._like" item="item">
+                       AND `project_can_running` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._notLike != null">
+                     <foreach collection="project_can_running._notLike" item="item">
+                       AND `project_can_running` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._regex != null">
+                     <foreach collection="project_can_running._regex" item="item">
+                       AND `project_can_running` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._regex != null">
+                     <foreach collection="project_can_running._regex" item="item">
+                       AND `project_can_running` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="projectCanRunning._lt != null">
+                      AND `project_can_running` <![CDATA[ < ]]>  #{project_can_running._lt}
+                 </if>
+                  <if test="projectCanRunning._le != null">
+                      AND `project_can_running` <![CDATA[ <= ]]>  #{{project_can_running._lt}
+                 </if>
+                  <if test="projectCanRunning._gt != null">
+                      AND `project_can_running` <![CDATA[ > ]]>  #{{project_can_running._lt}
+                 </if>
+                  <if test="projectCanRunning._ge != null">
+                      AND `project_can_running` <![CDATA[ >= ]]>  #{{project_can_running._lt}
+                 </if>
+            </if>
+            <if test="dockerImageName != null">
+                 <if test="dockerImageName._in != null">
+                     AND `docker_image_name` in
+                     <foreach collection="docker_image_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._notIn != null">
+                     AND `docker_image_name`  not in
+                     <foreach collection="docker_image_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._like != null">
+                     <foreach collection="docker_image_name._like" item="item">
+                       AND `docker_image_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._notLike != null">
+                     <foreach collection="docker_image_name._notLike" item="item">
+                       AND `docker_image_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._regex != null">
+                     <foreach collection="docker_image_name._regex" item="item">
+                       AND `docker_image_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._regex != null">
+                     <foreach collection="docker_image_name._regex" item="item">
+                       AND `docker_image_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageName._lt != null">
+                      AND `docker_image_name` <![CDATA[ < ]]>  #{docker_image_name._lt}
+                 </if>
+                  <if test="dockerImageName._le != null">
+                      AND `docker_image_name` <![CDATA[ <= ]]>  #{{docker_image_name._lt}
+                 </if>
+                  <if test="dockerImageName._gt != null">
+                      AND `docker_image_name` <![CDATA[ > ]]>  #{{docker_image_name._lt}
+                 </if>
+                  <if test="dockerImageName._ge != null">
+                      AND `docker_image_name` <![CDATA[ >= ]]>  #{{docker_image_name._lt}
+                 </if>
+            </if>
+            <if test="dockerImageShellRemove != null">
+                 <if test="dockerImageShellRemove._in != null">
+                     AND `docker_image_shell_remove` in
+                     <foreach collection="docker_image_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._notIn != null">
+                     AND `docker_image_shell_remove`  not in
+                     <foreach collection="docker_image_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._like != null">
+                     <foreach collection="docker_image_shell_remove._like" item="item">
+                       AND `docker_image_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._notLike != null">
+                     <foreach collection="docker_image_shell_remove._notLike" item="item">
+                       AND `docker_image_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._regex != null">
+                     <foreach collection="docker_image_shell_remove._regex" item="item">
+                       AND `docker_image_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._regex != null">
+                     <foreach collection="docker_image_shell_remove._regex" item="item">
+                       AND `docker_image_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerImageShellRemove._lt != null">
+                      AND `docker_image_shell_remove` <![CDATA[ < ]]>  #{docker_image_shell_remove._lt}
+                 </if>
+                  <if test="dockerImageShellRemove._le != null">
+                      AND `docker_image_shell_remove` <![CDATA[ <= ]]>  #{{docker_image_shell_remove._lt}
+                 </if>
+                  <if test="dockerImageShellRemove._gt != null">
+                      AND `docker_image_shell_remove` <![CDATA[ > ]]>  #{{docker_image_shell_remove._lt}
+                 </if>
+                  <if test="dockerImageShellRemove._ge != null">
+                      AND `docker_image_shell_remove` <![CDATA[ >= ]]>  #{{docker_image_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="dockerStatus != null">
+                 <if test="dockerStatus._in != null">
+                     AND `docker_status` in
+                     <foreach collection="docker_status._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._notIn != null">
+                     AND `docker_status`  not in
+                     <foreach collection="docker_status._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._like != null">
+                     <foreach collection="docker_status._like" item="item">
+                       AND `docker_status` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._notLike != null">
+                     <foreach collection="docker_status._notLike" item="item">
+                       AND `docker_status` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._regex != null">
+                     <foreach collection="docker_status._regex" item="item">
+                       AND `docker_status` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._regex != null">
+                     <foreach collection="docker_status._regex" item="item">
+                       AND `docker_status` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerStatus._lt != null">
+                      AND `docker_status` <![CDATA[ < ]]>  #{docker_status._lt}
+                 </if>
+                  <if test="dockerStatus._le != null">
+                      AND `docker_status` <![CDATA[ <= ]]>  #{{docker_status._lt}
+                 </if>
+                  <if test="dockerStatus._gt != null">
+                      AND `docker_status` <![CDATA[ > ]]>  #{{docker_status._lt}
+                 </if>
+                  <if test="dockerStatus._ge != null">
+                      AND `docker_status` <![CDATA[ >= ]]>  #{{docker_status._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerId != null">
+                 <if test="dockerContainerId._in != null">
+                     AND `docker_container_id` in
+                     <foreach collection="docker_container_id._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._notIn != null">
+                     AND `docker_container_id`  not in
+                     <foreach collection="docker_container_id._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._like != null">
+                     <foreach collection="docker_container_id._like" item="item">
+                       AND `docker_container_id` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._notLike != null">
+                     <foreach collection="docker_container_id._notLike" item="item">
+                       AND `docker_container_id` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._regex != null">
+                     <foreach collection="docker_container_id._regex" item="item">
+                       AND `docker_container_id` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._regex != null">
+                     <foreach collection="docker_container_id._regex" item="item">
+                       AND `docker_container_id` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerId._lt != null">
+                      AND `docker_container_id` <![CDATA[ < ]]>  #{docker_container_id._lt}
+                 </if>
+                  <if test="dockerContainerId._le != null">
+                      AND `docker_container_id` <![CDATA[ <= ]]>  #{{docker_container_id._lt}
+                 </if>
+                  <if test="dockerContainerId._gt != null">
+                      AND `docker_container_id` <![CDATA[ > ]]>  #{{docker_container_id._lt}
+                 </if>
+                  <if test="dockerContainerId._ge != null">
+                      AND `docker_container_id` <![CDATA[ >= ]]>  #{{docker_container_id._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerName != null">
+                 <if test="dockerContainerName._in != null">
+                     AND `docker_container_name` in
+                     <foreach collection="docker_container_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._notIn != null">
+                     AND `docker_container_name`  not in
+                     <foreach collection="docker_container_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._like != null">
+                     <foreach collection="docker_container_name._like" item="item">
+                       AND `docker_container_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._notLike != null">
+                     <foreach collection="docker_container_name._notLike" item="item">
+                       AND `docker_container_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._regex != null">
+                     <foreach collection="docker_container_name._regex" item="item">
+                       AND `docker_container_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._regex != null">
+                     <foreach collection="docker_container_name._regex" item="item">
+                       AND `docker_container_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerName._lt != null">
+                      AND `docker_container_name` <![CDATA[ < ]]>  #{docker_container_name._lt}
+                 </if>
+                  <if test="dockerContainerName._le != null">
+                      AND `docker_container_name` <![CDATA[ <= ]]>  #{{docker_container_name._lt}
+                 </if>
+                  <if test="dockerContainerName._gt != null">
+                      AND `docker_container_name` <![CDATA[ > ]]>  #{{docker_container_name._lt}
+                 </if>
+                  <if test="dockerContainerName._ge != null">
+                      AND `docker_container_name` <![CDATA[ >= ]]>  #{{docker_container_name._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerPort != null">
+                 <if test="dockerContainerPort._in != null">
+                     AND `docker_container_port` in
+                     <foreach collection="docker_container_port._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._notIn != null">
+                     AND `docker_container_port`  not in
+                     <foreach collection="docker_container_port._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._like != null">
+                     <foreach collection="docker_container_port._like" item="item">
+                       AND `docker_container_port` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._notLike != null">
+                     <foreach collection="docker_container_port._notLike" item="item">
+                       AND `docker_container_port` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._regex != null">
+                     <foreach collection="docker_container_port._regex" item="item">
+                       AND `docker_container_port` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._regex != null">
+                     <foreach collection="docker_container_port._regex" item="item">
+                       AND `docker_container_port` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerPort._lt != null">
+                      AND `docker_container_port` <![CDATA[ < ]]>  #{docker_container_port._lt}
+                 </if>
+                  <if test="dockerContainerPort._le != null">
+                      AND `docker_container_port` <![CDATA[ <= ]]>  #{{docker_container_port._lt}
+                 </if>
+                  <if test="dockerContainerPort._gt != null">
+                      AND `docker_container_port` <![CDATA[ > ]]>  #{{docker_container_port._lt}
+                 </if>
+                  <if test="dockerContainerPort._ge != null">
+                      AND `docker_container_port` <![CDATA[ >= ]]>  #{{docker_container_port._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerShellCreate != null">
+                 <if test="dockerContainerShellCreate._in != null">
+                     AND `docker_container_shell_create` in
+                     <foreach collection="docker_container_shell_create._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._notIn != null">
+                     AND `docker_container_shell_create`  not in
+                     <foreach collection="docker_container_shell_create._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._like != null">
+                     <foreach collection="docker_container_shell_create._like" item="item">
+                       AND `docker_container_shell_create` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._notLike != null">
+                     <foreach collection="docker_container_shell_create._notLike" item="item">
+                       AND `docker_container_shell_create` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._regex != null">
+                     <foreach collection="docker_container_shell_create._regex" item="item">
+                       AND `docker_container_shell_create` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._regex != null">
+                     <foreach collection="docker_container_shell_create._regex" item="item">
+                       AND `docker_container_shell_create` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellCreate._lt != null">
+                      AND `docker_container_shell_create` <![CDATA[ < ]]>  #{docker_container_shell_create._lt}
+                 </if>
+                  <if test="dockerContainerShellCreate._le != null">
+                      AND `docker_container_shell_create` <![CDATA[ <= ]]>  #{{docker_container_shell_create._lt}
+                 </if>
+                  <if test="dockerContainerShellCreate._gt != null">
+                      AND `docker_container_shell_create` <![CDATA[ > ]]>  #{{docker_container_shell_create._lt}
+                 </if>
+                  <if test="dockerContainerShellCreate._ge != null">
+                      AND `docker_container_shell_create` <![CDATA[ >= ]]>  #{{docker_container_shell_create._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerShellRun != null">
+                 <if test="dockerContainerShellRun._in != null">
+                     AND `docker_container_shell_run` in
+                     <foreach collection="docker_container_shell_run._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._notIn != null">
+                     AND `docker_container_shell_run`  not in
+                     <foreach collection="docker_container_shell_run._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._like != null">
+                     <foreach collection="docker_container_shell_run._like" item="item">
+                       AND `docker_container_shell_run` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._notLike != null">
+                     <foreach collection="docker_container_shell_run._notLike" item="item">
+                       AND `docker_container_shell_run` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._regex != null">
+                     <foreach collection="docker_container_shell_run._regex" item="item">
+                       AND `docker_container_shell_run` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._regex != null">
+                     <foreach collection="docker_container_shell_run._regex" item="item">
+                       AND `docker_container_shell_run` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRun._lt != null">
+                      AND `docker_container_shell_run` <![CDATA[ < ]]>  #{docker_container_shell_run._lt}
+                 </if>
+                  <if test="dockerContainerShellRun._le != null">
+                      AND `docker_container_shell_run` <![CDATA[ <= ]]>  #{{docker_container_shell_run._lt}
+                 </if>
+                  <if test="dockerContainerShellRun._gt != null">
+                      AND `docker_container_shell_run` <![CDATA[ > ]]>  #{{docker_container_shell_run._lt}
+                 </if>
+                  <if test="dockerContainerShellRun._ge != null">
+                      AND `docker_container_shell_run` <![CDATA[ >= ]]>  #{{docker_container_shell_run._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerShellStop != null">
+                 <if test="dockerContainerShellStop._in != null">
+                     AND `docker_container_shell_stop` in
+                     <foreach collection="docker_container_shell_stop._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._notIn != null">
+                     AND `docker_container_shell_stop`  not in
+                     <foreach collection="docker_container_shell_stop._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._like != null">
+                     <foreach collection="docker_container_shell_stop._like" item="item">
+                       AND `docker_container_shell_stop` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._notLike != null">
+                     <foreach collection="docker_container_shell_stop._notLike" item="item">
+                       AND `docker_container_shell_stop` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._regex != null">
+                     <foreach collection="docker_container_shell_stop._regex" item="item">
+                       AND `docker_container_shell_stop` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._regex != null">
+                     <foreach collection="docker_container_shell_stop._regex" item="item">
+                       AND `docker_container_shell_stop` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellStop._lt != null">
+                      AND `docker_container_shell_stop` <![CDATA[ < ]]>  #{docker_container_shell_stop._lt}
+                 </if>
+                  <if test="dockerContainerShellStop._le != null">
+                      AND `docker_container_shell_stop` <![CDATA[ <= ]]>  #{{docker_container_shell_stop._lt}
+                 </if>
+                  <if test="dockerContainerShellStop._gt != null">
+                      AND `docker_container_shell_stop` <![CDATA[ > ]]>  #{{docker_container_shell_stop._lt}
+                 </if>
+                  <if test="dockerContainerShellStop._ge != null">
+                      AND `docker_container_shell_stop` <![CDATA[ >= ]]>  #{{docker_container_shell_stop._lt}
+                 </if>
+            </if>
+            <if test="dockerContainerShellRemove != null">
+                 <if test="dockerContainerShellRemove._in != null">
+                     AND `docker_container_shell_remove` in
+                     <foreach collection="docker_container_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._notIn != null">
+                     AND `docker_container_shell_remove`  not in
+                     <foreach collection="docker_container_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._like != null">
+                     <foreach collection="docker_container_shell_remove._like" item="item">
+                       AND `docker_container_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._notLike != null">
+                     <foreach collection="docker_container_shell_remove._notLike" item="item">
+                       AND `docker_container_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._regex != null">
+                     <foreach collection="docker_container_shell_remove._regex" item="item">
+                       AND `docker_container_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._regex != null">
+                     <foreach collection="docker_container_shell_remove._regex" item="item">
+                       AND `docker_container_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="dockerContainerShellRemove._lt != null">
+                      AND `docker_container_shell_remove` <![CDATA[ < ]]>  #{docker_container_shell_remove._lt}
+                 </if>
+                  <if test="dockerContainerShellRemove._le != null">
+                      AND `docker_container_shell_remove` <![CDATA[ <= ]]>  #{{docker_container_shell_remove._lt}
+                 </if>
+                  <if test="dockerContainerShellRemove._gt != null">
+                      AND `docker_container_shell_remove` <![CDATA[ > ]]>  #{{docker_container_shell_remove._lt}
+                 </if>
+                  <if test="dockerContainerShellRemove._ge != null">
+                      AND `docker_container_shell_remove` <![CDATA[ >= ]]>  #{{docker_container_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="addressContainerOuter != null">
+                 <if test="addressContainerOuter._in != null">
+                     AND `address_container_outer` in
+                     <foreach collection="address_container_outer._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._notIn != null">
+                     AND `address_container_outer`  not in
+                     <foreach collection="address_container_outer._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._like != null">
+                     <foreach collection="address_container_outer._like" item="item">
+                       AND `address_container_outer` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._notLike != null">
+                     <foreach collection="address_container_outer._notLike" item="item">
+                       AND `address_container_outer` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._regex != null">
+                     <foreach collection="address_container_outer._regex" item="item">
+                       AND `address_container_outer` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._regex != null">
+                     <foreach collection="address_container_outer._regex" item="item">
+                       AND `address_container_outer` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerOuter._lt != null">
+                      AND `address_container_outer` <![CDATA[ < ]]>  #{address_container_outer._lt}
+                 </if>
+                  <if test="addressContainerOuter._le != null">
+                      AND `address_container_outer` <![CDATA[ <= ]]>  #{{address_container_outer._lt}
+                 </if>
+                  <if test="addressContainerOuter._gt != null">
+                      AND `address_container_outer` <![CDATA[ > ]]>  #{{address_container_outer._lt}
+                 </if>
+                  <if test="addressContainerOuter._ge != null">
+                      AND `address_container_outer` <![CDATA[ >= ]]>  #{{address_container_outer._lt}
+                 </if>
+            </if>
+            <if test="addressContainerInner != null">
+                 <if test="addressContainerInner._in != null">
+                     AND `address_container_inner` in
+                     <foreach collection="address_container_inner._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._notIn != null">
+                     AND `address_container_inner`  not in
+                     <foreach collection="address_container_inner._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._like != null">
+                     <foreach collection="address_container_inner._like" item="item">
+                       AND `address_container_inner` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._notLike != null">
+                     <foreach collection="address_container_inner._notLike" item="item">
+                       AND `address_container_inner` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._regex != null">
+                     <foreach collection="address_container_inner._regex" item="item">
+                       AND `address_container_inner` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._regex != null">
+                     <foreach collection="address_container_inner._regex" item="item">
+                       AND `address_container_inner` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressContainerInner._lt != null">
+                      AND `address_container_inner` <![CDATA[ < ]]>  #{address_container_inner._lt}
+                 </if>
+                  <if test="addressContainerInner._le != null">
+                      AND `address_container_inner` <![CDATA[ <= ]]>  #{{address_container_inner._lt}
+                 </if>
+                  <if test="addressContainerInner._gt != null">
+                      AND `address_container_inner` <![CDATA[ > ]]>  #{{address_container_inner._lt}
+                 </if>
+                  <if test="addressContainerInner._ge != null">
+                      AND `address_container_inner` <![CDATA[ >= ]]>  #{{address_container_inner._lt}
+                 </if>
+            </if>
+            <if test="addressProjectFront != null">
+                 <if test="addressProjectFront._in != null">
+                     AND `address_project_front` in
+                     <foreach collection="address_project_front._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._notIn != null">
+                     AND `address_project_front`  not in
+                     <foreach collection="address_project_front._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._like != null">
+                     <foreach collection="address_project_front._like" item="item">
+                       AND `address_project_front` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._notLike != null">
+                     <foreach collection="address_project_front._notLike" item="item">
+                       AND `address_project_front` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._regex != null">
+                     <foreach collection="address_project_front._regex" item="item">
+                       AND `address_project_front` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._regex != null">
+                     <foreach collection="address_project_front._regex" item="item">
+                       AND `address_project_front` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectFront._lt != null">
+                      AND `address_project_front` <![CDATA[ < ]]>  #{address_project_front._lt}
+                 </if>
+                  <if test="addressProjectFront._le != null">
+                      AND `address_project_front` <![CDATA[ <= ]]>  #{{address_project_front._lt}
+                 </if>
+                  <if test="addressProjectFront._gt != null">
+                      AND `address_project_front` <![CDATA[ > ]]>  #{{address_project_front._lt}
+                 </if>
+                  <if test="addressProjectFront._ge != null">
+                      AND `address_project_front` <![CDATA[ >= ]]>  #{{address_project_front._lt}
+                 </if>
+            </if>
+            <if test="addressProjectBackground != null">
+                 <if test="addressProjectBackground._in != null">
+                     AND `address_project_background` in
+                     <foreach collection="address_project_background._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._notIn != null">
+                     AND `address_project_background`  not in
+                     <foreach collection="address_project_background._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._like != null">
+                     <foreach collection="address_project_background._like" item="item">
+                       AND `address_project_background` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._notLike != null">
+                     <foreach collection="address_project_background._notLike" item="item">
+                       AND `address_project_background` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._regex != null">
+                     <foreach collection="address_project_background._regex" item="item">
+                       AND `address_project_background` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._regex != null">
+                     <foreach collection="address_project_background._regex" item="item">
+                       AND `address_project_background` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackground._lt != null">
+                      AND `address_project_background` <![CDATA[ < ]]>  #{address_project_background._lt}
+                 </if>
+                  <if test="addressProjectBackground._le != null">
+                      AND `address_project_background` <![CDATA[ <= ]]>  #{{address_project_background._lt}
+                 </if>
+                  <if test="addressProjectBackground._gt != null">
+                      AND `address_project_background` <![CDATA[ > ]]>  #{{address_project_background._lt}
+                 </if>
+                  <if test="addressProjectBackground._ge != null">
+                      AND `address_project_background` <![CDATA[ >= ]]>  #{{address_project_background._lt}
+                 </if>
+            </if>
+            <if test="addressProjectBackgroundAccountPasswd != null">
+                 <if test="addressProjectBackgroundAccountPasswd._in != null">
+                     AND `address_project_background_account_passwd` in
+                     <foreach collection="address_project_background_account_passwd._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._notIn != null">
+                     AND `address_project_background_account_passwd`  not in
+                     <foreach collection="address_project_background_account_passwd._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._like != null">
+                     <foreach collection="address_project_background_account_passwd._like" item="item">
+                       AND `address_project_background_account_passwd` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._notLike != null">
+                     <foreach collection="address_project_background_account_passwd._notLike" item="item">
+                       AND `address_project_background_account_passwd` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._regex != null">
+                     <foreach collection="address_project_background_account_passwd._regex" item="item">
+                       AND `address_project_background_account_passwd` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._regex != null">
+                     <foreach collection="address_project_background_account_passwd._regex" item="item">
+                       AND `address_project_background_account_passwd` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="addressProjectBackgroundAccountPasswd._lt != null">
+                      AND `address_project_background_account_passwd` <![CDATA[ < ]]>  #{address_project_background_account_passwd._lt}
+                 </if>
+                  <if test="addressProjectBackgroundAccountPasswd._le != null">
+                      AND `address_project_background_account_passwd` <![CDATA[ <= ]]>  #{{address_project_background_account_passwd._lt}
+                 </if>
+                  <if test="addressProjectBackgroundAccountPasswd._gt != null">
+                      AND `address_project_background_account_passwd` <![CDATA[ > ]]>  #{{address_project_background_account_passwd._lt}
+                 </if>
+                  <if test="addressProjectBackgroundAccountPasswd._ge != null">
+                      AND `address_project_background_account_passwd` <![CDATA[ >= ]]>  #{{address_project_background_account_passwd._lt}
+                 </if>
+            </if>
+            <if test="updateTime != null">
+                 <if test="updateTime._in != null">
+                     AND `update_time` in
+                     <foreach collection="update_time._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._notIn != null">
+                     AND `update_time`  not in
+                     <foreach collection="update_time._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._like != null">
+                     <foreach collection="update_time._like" item="item">
+                       AND `update_time` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._notLike != null">
+                     <foreach collection="update_time._notLike" item="item">
+                       AND `update_time` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._regex != null">
+                     <foreach collection="update_time._regex" item="item">
+                       AND `update_time` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._regex != null">
+                     <foreach collection="update_time._regex" item="item">
+                       AND `update_time` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="updateTime._lt != null">
+                      AND `update_time` <![CDATA[ < ]]>  #{update_time._lt}
+                 </if>
+                  <if test="updateTime._le != null">
+                      AND `update_time` <![CDATA[ <= ]]>  #{{update_time._lt}
+                 </if>
+                  <if test="updateTime._gt != null">
+                      AND `update_time` <![CDATA[ > ]]>  #{{update_time._lt}
+                 </if>
+                  <if test="updateTime._ge != null">
+                      AND `update_time` <![CDATA[ >= ]]>  #{{update_time._lt}
+                 </if>
+            </if>
+        </where>
+        </select>
+
+    <update id="updateBase"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        UPDATE `project_plus`
+        <set>
+            <if test="source.id != null">
+                `id` = #{source.id},
+            </if>
+            <if test="source.criteriaid != null">
+                `criteriaId` = #{source.criteriaid},
+            </if>
+            <if test="source.projectName != null">
+                `project_name` = #{source.projectName},
+            </if>
+            <if test="source.projectUpdateTime != null">
+                `project_update_time` = #{source.projectUpdateTime},
+            </if>
+            <if test="source.projectType != null">
+                `project_type` = #{source.projectType},
+            </if>
+            <if test="source.projectPrice != null">
+                `project_price` = #{source.projectPrice},
+            </if>
+            <if test="source.projectPackageType != null">
+                `project_package_type` = #{source.projectPackageType},
+            </if>
+            <if test="source.projectPanAddress != null">
+                `project_pan_address` = #{source.projectPanAddress},
+            </if>
+            <if test="source.projectRealFileName != null">
+                `project_real_file_name` = #{source.projectRealFileName},
+            </if>
+            <if test="source.projectHtmlBody != null">
+                `project_html_body` = #{source.projectHtmlBody},
+            </if>
+            <if test="source.projectSourceUrl != null">
+                `project_source_url` = #{source.projectSourceUrl},
+            </if>
+            <if test="source.projectLanguage != null">
+                `project_language` = #{source.projectLanguage},
+            </if>
+            <if test="source.projectSize2 != null">
+                `project_size2` = #{source.projectSize2},
+            </if>
+            <if test="source.projectSizeNum != null">
+                `project_size_num` = #{source.projectSizeNum},
+            </if>
+            <if test="source.projectSizeType != null">
+                `project_size_type` = #{source.projectSizeType},
+            </if>
+            <if test="source.projectImgs != null">
+                `project_imgs` = #{source.projectImgs},
+            </if>
+            <if test="source.projectImgsDefault != null">
+                `project_imgs_default` = #{source.projectImgsDefault},
+            </if>
+            <if test="source.projectRuntime != null">
+                `project_runtime` = #{source.projectRuntime},
+            </if>
+            <if test="source.projectOfficialWebsite != null">
+                `project_official_website` = #{source.projectOfficialWebsite},
+            </if>
+            <if test="source.projectShowWebsite != null">
+                `project_show_website` = #{source.projectShowWebsite},
+            </if>
+            <if test="source.projectDownloadUrls != null">
+                `project_download_urls` = #{source.projectDownloadUrls},
+            </if>
+            <if test="source.projectDownloadSum != null">
+                `project_download_sum` = #{source.projectDownloadSum},
+            </if>
+            <if test="source.projectIntroduction != null">
+                `project_introduction` = #{source.projectIntroduction},
+            </if>
+            <if test="source.projectStatus != null">
+                `project_status` = #{source.projectStatus},
+            </if>
+            <if test="source.projectMark != null">
+                `project_mark` = #{source.projectMark},
+            </if>
+            <if test="source.projectCanRunning != null">
+                `project_can_running` = #{source.projectCanRunning},
+            </if>
+            <if test="source.dockerImageName != null">
+                `docker_image_name` = #{source.dockerImageName},
+            </if>
+            <if test="source.dockerImageShellRemove != null">
+                `docker_image_shell_remove` = #{source.dockerImageShellRemove},
+            </if>
+            <if test="source.dockerStatus != null">
+                `docker_status` = #{source.dockerStatus},
+            </if>
+            <if test="source.dockerContainerId != null">
+                `docker_container_id` = #{source.dockerContainerId},
+            </if>
+            <if test="source.dockerContainerName != null">
+                `docker_container_name` = #{source.dockerContainerName},
+            </if>
+            <if test="source.dockerContainerPort != null">
+                `docker_container_port` = #{source.dockerContainerPort},
+            </if>
+            <if test="source.dockerContainerShellCreate != null">
+                `docker_container_shell_create` = #{source.dockerContainerShellCreate},
+            </if>
+            <if test="source.dockerContainerShellRun != null">
+                `docker_container_shell_run` = #{source.dockerContainerShellRun},
+            </if>
+            <if test="source.dockerContainerShellStop != null">
+                `docker_container_shell_stop` = #{source.dockerContainerShellStop},
+            </if>
+            <if test="source.dockerContainerShellRemove != null">
+                `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+            </if>
+            <if test="source.addressContainerOuter != null">
+                `address_container_outer` = #{source.addressContainerOuter},
+            </if>
+            <if test="source.addressContainerInner != null">
+                `address_container_inner` = #{source.addressContainerInner},
+            </if>
+            <if test="source.addressProjectFront != null">
+                `address_project_front` = #{source.addressProjectFront},
+            </if>
+            <if test="source.addressProjectBackground != null">
+                `address_project_background` = #{source.addressProjectBackground},
+            </if>
+            <if test="source.addressProjectBackgroundAccountPasswd != null">
+                `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+            </if>
+            <if test="source.updateTime != null">
+                `update_time` = #{source.updateTime}
+            </if>
+        </set>
+        <where>
+            1 =1
+            <if test="target.id != null">
+                AND `id` = #{target.id}
+            </if>
+            <if test="target.criteriaid != null">
+                AND `criteriaId` = #{target.criteriaid}
+            </if>
+            <if test="target.projectName != null">
+                AND `project_name` = #{target.projectName}
+            </if>
+            <if test="target.projectUpdateTime != null">
+                AND `project_update_time` = #{target.projectUpdateTime}
+            </if>
+            <if test="target.projectType != null">
+                AND `project_type` = #{target.projectType}
+            </if>
+            <if test="target.projectPrice != null">
+                AND `project_price` = #{target.projectPrice}
+            </if>
+            <if test="target.projectPackageType != null">
+                AND `project_package_type` = #{target.projectPackageType}
+            </if>
+            <if test="target.projectPanAddress != null">
+                AND `project_pan_address` = #{target.projectPanAddress}
+            </if>
+            <if test="target.projectRealFileName != null">
+                AND `project_real_file_name` = #{target.projectRealFileName}
+            </if>
+            <if test="target.projectHtmlBody != null">
+                AND `project_html_body` = #{target.projectHtmlBody}
+            </if>
+            <if test="target.projectSourceUrl != null">
+                AND `project_source_url` = #{target.projectSourceUrl}
+            </if>
+            <if test="target.projectLanguage != null">
+                AND `project_language` = #{target.projectLanguage}
+            </if>
+            <if test="target.projectSize2 != null">
+                AND `project_size2` = #{target.projectSize2}
+            </if>
+            <if test="target.projectSizeNum != null">
+                AND `project_size_num` = #{target.projectSizeNum}
+            </if>
+            <if test="target.projectSizeType != null">
+                AND `project_size_type` = #{target.projectSizeType}
+            </if>
+            <if test="target.projectImgs != null">
+                AND `project_imgs` = #{target.projectImgs}
+            </if>
+            <if test="target.projectImgsDefault != null">
+                AND `project_imgs_default` = #{target.projectImgsDefault}
+            </if>
+            <if test="target.projectRuntime != null">
+                AND `project_runtime` = #{target.projectRuntime}
+            </if>
+            <if test="target.projectOfficialWebsite != null">
+                AND `project_official_website` = #{target.projectOfficialWebsite}
+            </if>
+            <if test="target.projectShowWebsite != null">
+                AND `project_show_website` = #{target.projectShowWebsite}
+            </if>
+            <if test="target.projectDownloadUrls != null">
+                AND `project_download_urls` = #{target.projectDownloadUrls}
+            </if>
+            <if test="target.projectDownloadSum != null">
+                AND `project_download_sum` = #{target.projectDownloadSum}
+            </if>
+            <if test="target.projectIntroduction != null">
+                AND `project_introduction` = #{target.projectIntroduction}
+            </if>
+            <if test="target.projectStatus != null">
+                AND `project_status` = #{target.projectStatus}
+            </if>
+            <if test="target.projectMark != null">
+                AND `project_mark` = #{target.projectMark}
+            </if>
+            <if test="target.projectCanRunning != null">
+                AND `project_can_running` = #{target.projectCanRunning}
+            </if>
+            <if test="target.dockerImageName != null">
+                AND `docker_image_name` = #{target.dockerImageName}
+            </if>
+            <if test="target.dockerImageShellRemove != null">
+                AND `docker_image_shell_remove` = #{target.dockerImageShellRemove}
+            </if>
+            <if test="target.dockerStatus != null">
+                AND `docker_status` = #{target.dockerStatus}
+            </if>
+            <if test="target.dockerContainerId != null">
+                AND `docker_container_id` = #{target.dockerContainerId}
+            </if>
+            <if test="target.dockerContainerName != null">
+                AND `docker_container_name` = #{target.dockerContainerName}
+            </if>
+            <if test="target.dockerContainerPort != null">
+                AND `docker_container_port` = #{target.dockerContainerPort}
+            </if>
+            <if test="target.dockerContainerShellCreate != null">
+                AND `docker_container_shell_create` = #{target.dockerContainerShellCreate}
+            </if>
+            <if test="target.dockerContainerShellRun != null">
+                AND `docker_container_shell_run` = #{target.dockerContainerShellRun}
+            </if>
+            <if test="target.dockerContainerShellStop != null">
+                AND `docker_container_shell_stop` = #{target.dockerContainerShellStop}
+            </if>
+            <if test="target.dockerContainerShellRemove != null">
+                AND `docker_container_shell_remove` = #{target.dockerContainerShellRemove}
+            </if>
+            <if test="target.addressContainerOuter != null">
+                AND `address_container_outer` = #{target.addressContainerOuter}
+            </if>
+            <if test="target.addressContainerInner != null">
+                AND `address_container_inner` = #{target.addressContainerInner}
+            </if>
+            <if test="target.addressProjectFront != null">
+                AND `address_project_front` = #{target.addressProjectFront}
+            </if>
+            <if test="target.addressProjectBackground != null">
+                AND `address_project_background` = #{target.addressProjectBackground}
+            </if>
+            <if test="target.addressProjectBackgroundAccountPasswd != null">
+                AND `address_project_background_account_passwd` = #{target.addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="target.updateTime != null">
+                AND `update_time` = #{target.updateTime}
+            </if>
+        </where>
+    </update>
+
+    <update id="updateBaseIncludeNull"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        UPDATE `project_plus`
+        <set>
+            `id` = #{source.id},
+            `criteriaId` = #{source.criteriaid},
+            `project_name` = #{source.projectName},
+            `project_update_time` = #{source.projectUpdateTime},
+            `project_type` = #{source.projectType},
+            `project_price` = #{source.projectPrice},
+            `project_package_type` = #{source.projectPackageType},
+            `project_pan_address` = #{source.projectPanAddress},
+            `project_real_file_name` = #{source.projectRealFileName},
+            `project_html_body` = #{source.projectHtmlBody},
+            `project_source_url` = #{source.projectSourceUrl},
+            `project_language` = #{source.projectLanguage},
+            `project_size2` = #{source.projectSize2},
+            `project_size_num` = #{source.projectSizeNum},
+            `project_size_type` = #{source.projectSizeType},
+            `project_imgs` = #{source.projectImgs},
+            `project_imgs_default` = #{source.projectImgsDefault},
+            `project_runtime` = #{source.projectRuntime},
+            `project_official_website` = #{source.projectOfficialWebsite},
+            `project_show_website` = #{source.projectShowWebsite},
+            `project_download_urls` = #{source.projectDownloadUrls},
+            `project_download_sum` = #{source.projectDownloadSum},
+            `project_introduction` = #{source.projectIntroduction},
+            `project_status` = #{source.projectStatus},
+            `project_mark` = #{source.projectMark},
+            `project_can_running` = #{source.projectCanRunning},
+            `docker_image_name` = #{source.dockerImageName},
+            `docker_image_shell_remove` = #{source.dockerImageShellRemove},
+            `docker_status` = #{source.dockerStatus},
+            `docker_container_id` = #{source.dockerContainerId},
+            `docker_container_name` = #{source.dockerContainerName},
+            `docker_container_port` = #{source.dockerContainerPort},
+            `docker_container_shell_create` = #{source.dockerContainerShellCreate},
+            `docker_container_shell_run` = #{source.dockerContainerShellRun},
+            `docker_container_shell_stop` = #{source.dockerContainerShellStop},
+            `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+            `address_container_outer` = #{source.addressContainerOuter},
+            `address_container_inner` = #{source.addressContainerInner},
+            `address_project_front` = #{source.addressProjectFront},
+            `address_project_background` = #{source.addressProjectBackground},
+            `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+            `update_time` = #{source.updateTime}
+        </set>
+        <where>
+            1 =1
+            <if test="target.id != null">
+                AND `id` = #{target.id}
+            </if>
+            <if test="target.criteriaid != null">
+                AND `criteriaId` = #{target.criteriaid}
+            </if>
+            <if test="target.projectName != null">
+                AND `project_name` = #{target.projectName}
+            </if>
+            <if test="target.projectUpdateTime != null">
+                AND `project_update_time` = #{target.projectUpdateTime}
+            </if>
+            <if test="target.projectType != null">
+                AND `project_type` = #{target.projectType}
+            </if>
+            <if test="target.projectPrice != null">
+                AND `project_price` = #{target.projectPrice}
+            </if>
+            <if test="target.projectPackageType != null">
+                AND `project_package_type` = #{target.projectPackageType}
+            </if>
+            <if test="target.projectPanAddress != null">
+                AND `project_pan_address` = #{target.projectPanAddress}
+            </if>
+            <if test="target.projectRealFileName != null">
+                AND `project_real_file_name` = #{target.projectRealFileName}
+            </if>
+            <if test="target.projectHtmlBody != null">
+                AND `project_html_body` = #{target.projectHtmlBody}
+            </if>
+            <if test="target.projectSourceUrl != null">
+                AND `project_source_url` = #{target.projectSourceUrl}
+            </if>
+            <if test="target.projectLanguage != null">
+                AND `project_language` = #{target.projectLanguage}
+            </if>
+            <if test="target.projectSize2 != null">
+                AND `project_size2` = #{target.projectSize2}
+            </if>
+            <if test="target.projectSizeNum != null">
+                AND `project_size_num` = #{target.projectSizeNum}
+            </if>
+            <if test="target.projectSizeType != null">
+                AND `project_size_type` = #{target.projectSizeType}
+            </if>
+            <if test="target.projectImgs != null">
+                AND `project_imgs` = #{target.projectImgs}
+            </if>
+            <if test="target.projectImgsDefault != null">
+                AND `project_imgs_default` = #{target.projectImgsDefault}
+            </if>
+            <if test="target.projectRuntime != null">
+                AND `project_runtime` = #{target.projectRuntime}
+            </if>
+            <if test="target.projectOfficialWebsite != null">
+                AND `project_official_website` = #{target.projectOfficialWebsite}
+            </if>
+            <if test="target.projectShowWebsite != null">
+                AND `project_show_website` = #{target.projectShowWebsite}
+            </if>
+            <if test="target.projectDownloadUrls != null">
+                AND `project_download_urls` = #{target.projectDownloadUrls}
+            </if>
+            <if test="target.projectDownloadSum != null">
+                AND `project_download_sum` = #{target.projectDownloadSum}
+            </if>
+            <if test="target.projectIntroduction != null">
+                AND `project_introduction` = #{target.projectIntroduction}
+            </if>
+            <if test="target.projectStatus != null">
+                AND `project_status` = #{target.projectStatus}
+            </if>
+            <if test="target.projectMark != null">
+                AND `project_mark` = #{target.projectMark}
+            </if>
+            <if test="target.projectCanRunning != null">
+                AND `project_can_running` = #{target.projectCanRunning}
+            </if>
+            <if test="target.dockerImageName != null">
+                AND `docker_image_name` = #{target.dockerImageName}
+            </if>
+            <if test="target.dockerImageShellRemove != null">
+                AND `docker_image_shell_remove` = #{target.dockerImageShellRemove}
+            </if>
+            <if test="target.dockerStatus != null">
+                AND `docker_status` = #{target.dockerStatus}
+            </if>
+            <if test="target.dockerContainerId != null">
+                AND `docker_container_id` = #{target.dockerContainerId}
+            </if>
+            <if test="target.dockerContainerName != null">
+                AND `docker_container_name` = #{target.dockerContainerName}
+            </if>
+            <if test="target.dockerContainerPort != null">
+                AND `docker_container_port` = #{target.dockerContainerPort}
+            </if>
+            <if test="target.dockerContainerShellCreate != null">
+                AND `docker_container_shell_create` = #{target.dockerContainerShellCreate}
+            </if>
+            <if test="target.dockerContainerShellRun != null">
+                AND `docker_container_shell_run` = #{target.dockerContainerShellRun}
+            </if>
+            <if test="target.dockerContainerShellStop != null">
+                AND `docker_container_shell_stop` = #{target.dockerContainerShellStop}
+            </if>
+            <if test="target.dockerContainerShellRemove != null">
+                AND `docker_container_shell_remove` = #{target.dockerContainerShellRemove}
+            </if>
+            <if test="target.addressContainerOuter != null">
+                AND `address_container_outer` = #{target.addressContainerOuter}
+            </if>
+            <if test="target.addressContainerInner != null">
+                AND `address_container_inner` = #{target.addressContainerInner}
+            </if>
+            <if test="target.addressProjectFront != null">
+                AND `address_project_front` = #{target.addressProjectFront}
+            </if>
+            <if test="target.addressProjectBackground != null">
+                AND `address_project_background` = #{target.addressProjectBackground}
+            </if>
+            <if test="target.addressProjectBackgroundAccountPasswd != null">
+                AND `address_project_background_account_passwd` = #{target.addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="target.updateTime != null">
+                AND `update_time` = #{target.updateTime}
+            </if>
+        </where>
+    </update>
+
+    <delete id="deleteBase"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        DELETE FROM `project_plus`
+        <where>
+            1 =1
+            <if test="id != null">
+                AND `id` = #{id}
+            </if>
+            <if test="criteriaid != null">
+                AND `criteriaId` = #{criteriaid}
+            </if>
+            <if test="projectName != null">
+                AND `project_name` = #{projectName}
+            </if>
+            <if test="projectUpdateTime != null">
+                AND `project_update_time` = #{projectUpdateTime}
+            </if>
+            <if test="projectType != null">
+                AND `project_type` = #{projectType}
+            </if>
+            <if test="projectPrice != null">
+                AND `project_price` = #{projectPrice}
+            </if>
+            <if test="projectPackageType != null">
+                AND `project_package_type` = #{projectPackageType}
+            </if>
+            <if test="projectPanAddress != null">
+                AND `project_pan_address` = #{projectPanAddress}
+            </if>
+            <if test="projectRealFileName != null">
+                AND `project_real_file_name` = #{projectRealFileName}
+            </if>
+            <if test="projectHtmlBody != null">
+                AND `project_html_body` = #{projectHtmlBody}
+            </if>
+            <if test="projectSourceUrl != null">
+                AND `project_source_url` = #{projectSourceUrl}
+            </if>
+            <if test="projectLanguage != null">
+                AND `project_language` = #{projectLanguage}
+            </if>
+            <if test="projectSize2 != null">
+                AND `project_size2` = #{projectSize2}
+            </if>
+            <if test="projectSizeNum != null">
+                AND `project_size_num` = #{projectSizeNum}
+            </if>
+            <if test="projectSizeType != null">
+                AND `project_size_type` = #{projectSizeType}
+            </if>
+            <if test="projectImgs != null">
+                AND `project_imgs` = #{projectImgs}
+            </if>
+            <if test="projectImgsDefault != null">
+                AND `project_imgs_default` = #{projectImgsDefault}
+            </if>
+            <if test="projectRuntime != null">
+                AND `project_runtime` = #{projectRuntime}
+            </if>
+            <if test="projectOfficialWebsite != null">
+                AND `project_official_website` = #{projectOfficialWebsite}
+            </if>
+            <if test="projectShowWebsite != null">
+                AND `project_show_website` = #{projectShowWebsite}
+            </if>
+            <if test="projectDownloadUrls != null">
+                AND `project_download_urls` = #{projectDownloadUrls}
+            </if>
+            <if test="projectDownloadSum != null">
+                AND `project_download_sum` = #{projectDownloadSum}
+            </if>
+            <if test="projectIntroduction != null">
+                AND `project_introduction` = #{projectIntroduction}
+            </if>
+            <if test="projectStatus != null">
+                AND `project_status` = #{projectStatus}
+            </if>
+            <if test="projectMark != null">
+                AND `project_mark` = #{projectMark}
+            </if>
+            <if test="projectCanRunning != null">
+                AND `project_can_running` = #{projectCanRunning}
+            </if>
+            <if test="dockerImageName != null">
+                AND `docker_image_name` = #{dockerImageName}
+            </if>
+            <if test="dockerImageShellRemove != null">
+                AND `docker_image_shell_remove` = #{dockerImageShellRemove}
+            </if>
+            <if test="dockerStatus != null">
+                AND `docker_status` = #{dockerStatus}
+            </if>
+            <if test="dockerContainerId != null">
+                AND `docker_container_id` = #{dockerContainerId}
+            </if>
+            <if test="dockerContainerName != null">
+                AND `docker_container_name` = #{dockerContainerName}
+            </if>
+            <if test="dockerContainerPort != null">
+                AND `docker_container_port` = #{dockerContainerPort}
+            </if>
+            <if test="dockerContainerShellCreate != null">
+                AND `docker_container_shell_create` = #{dockerContainerShellCreate}
+            </if>
+            <if test="dockerContainerShellRun != null">
+                AND `docker_container_shell_run` = #{dockerContainerShellRun}
+            </if>
+            <if test="dockerContainerShellStop != null">
+                AND `docker_container_shell_stop` = #{dockerContainerShellStop}
+            </if>
+            <if test="dockerContainerShellRemove != null">
+                AND `docker_container_shell_remove` = #{dockerContainerShellRemove}
+            </if>
+            <if test="addressContainerOuter != null">
+                AND `address_container_outer` = #{addressContainerOuter}
+            </if>
+            <if test="addressContainerInner != null">
+                AND `address_container_inner` = #{addressContainerInner}
+            </if>
+            <if test="addressProjectFront != null">
+                AND `address_project_front` = #{addressProjectFront}
+            </if>
+            <if test="addressProjectBackground != null">
+                AND `address_project_background` = #{addressProjectBackground}
+            </if>
+            <if test="addressProjectBackgroundAccountPasswd != null">
+                AND `address_project_background_account_passwd` = #{addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="updateTime != null">
+                AND `update_time` = #{updateTime}
+            </if>
+        </where>
+    </delete>
+
+
+    <select id="queryByPrimaryKey" resultMap="resultMap"
+            resultType="demomaster.vo.ProjectPlusVo">
+        SELECT
+        `id`,
+        `criteriaId`,
+        `project_name`,
+        `project_update_time`,
+        `project_type`,
+        `project_price`,
+        `project_package_type`,
+        `project_pan_address`,
+        `project_real_file_name`,
+        `project_html_body`,
+        `project_source_url`,
+        `project_language`,
+        `project_size2`,
+        `project_size_num`,
+        `project_size_type`,
+        `project_imgs`,
+        `project_imgs_default`,
+        `project_runtime`,
+        `project_official_website`,
+        `project_show_website`,
+        `project_download_urls`,
+        `project_download_sum`,
+        `project_introduction`,
+        `project_status`,
+        `project_mark`,
+        `project_can_running`,
+        `docker_image_name`,
+        `docker_image_shell_remove`,
+        `docker_status`,
+        `docker_container_id`,
+        `docker_container_name`,
+        `docker_container_port`,
+        `docker_container_shell_create`,
+        `docker_container_shell_run`,
+        `docker_container_shell_stop`,
+        `docker_container_shell_remove`,
+        `address_container_outer`,
+        `address_container_inner`,
+        `address_project_front`,
+        `address_project_background`,
+        `address_project_background_account_passwd`,
+        `update_time`
+        FROM `project_plus`
+        <where>
+            1 =1
+            AND `id` = #{id}
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey">
+        DELETE FROM `project_plus`
+        <where>
+            1 = 1
+               AND `id` = #{id}
+        </where>
+    </delete>
+
+    <update id="updateByPrimaryKey"
+            parameterType="demomaster.vo.ProjectPlusVo">
+        UPDATE `project_plus`
+        <set>
+               <if test="source.criteriaid != null">
+                   `criteriaId` = #{source.criteriaid},
+               </if>
+               <if test="source.projectName != null">
+                   `project_name` = #{source.projectName},
+               </if>
+               <if test="source.projectUpdateTime != null">
+                   `project_update_time` = #{source.projectUpdateTime},
+               </if>
+               <if test="source.projectType != null">
+                   `project_type` = #{source.projectType},
+               </if>
+               <if test="source.projectPrice != null">
+                   `project_price` = #{source.projectPrice},
+               </if>
+               <if test="source.projectPackageType != null">
+                   `project_package_type` = #{source.projectPackageType},
+               </if>
+               <if test="source.projectPanAddress != null">
+                   `project_pan_address` = #{source.projectPanAddress},
+               </if>
+               <if test="source.projectRealFileName != null">
+                   `project_real_file_name` = #{source.projectRealFileName},
+               </if>
+               <if test="source.projectHtmlBody != null">
+                   `project_html_body` = #{source.projectHtmlBody},
+               </if>
+               <if test="source.projectSourceUrl != null">
+                   `project_source_url` = #{source.projectSourceUrl},
+               </if>
+               <if test="source.projectLanguage != null">
+                   `project_language` = #{source.projectLanguage},
+               </if>
+               <if test="source.projectSize2 != null">
+                   `project_size2` = #{source.projectSize2},
+               </if>
+               <if test="source.projectSizeNum != null">
+                   `project_size_num` = #{source.projectSizeNum},
+               </if>
+               <if test="source.projectSizeType != null">
+                   `project_size_type` = #{source.projectSizeType},
+               </if>
+               <if test="source.projectImgs != null">
+                   `project_imgs` = #{source.projectImgs},
+               </if>
+               <if test="source.projectImgsDefault != null">
+                   `project_imgs_default` = #{source.projectImgsDefault},
+               </if>
+               <if test="source.projectRuntime != null">
+                   `project_runtime` = #{source.projectRuntime},
+               </if>
+               <if test="source.projectOfficialWebsite != null">
+                   `project_official_website` = #{source.projectOfficialWebsite},
+               </if>
+               <if test="source.projectShowWebsite != null">
+                   `project_show_website` = #{source.projectShowWebsite},
+               </if>
+               <if test="source.projectDownloadUrls != null">
+                   `project_download_urls` = #{source.projectDownloadUrls},
+               </if>
+               <if test="source.projectDownloadSum != null">
+                   `project_download_sum` = #{source.projectDownloadSum},
+               </if>
+               <if test="source.projectIntroduction != null">
+                   `project_introduction` = #{source.projectIntroduction},
+               </if>
+               <if test="source.projectStatus != null">
+                   `project_status` = #{source.projectStatus},
+               </if>
+               <if test="source.projectMark != null">
+                   `project_mark` = #{source.projectMark},
+               </if>
+               <if test="source.projectCanRunning != null">
+                   `project_can_running` = #{source.projectCanRunning},
+               </if>
+               <if test="source.dockerImageName != null">
+                   `docker_image_name` = #{source.dockerImageName},
+               </if>
+               <if test="source.dockerImageShellRemove != null">
+                   `docker_image_shell_remove` = #{source.dockerImageShellRemove},
+               </if>
+               <if test="source.dockerStatus != null">
+                   `docker_status` = #{source.dockerStatus},
+               </if>
+               <if test="source.dockerContainerId != null">
+                   `docker_container_id` = #{source.dockerContainerId},
+               </if>
+               <if test="source.dockerContainerName != null">
+                   `docker_container_name` = #{source.dockerContainerName},
+               </if>
+               <if test="source.dockerContainerPort != null">
+                   `docker_container_port` = #{source.dockerContainerPort},
+               </if>
+               <if test="source.dockerContainerShellCreate != null">
+                   `docker_container_shell_create` = #{source.dockerContainerShellCreate},
+               </if>
+               <if test="source.dockerContainerShellRun != null">
+                   `docker_container_shell_run` = #{source.dockerContainerShellRun},
+               </if>
+               <if test="source.dockerContainerShellStop != null">
+                   `docker_container_shell_stop` = #{source.dockerContainerShellStop},
+               </if>
+               <if test="source.dockerContainerShellRemove != null">
+                   `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+               </if>
+               <if test="source.addressContainerOuter != null">
+                   `address_container_outer` = #{source.addressContainerOuter},
+               </if>
+               <if test="source.addressContainerInner != null">
+                   `address_container_inner` = #{source.addressContainerInner},
+               </if>
+               <if test="source.addressProjectFront != null">
+                   `address_project_front` = #{source.addressProjectFront},
+               </if>
+               <if test="source.addressProjectBackground != null">
+                   `address_project_background` = #{source.addressProjectBackground},
+               </if>
+               <if test="source.addressProjectBackgroundAccountPasswd != null">
+                   `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+               </if>
+               <if test="source.updateTime != null">
+                   `update_time` = #{source.updateTime}
+               </if>
+        </set>
+        <where>
+            1 =1
+               AND `id` = #{target.id}
+        </where>
+    </update>
+
+</mapper>

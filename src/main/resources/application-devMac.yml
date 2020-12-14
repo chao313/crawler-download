@@ -19,6 +19,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
+    #    url: jdbc:mysql://192.168.0.106:7001/ASPDocker?useUnicode=true&characterEncoding=utf8&autoReconnect=true
     username: root
     password: 123456
 

@@ -3,6 +3,7 @@ package demo.spring.boot.demospringboot.service.zip;
 import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.util.DockerCmdUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
+import demomaster.vo.ProjectPlusVo;
 import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -118,7 +119,7 @@ public abstract class UnzipToDocker {
                           String dockerModelDirPath,
                           Integer port,
                           Map<String, byte[]> descMap,
-                          ProjectVo projectVo) throws IOException {
+                          ProjectPlusVo projectPlusVo) throws IOException {
 
         StringBuilder sql = new StringBuilder();//存放sql的地址
 
@@ -180,22 +181,22 @@ public abstract class UnzipToDocker {
         String containerName = this.buildRunDockerContainer(imageName, port);
         log.info("镜像容器运行:{}", containerName);
 
-        if (null != projectVo) {
+        if (null != projectPlusVo) {
             if (null != languageType.get()) {
-                projectVo.setLanguage(languageType.get().getType());
+                projectPlusVo.setProjectLanguage(languageType.get().getType());
             }
-            projectVo.setDockerImageName(imageName);
-            projectVo.setDockerContainerName(containerName);
-            projectVo.setDockerPort(port.toString());
-            projectVo.setHttpInnerAddress(StartConfig.INNER_HOST + ":" + port);
-            projectVo.setHttpOutAddress(StartConfig.OUT_HOST + ":" + port);
-            projectVo.setDockerShellCreate(DockerCmdUtils.create(containerName, port, 80, imageName));
-            projectVo.setDockerShellRun(DockerCmdUtils.run(containerName));
-            projectVo.setDockerShellStop(DockerCmdUtils.stopContainer(containerName));
-            projectVo.setDockerShellContainerRemove(DockerCmdUtils.removeContainer(containerName));
-            projectVo.setDockerShellImageRemove(DockerCmdUtils.removeImage(imageName));
-            projectVo.setProjectStatus(ProjectVo.Status.CREATED.getStatus());
-            projectVo.setDockerStatus(DockerCmdUtils.Status.CREATED.getStatus());
+            projectPlusVo.setDockerImageName(imageName);
+            projectPlusVo.setDockerContainerName(containerName);
+            projectPlusVo.setDockerContainerPort(port.toString());
+            projectPlusVo.setAddressContainerInner(StartConfig.INNER_HOST + ":" + port);
+            projectPlusVo.setAddressContainerOuter(StartConfig.OUT_HOST + ":" + port);
+            projectPlusVo.setDockerContainerShellCreate(DockerCmdUtils.create(containerName, port, 80, imageName));
+            projectPlusVo.setDockerContainerShellRun(DockerCmdUtils.run(containerName));
+            projectPlusVo.setDockerContainerShellStop(DockerCmdUtils.stopContainer(containerName));
+            projectPlusVo.setDockerContainerShellRemove(DockerCmdUtils.removeContainer(containerName));
+            projectPlusVo.setDockerImageShellRemove(DockerCmdUtils.removeImage(imageName));
+            projectPlusVo.setProjectStatus(ProjectVo.Status.CREATED.getStatus());
+            projectPlusVo.setDockerStatus(DockerCmdUtils.Status.CREATED.getStatus());
         }
         //删除临时文件(为了防止误删,加上判断)
         if (rootPath.contains("tmp") && dockerRealPath.contains("tmp") && tmpCopyFilePath.contains("tmp")) {

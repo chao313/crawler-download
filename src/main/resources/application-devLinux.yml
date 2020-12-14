@@ -14,6 +14,7 @@ local:
     portainer:
       inner: http://192.168.0.106:9000/#/containers
       outer: http://39.107.236.187:9000/#/containers
+
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

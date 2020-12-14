@@ -1,4 +1,4 @@
-CREATE TABLE `PROJECT` (
+CREATE TABLE `project_plus` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `criteriaId` longtext COLLATE utf8_bin COMMENT '唯一id',
   `project_name` text COLLATE utf8_bin COMMENT '项目-名称',
@@ -15,7 +15,7 @@ CREATE TABLE `PROJECT` (
   `project_size_num` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-大小数字',
   `project_size_type` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-大小type(k,M,G)',
   `project_imgs` text COLLATE utf8_bin COMMENT '项目-介绍(图片)',
-  `project_imgs_default` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-默认的图片',
+  `project_imgs_default` text COLLATE utf8_bin COMMENT '项目-默认的图片',
   `project_runtime` text COLLATE utf8_bin COMMENT '项目-运行环境',
   `project_official_website` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-官网地址',
   `project_show_website` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-展示网址',
@@ -23,6 +23,7 @@ CREATE TABLE `PROJECT` (
   `project_download_sum` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-下载次数',
   `project_introduction` longtext COLLATE utf8_bin COMMENT '项目-介绍(文字)',
   `project_status` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-状态,可用/废弃/暂定',
+  `project_mark` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-备注',
   `project_can_running` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-是否正常运行',
   `docker_image_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-名称',
   `docker_image_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-移除命令',
@@ -39,7 +40,7 @@ CREATE TABLE `PROJECT` (
   `address_project_front` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目前端',
   `address_project_background` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目后台',
   `address_project_background_account_passwd` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目后台-账号密码',
-  `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `update_time` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `index111` (`criteriaId`(100)) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=11322 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;

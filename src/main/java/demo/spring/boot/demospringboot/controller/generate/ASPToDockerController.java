@@ -11,6 +11,7 @@ import demo.spring.boot.demospringboot.service.download.DownloadAndParse;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
 import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
 import demo.spring.boot.demospringboot.util.URLUtils;
+import demomaster.service.ProjectPlusService;
 import demomaster.service.ProjectService;
 import demomaster.vo.ProjectVo;
 import demomaster.vo.ProjectVoBase;
@@ -52,6 +53,9 @@ public class ASPToDockerController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private ProjectPlusService projectPlusService;
 
     @Autowired
     private ASPService aspService;
@@ -182,88 +186,88 @@ public class ASPToDockerController {
         return response;
     }
 
-    @ApiOperation(value = "构建Docker镜像")
-    @GetMapping("/buildToDocker")
-    public Response buildToDocker(
-            @RequestParam(value = "criteriaid") String criteriaid) {
-        Response response = new Response<>();
-        try {
-            ProjectVo query = new ProjectVo();
-            query.setCriteriaid(criteriaid);
-            List<ProjectVo> projectVos = projectService.queryBase(query);
-            String localFsPathOriginZip = startConfig.getLocalFsPathOriginZip();
-            String workDirAbsolutePath = startConfig.getLocalFsPathTmp();
-            for (ProjectVo vo : projectVos) {
-                String fileRealName = vo.getFileRealName();
-                String absolutePathFilePath = localFsPathOriginZip + "/" + fileRealName;
-                String contentImgs = vo.getContentImgs();
-                Map<String, byte[]> descMap = new HashMap<>();
-                descMap.put("readme.txt", vo.getIntroduction().getBytes());//加入介绍
-                if (StringUtils.isNotBlank(contentImgs)) {
-                    String[] split = contentImgs.substring(1, contentImgs.length() - 1).split(",");
-                    for (String imgName : split) {
-                        String s = startConfig.getLocalFsPathImg() + "/" + imgName;
-                        File file = new File(s);
-                        if (file.exists()) {
-                            //如果存在
-                            descMap.put(imgName, IOUtils.toByteArray(FileUtils.openInputStream(file)));
-                        }
-                    }
-                }
-                try {
-                    String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
-                    ProjectVo tmp = new ProjectVo();
-                    unzipToDocker.doWork(
-                            workDirAbsolutePath,
-                            new File(absolutePathFilePath),
-                            criteriaid.toLowerCase(), dockerModelDirPath, Integer.valueOf(vo.getDockerPort()), descMap, tmp);
-                    ProjectPriVo target = new ProjectPriVo();
-                    target.setId(vo.getId());
-                    ProjectNoPriVo source = new ProjectNoPriVo();
-                    BeanUtils.copyProperties(tmp, source);
-                    projectService.updateByPrimaryKey(source, target);//更新
-
-                } catch (Exception e) {
-                    log.error("e:{}", e.toString(), e);
-                }
-            }
-        } catch (Exception e) {
-            response.setCode(Code.System.FAIL);
-            response.setMsg(e.getMessage());
-            response.addException(e);
-            log.error("异常 ：{} ", e.getMessage(), e);
-        }
-        return response;
-
-    }
-
-    @ApiOperation(value = "构建Docker镜像批量")
-    @GetMapping("/buildToDockerBatch")
-    public Response buildToDockerBatch() throws Exception {
-        Response response = new Response<>();
-        ProjectVo query = new ProjectVo();
-        query.setProjectZipStatus(URLUtils.Type.stream.getType());
-        List<ProjectVo> projectVos = projectService.queryBase(query);
-        for (ProjectVo vo : projectVos) {
-            if (StringUtils.isBlank(vo.getDockerImageName())) {
-                buildToDocker(vo.getCriteriaid());
-//                threadPoolExecutorService.addWork(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            buildToDocker(vo.getCriteriaid());
-//                        } catch (Exception e) {
-//                            log.error("构建异常:{}", e.toString(), e);
+//    @ApiOperation(value = "构建Docker镜像")
+//    @GetMapping("/buildToDocker")
+//    public Response buildToDocker(
+//            @RequestParam(value = "criteriaid") String criteriaid) {
+//        Response response = new Response<>();
+//        try {
+//            ProjectVo query = new ProjectVo();
+//            query.setCriteriaid(criteriaid);
+//            List<ProjectVo> projectVos = projectService.queryBase(query);
+//            String localFsPathOriginZip = startConfig.getLocalFsPathOriginZip();
+//            String workDirAbsolutePath = startConfig.getLocalFsPathTmp();
+//            for (ProjectVo vo : projectVos) {
+//                String fileRealName = vo.getFileRealName();
+//                String absolutePathFilePath = localFsPathOriginZip + "/" + fileRealName;
+//                String contentImgs = vo.getContentImgs();
+//                Map<String, byte[]> descMap = new HashMap<>();
+//                descMap.put("readme.txt", vo.getIntroduction().getBytes());//加入介绍
+//                if (StringUtils.isNotBlank(contentImgs)) {
+//                    String[] split = contentImgs.substring(1, contentImgs.length() - 1).split(",");
+//                    for (String imgName : split) {
+//                        String s = startConfig.getLocalFsPathImg() + "/" + imgName;
+//                        File file = new File(s);
+//                        if (file.exists()) {
+//                            //如果存在
+//                            descMap.put(imgName, IOUtils.toByteArray(FileUtils.openInputStream(file)));
 //                        }
-//
 //                    }
-//                });
-
-            }
-        }
-//        threadPoolExecutorService.waitComplete();
-        return response;
-    }
+//                }
+//                try {
+//                    String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
+//                    ProjectVo tmp = new ProjectVo();
+//                    unzipToDocker.doWork(
+//                            workDirAbsolutePath,
+//                            new File(absolutePathFilePath),
+//                            criteriaid.toLowerCase(), dockerModelDirPath, Integer.valueOf(vo.getDockerPort()), descMap, tmp);
+//                    ProjectPriVo target = new ProjectPriVo();
+//                    target.setId(vo.getId());
+//                    ProjectNoPriVo source = new ProjectNoPriVo();
+//                    BeanUtils.copyProperties(tmp, source);
+//                    projectService.updateByPrimaryKey(source, target);//更新
+//
+//                } catch (Exception e) {
+//                    log.error("e:{}", e.toString(), e);
+//                }
+//            }
+//        } catch (Exception e) {
+//            response.setCode(Code.System.FAIL);
+//            response.setMsg(e.getMessage());
+//            response.addException(e);
+//            log.error("异常 ：{} ", e.getMessage(), e);
+//        }
+//        return response;
+//
+//    }
+//
+//    @ApiOperation(value = "构建Docker镜像批量")
+//    @GetMapping("/buildToDockerBatch")
+//    public Response buildToDockerBatch() throws Exception {
+//        Response response = new Response<>();
+//        ProjectVo query = new ProjectVo();
+//        query.setProjectZipStatus(URLUtils.Type.stream.getType());
+//        List<ProjectVo> projectVos = projectService.queryBase(query);
+//        for (ProjectVo vo : projectVos) {
+//            if (StringUtils.isBlank(vo.getDockerImageName())) {
+//                buildToDocker(vo.getCriteriaid());
+////                threadPoolExecutorService.addWork(new Runnable() {
+////                    @Override
+////                    public void run() {
+////                        try {
+////                            buildToDocker(vo.getCriteriaid());
+////                        } catch (Exception e) {
+////                            log.error("构建异常:{}", e.toString(), e);
+////                        }
+////
+////                    }
+////                });
+//
+//            }
+//        }
+////        threadPoolExecutorService.waitComplete();
+//        return response;
+//    }
 
     @ApiOperation(value = "batchDealIndb")
     @GetMapping("/batchDealIndb")
