@@ -69,6 +69,20 @@ public class DockerCmdUtils {
         return MessageFormat.format("docker  inspect {0} --format='{{.Id}}'", containerName);
     }
 
+    /**
+     * 获取tag的命令
+     */
+    public static String getTagCmd(String imageName) {
+        return MessageFormat.format("docker tag {0}  docker.io/chao313/{0}:latest'", imageName, imageName);
+    }
+
+    /**
+     * 获取push的命令
+     */
+    public static String getPushCmd(String imageName) {
+        return MessageFormat.format("docker push docker.io/chao313/{0}:latest'", imageName);
+    }
+
     public static List<String> getContainerRunningNames() {
         String cmd = "docker ps -a -f status=running --format {{.Names}}";
         return ShellUtil.getResult(cmd.split(" "));

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.converter.StringHttpMessageConverter;
 
+import java.lang.management.ManagementFactory;
 import java.nio.charset.Charset;
 
 @SpringBootApplication
@@ -21,7 +22,6 @@ public class Application {
     private static Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-
         SpringApplication.run(Application.class, args);
     }
 

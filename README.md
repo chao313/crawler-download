@@ -31,17 +31,17 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 
 
 ## 需要修改的
-1.字段 增加首页访问地址/后台访问地址/账号密码/注意事项/更新时间
-2.字段 增加状态(是否正常运行)
-3.字段 增加状态(可用/废弃/暂定)
-4.字段 增加容器id,用于 portainer url
-5.字段 增加默认的img(便于预览)
-6.前端 增加状态判断(停止 -> 展示启动 ; 启动 -> 展示停止)
-7.前端 portainer -> 下拉框/弹出链接地址 (按钮太多,影响美观)
-8.前端 源url修改为超链
-9.前端 增加图片预览
-10.增加 生成介绍
-11.增加 镜像push
+* 字段 增加首页访问地址/后台访问地址/账号密码/注意事项/更新时间
+* 字段 增加状态(是否正常运行)
+* 字段 增加状态(可用/废弃/暂定)
+* 字段 增加容器id,用于 portainer url
+* 字段 增加默认的img(便于预览)
+* 前端 增加状态判断(停止 -> 展示启动 ; 启动 -> 展示停止)
+* 前端 portainer -> 下拉框/弹出链接地址 (按钮太多,影响美观)
+* 前端 源url修改为超链
+* 前端 增加图片预览
+* 增加 生成介绍
+* 增加 镜像push
 
 
 ## 提给自动生成的
@@ -51,3 +51,14 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 
 docker tag 11_softview_32090  docker.io/chao313/11_softview_32090:latest
 docker push docker.io/chao313/11_softview_32090:latest
+docker search 11_softview_32090
+https://hub.docker.com/v2/repositories/chao313/?page_size=25&page=2&ordering=last_updated
+
+## ？
+* 具体的需求 -> 步骤拆分
+ * 镜像名称统一使用ASP_开头 + (PHP|JSP) + 端口号 + 唯一标识(e.g. ASP_PHP_7500_xxx)
+ * 容器名称是镜像名称+下划线(e.g. ASP_PHP_7500_xxx_)
+ * desc内部需要存放原生的代码,描述,asp300url,图片,docker命令
+ * 需要打通ASP300的url -> zip包(直接下载+百度云);就是给一个url,可以直接生成docker
+ * 需要一个镜像管理系统来管理这些
+
