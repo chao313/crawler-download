@@ -24,8 +24,7 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 * 容器的修改后的也需要可以下载(包含sql语句)
 * 需要可以标识成功的操作
   
-#?
-* mysql应该要独立出来?  
+
 
 
 
@@ -36,12 +35,15 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 * 字段 增加状态(可用/废弃/暂定)
 * 字段 增加容器id,用于 portainer url
 * 字段 增加默认的img(便于预览)
-* 前端 增加状态判断(停止 -> 展示启动 ; 启动 -> 展示停止)
-* 前端 portainer -> 下拉框/弹出链接地址 (按钮太多,影响美观)
+* 前端 增加状态判断(停止 -> 展示启动 ; 启动 -> 展示停止) / 变成小图标
+* 前端 portainer -> 下拉框/弹出链接地址 (按钮太多,影响美观) / 变成portainer一样的小图标
 * 前端 源url修改为超链
 * 前端 增加图片预览
+* 前端 增加批量操作
 * 增加 生成介绍
 * 增加 镜像push
+* 增加 可以使用的镜像打包成可使用镜像-无需重新安装的镜像
+
 
 
 ## 提给自动生成的
@@ -55,6 +57,7 @@ docker search 11_softview_32090
 https://hub.docker.com/v2/repositories/chao313/?page_size=25&page=2&ordering=last_updated
 
 ## ？
+* mysql应该要独立出来?
 * 具体的需求 -> 步骤拆分
  * 镜像名称统一使用ASP_开头 + (PHP|JSP) + 端口号 + 唯一标识(e.g. ASP_PHP_7500_xxx)
  * 容器名称是镜像名称+下划线(e.g. ASP_PHP_7500_xxx_)
