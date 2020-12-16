@@ -1,12 +1,12 @@
 FROM mattrayner/lamp:latest-1404-php5
 WORKDIR /root/www/html/www/
 ##选择add 自带解压
-ADD code .
-ADD dsc .
+COPY create_mysql_users.sh /
 COPY import.sh /root/
 COPY start.sh /root/
-COPY install.sql /root/
-COPY create_mysql_users.sh /
 RUN  chmod 755 /root/*.sh && chmod 755 /*.sh
+COPY install.sql /root/
+ADD code .
+ADD dsc .
 EXPOSE 80
 CMD ["/root/start.sh"]

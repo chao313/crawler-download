@@ -39,7 +39,7 @@ public class DockerCmdUtils {
     }
 
     public static String build(String imageName, String dockerRealPath) {
-        return MessageFormat.format("docker build --rm -t  {0}  {1}  --name {0} -p {1}:{2} {3}", imageName, dockerRealPath);
+        return MessageFormat.format("docker build  -t  {0}  {1} ", imageName, dockerRealPath);
     }
 
     public static String create(String containerName, Integer outPort, Integer innerPort, String imageName) {
@@ -74,6 +74,13 @@ public class DockerCmdUtils {
      */
     public static String getTagCmd(String imageName) {
         return MessageFormat.format("docker tag {0}  docker.io/chao313/{0}:latest'", imageName, imageName);
+    }
+
+    /**
+     * 获取tag的命令
+     */
+    public static String getRemoveTagCmd(String imageName) {
+        return MessageFormat.format("docker rmi  docker.io/chao313/{0}:latest'", imageName, imageName);
     }
 
     /**

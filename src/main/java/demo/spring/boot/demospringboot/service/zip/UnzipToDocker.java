@@ -172,8 +172,8 @@ public abstract class UnzipToDocker {
         /**
          * 推送docker镜像
          */
-//        Boolean pushFlag = this.pushDockerImage(imageName);
-//        log.info("镜像推送:{}", pushFlag);
+        Boolean pushFlag = this.pushDockerImage(imageName);
+        log.info("镜像推送:{}", pushFlag);
 
         /**
          * 构建运行docker容器 容器名称默认为_+容器名称

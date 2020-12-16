@@ -100,11 +100,11 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     @Override
     protected void makeUpDecPath(String dockerRealPath, Map<String, byte[]> descMap) throws IOException {
         if (null != descMap) {
-            File DescFileDir = new File(dockerRealPath + DockerStructure.DSC);
+            String descFileDirPath = dockerRealPath + DockerStructure.DSC;
             for (Map.Entry<String, byte[]> entry : descMap.entrySet()) {
                 String fileName = entry.getKey();
                 byte[] bytes = entry.getValue();
-                FileUtils.writeByteArrayToFile(new File(DescFileDir + "/" + fileName), bytes);
+                FileUtils.writeByteArrayToFile(new File(descFileDirPath + "/" + fileName), bytes);
             }
         }
         return;
@@ -112,23 +112,28 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
 
 
     @Override
-    protected synchronized void buildDockerImage(String dockerRealPath, String imageName) {
-        String shell = " docker build --rm -t " + imageName + " " + dockerRealPath;
+    protected  void buildDockerImage(String dockerRealPath, String imageName) {
+        String shell = DockerCmdUtils.build(imageName, dockerRealPath);
         ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
     }
 
     @Override
     protected Boolean pushDockerImage(String imageName) {
-        String shell = " docker push " + imageName;
-        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+        //tag
+        ShellUtil.executeLinuxShellStr(DockerCmdUtils.getTagCmd(imageName), new ShellUtil.LocalFun());
+        //push
+        ShellUtil.executeLinuxShellStr(DockerCmdUtils.getPushCmd(imageName), new ShellUtil.LocalFun());
+        //移除
+        ShellUtil.executeLinuxShellStr(DockerCmdUtils.removeImage(imageName), new ShellUtil.LocalFun());
+        ShellUtil.executeLinuxShellStr(DockerCmdUtils.getRemoveTagCmd(imageName), new ShellUtil.LocalFun());
         return true;
     }
 
     @Override
-    protected synchronized String buildRunDockerContainer(String imageName, Integer port) {
+    protected  String buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
-        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
-        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
+//        String shell = DockerCmdUtils.create(containerName, port, 80, imageName);
+//        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
         return containerName;
     }
 

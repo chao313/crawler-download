@@ -5,6 +5,7 @@ import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
+import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
 import demo.spring.boot.demospringboot.util.URLUtils;
 import demomaster.service.ProjectPlusService;
 import demomaster.vo.ProjectPlusVo;
@@ -40,6 +41,9 @@ public class ASPToDockerPlusController {
 
     @Autowired
     private StartConfig startConfig;
+
+    @Autowired
+    private ThreadPoolExecutorService threadPoolExecutorService;
 
 
     @ApiOperation(value = "构建Docker镜像")
@@ -100,6 +104,7 @@ public class ASPToDockerPlusController {
     @ApiOperation(value = "构建Docker镜像批量")
     @GetMapping("/buildToDockerBatch")
     public Response buildToDockerBatch() throws Exception {
+        System.out.println("构建Docker镜像批量");
         Response response = new Response<>();
         ProjectPlusVo query = new ProjectPlusVo();
         query.setProjectPackageType(URLUtils.Type.stream.getType());
@@ -107,21 +112,22 @@ public class ASPToDockerPlusController {
         for (ProjectPlusVo vo : projectVos) {
             if (StringUtils.isBlank(vo.getDockerImageName())) {
                 buildToDocker(vo.getCriteriaid());
-//                threadPoolExecutorService.addWork(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        try {
-//                            buildToDocker(vo.getCriteriaid());
-//                        } catch (Exception e) {
-//                            log.error("构建异常:{}", e.toString(), e);
-//                        }
-//
-//                    }
-//                });
+                threadPoolExecutorService.addWork(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            log.info("使用线程池");
+                            buildToDocker(vo.getCriteriaid());
+                        } catch (Exception e) {
+                            log.error("构建异常:{}", e.toString(), e);
+                        }
+
+                    }
+                });
 
             }
         }
-//        threadPoolExecutorService.waitComplete();
+        threadPoolExecutorService.waitComplete();
         return response;
     }
 
