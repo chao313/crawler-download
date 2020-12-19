@@ -93,7 +93,7 @@ public abstract class UnzipToDocker {
      * @param imageName 镜像名称
      * @return
      */
-    protected abstract Boolean pushDockerImage(String imageName);
+    public abstract Boolean pushDockerImage(String imageName);
 
 
     /**
@@ -170,7 +170,7 @@ public abstract class UnzipToDocker {
 
 
         /**
-         * 推送docker镜像
+         * 推送docker镜像 -> 为了加快速度 -> 做成阻塞队列模式
          */
         Boolean pushFlag = this.pushDockerImage(imageName);
         log.info("镜像推送:{}", pushFlag);

@@ -30,11 +30,11 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 
 
 ## 需要修改的
-* 字段 增加首页访问地址/后台访问地址/账号密码/注意事项/更新时间
-* 字段 增加状态(是否正常运行)
-* 字段 增加状态(可用/废弃/暂定)
-* 字段 增加容器id,用于 portainer url
-* 字段 增加默认的img(便于预览)
+[x] 字段 增加首页访问地址/后台访问地址/账号密码/注意事项/更新时间
+[x] 字段 增加状态(是否正常运行)
+[x] 字段 增加状态(可用/废弃/暂定)
+[x] 字段 增加容器id,用于 portainer url
+[x] 字段 增加默认的img(便于预览)
 * 前端 增加状态判断(停止 -> 展示启动 ; 启动 -> 展示停止) / 变成小图标
 * 前端 portainer -> 下拉框/弹出链接地址 (按钮太多,影响美观) / 变成portainer一样的小图标
 * 前端 源url修改为超链
@@ -58,6 +58,7 @@ https://hub.docker.com/v2/repositories/chao313/?page_size=25&page=2&ordering=las
 
 ## ？
 * mysql应该要独立出来?
+* 镜像是否需要限制使用时间 - 或者运行时需要验证? - 防止其他人使用
 * 具体的需求 -> 步骤拆分
  * 镜像名称统一使用ASP_开头 + (PHP|JSP) + 端口号 + 唯一标识(e.g. ASP_PHP_7500_xxx)
  * 容器名称是镜像名称+下划线(e.g. ASP_PHP_7500_xxx_)

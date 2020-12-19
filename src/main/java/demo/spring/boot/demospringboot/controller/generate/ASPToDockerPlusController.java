@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.FastDateFormat;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,6 +86,7 @@ public class ASPToDockerPlusController {
                     ProjectPlusPriVo target = new ProjectPlusPriVo();
                     target.setId(vo.getId());
                     ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
+                    source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));//设置更新时间
                     BeanUtils.copyProperties(tmp, source);
                     projectService.updateByPrimaryKey(source, target);//更新
 
@@ -111,12 +114,10 @@ public class ASPToDockerPlusController {
         List<ProjectPlusVo> projectVos = projectService.queryBase(query);
         for (ProjectPlusVo vo : projectVos) {
             if (StringUtils.isBlank(vo.getDockerImageName())) {
-                buildToDocker(vo.getCriteriaid());
                 threadPoolExecutorService.addWork(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            log.info("使用线程池");
                             buildToDocker(vo.getCriteriaid());
                         } catch (Exception e) {
                             log.error("构建异常:{}", e.toString(), e);

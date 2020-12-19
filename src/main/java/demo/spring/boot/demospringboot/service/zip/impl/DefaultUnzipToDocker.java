@@ -118,7 +118,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected Boolean pushDockerImage(String imageName) {
+    public Boolean pushDockerImage(String imageName) {
         //tag
         ShellUtil.executeLinuxShellStr(DockerCmdUtils.getTagCmd(imageName), new ShellUtil.LocalFun());
         //push
