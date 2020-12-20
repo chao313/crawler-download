@@ -1,8 +1,15 @@
 package demo.spring.boot.demospringboot.config;
 
+import demo.spring.boot.demospringboot.framework.Code;
+import demo.spring.boot.demospringboot.framework.Response;
+import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
 
@@ -12,7 +19,10 @@ import java.io.File;
  * img: D:/fsPath/img
  * originZip: D:/fsPath/originZip
  */
+@Slf4j
 @Component
+@RestController
+@RequestMapping(value = "/StartConfig")
 public class StartConfig implements InitializingBean {
 
     public static final String INNER_HOST = "http://127.0.0.1";
@@ -39,6 +49,12 @@ public class StartConfig implements InitializingBean {
 
     @Value(value = "${local.host.portainer.outer}")
     private String localHostPortainerOuter;
+
+    /**
+     * docker REST API host
+     */
+    @Value(value = "${local.host.docker.api}")
+    private String localHostDockerApi;
 
     public String getLocalFsPathImg() {
         return localFsPathImg;
@@ -68,6 +84,10 @@ public class StartConfig implements InitializingBean {
         return localHostPortainerOuter;
     }
 
+    public String getLocalHostDockerApi() {
+        return localHostDockerApi;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         //保证文件夹存在
@@ -83,5 +103,40 @@ public class StartConfig implements InitializingBean {
         if (!localFsPathOriginZipFile.exists()) {
             localFsPathOriginZipFile.mkdirs();
         }
+    }
+
+    @ApiOperation(value = "获取容器的URL")
+    @GetMapping("/getOuterPortainerUrl")
+    public Response getOuterPortainerUrl() {
+        Response response = new Response<>();
+        try {
+            response.setCode(Code.System.OK);
+            response.setContent(this.getLocalHostPortainerOuter());
+            log.info("下载完成");
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+    @ApiOperation(value = "获取容器的URL")
+    @GetMapping("/getInnerPortainerUrl")
+    public Response getInnerPortainerUrl() {
+        Response response = new Response<>();
+        try {
+            response.setCode(Code.System.OK);
+            response.setContent(this.getLocalHostPortainerInner());
+            log.info("下载完成");
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
     }
 }

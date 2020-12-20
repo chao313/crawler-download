@@ -9,22 +9,6 @@ public class DockerCmdUtils {
     /**
      * 状态
      */
-    public enum Status {
-        CREATED("created"), RUNNING("running"), STOPPED("stopped"), CONTAINER_REMOVED("container_removed"), IMAGES_REMOVED("images_removed");
-        private String status;
-
-        Status(String status) {
-            this.status = status;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-    }
-
-    /**
-     * 状态
-     */
     public enum ContainerStatus {
         CREATED("created"), RUNNING("running"), EXISTED("exited");
         private String status;
@@ -39,11 +23,11 @@ public class DockerCmdUtils {
     }
 
     public static String build(String imageName, String dockerRealPath) {
-        return MessageFormat.format("docker build  -t  {0}  {1} ", imageName, dockerRealPath);
+        return MessageFormat.format("docker build  -t  chao313/{0}  {1} ", imageName, dockerRealPath);
     }
 
     public static String create(String containerName, Integer outPort, Integer innerPort, String imageName) {
-        return MessageFormat.format("docker create  --name {0} -p {1}:{2} {3}", containerName, String.valueOf(outPort), String.valueOf(innerPort), imageName);
+        return MessageFormat.format("docker create  --name {0} -p {1}:{2} chao313/{3}", containerName, String.valueOf(outPort), String.valueOf(innerPort), imageName);
     }
 
     public static String run(String containerName) {
@@ -59,7 +43,28 @@ public class DockerCmdUtils {
     }
 
     public static String removeImage(String imageName) {
-        return MessageFormat.format("docker rmi {0}", imageName);
+        return MessageFormat.format("docker rmi chao313/{0}", imageName);
+    }
+
+    /**
+     * 按镜像名称检索
+     */
+    public static String imageSearchByImageName(String imageName) {
+        return MessageFormat.format("docker images chao313/{0}", imageName);
+    }
+
+    /**
+     * 按容器名称检索
+     */
+    public static String containerSearchByContainerName(String containerName) {
+        return MessageFormat.format("docker ps -a --filter name={0}", containerName);
+    }
+
+    /**
+     * 按容器名称检索
+     */
+    public static String containerRunningSearchByContainerName(String containerName) {
+        return MessageFormat.format("docker ps --filter name={0}", containerName);
     }
 
     /**

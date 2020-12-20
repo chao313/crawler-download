@@ -1,10 +1,11 @@
 package demo.spring.boot.demospringboot.service.zip;
 
 import demo.spring.boot.demospringboot.config.StartConfig;
+import demo.spring.boot.demospringboot.enums.DockerStatus;
+import demo.spring.boot.demospringboot.enums.ProjectStatus;
 import demo.spring.boot.demospringboot.util.DockerCmdUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
 import demomaster.vo.ProjectPlusVo;
-import demomaster.vo.ProjectVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
@@ -172,8 +173,8 @@ public abstract class UnzipToDocker {
         /**
          * 推送docker镜像 -> 为了加快速度 -> 做成阻塞队列模式
          */
-        Boolean pushFlag = this.pushDockerImage(imageName);
-        log.info("镜像推送:{}", pushFlag);
+//        Boolean pushFlag = this.pushDockerImage(imageName);
+//        log.info("镜像推送:{}", pushFlag);
 
         /**
          * 构建运行docker容器 容器名称默认为_+容器名称
@@ -195,8 +196,8 @@ public abstract class UnzipToDocker {
             projectPlusVo.setDockerContainerShellStop(DockerCmdUtils.stopContainer(containerName));
             projectPlusVo.setDockerContainerShellRemove(DockerCmdUtils.removeContainer(containerName));
             projectPlusVo.setDockerImageShellRemove(DockerCmdUtils.removeImage(imageName));
-            projectPlusVo.setProjectStatus(ProjectVo.Status.CREATED.getStatus());
-            projectPlusVo.setDockerStatus(DockerCmdUtils.Status.CREATED.getStatus());
+            projectPlusVo.setProjectStatus(ProjectStatus.CREATED.getStatus());
+            projectPlusVo.setDockerStatus(DockerStatus.IMAGE_NO_EXIST.getStatus());
         }
         //删除临时文件(为了防止误删,加上判断)
         if (rootPath.contains("tmp") && dockerRealPath.contains("tmp") && tmpCopyFilePath.contains("tmp")) {

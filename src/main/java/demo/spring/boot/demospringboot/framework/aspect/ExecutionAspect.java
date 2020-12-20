@@ -1,10 +1,9 @@
 package demo.spring.boot.demospringboot.framework.aspect;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.framework.Response;
-import demomaster.vo.ProjectVo;
+import demomaster.vo.ProjectPlusVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -56,11 +55,11 @@ public class ExecutionAspect {
                     ((ArrayList) content).forEach(vo -> {
                         deal(vo);
                     });
-                } else if (content instanceof ProjectVo) {
+                } else if (content instanceof ProjectPlusVo) {
                     deal(content);
                 }
             }
-            log.info("执行结果:{}", JSONObject.toJSON(result));
+//            log.info("执行结果:{}", JSONObject.toJSON(result));
             return result;
         } catch (Exception e) {
             log.error("[]FAIL path:{}", e.getMessage(), e);
@@ -69,17 +68,17 @@ public class ExecutionAspect {
     }
 
     private void deal(Object vo) {
-        if (vo instanceof ProjectVo) {
-            ProjectVo tmp = ((ProjectVo) vo);
-            String httpInnerAddress = tmp.getHttpInnerAddress();
-            String httpOutAddress = tmp.getHttpOutAddress();
+        if (vo instanceof ProjectPlusVo) {
+            ProjectPlusVo tmp = ((ProjectPlusVo) vo);
+            String httpInnerAddress = tmp.getAddressContainerInner();
+            String httpOutAddress = tmp.getAddressContainerOuter();
             if (StringUtils.isNotBlank(httpInnerAddress)) {
                 String replaceHttpInnerAddress = httpInnerAddress.replace(StartConfig.INNER_HOST, startConfig.getLocalHostInner());
-                tmp.setHttpInnerAddress(replaceHttpInnerAddress);
+                tmp.setAddressContainerInner(replaceHttpInnerAddress);
             }
             if (StringUtils.isNotBlank(httpOutAddress)) {
                 String replaceHttpOutAddress = httpOutAddress.replace(StartConfig.OUT_HOST, startConfig.getLocalHostOuter());
-                tmp.setHttpOutAddress(replaceHttpOutAddress);
+                tmp.setAddressContainerOuter(replaceHttpOutAddress);
             }
         }
     }

@@ -2,10 +2,13 @@ package demo.spring.boot.demospringboot.controller.generate;
 
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
+import demo.spring.boot.demospringboot.util.DockerCmdUtils;
 import demomaster.service.ProjectPlusService;
 import demomaster.service.ProjectService;
 import demomaster.vo.ProjectPlusVo;
 import demomaster.vo.ProjectVo;
+import demomaster.vo.plugin.ProjectPlusNoPriVo;
+import demomaster.vo.plugin.ProjectPlusPriVo;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -105,4 +108,41 @@ public class ETLController {
         return response;
 
     }
+
+    /**
+     * 清洗plus -> create命令加上仓库
+     * +移除镜像时加上仓库
+     *
+     * @return
+     */
+    @ApiOperation(value = "ETLProjectPlusCreateContainer")
+    @GetMapping("/ETLProjectPlusCreateContainer")
+    public Response ETLProjectPlusCreateContainer() {
+        Response response = new Response<>();
+        try {
+            ProjectPlusVo query = new ProjectPlusVo();
+            List<ProjectPlusVo> vos = projectPlusService.queryBase(query);
+            vos.forEach(vo -> {
+                if (StringUtils.isNotBlank(vo.getDockerContainerShellCreate())) {
+                    ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
+                    ProjectPlusPriVo target = new ProjectPlusPriVo();
+                    target.setId(vo.getId());
+                    source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));
+                    source.setDockerContainerShellCreate(DockerCmdUtils.create(vo.getDockerContainerName(), Integer.valueOf(vo.getDockerContainerPort()), 80, vo.getDockerImageName()));
+                    source.setDockerImageShellRemove(DockerCmdUtils.removeImage(vo.getDockerContainerName()));
+                    projectPlusService.updateByPrimaryKey(source, target);
+                }
+            });
+            response.setCode(Code.System.OK);
+            response.setContent(true);
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
 }

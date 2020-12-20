@@ -13,22 +13,6 @@ package demomaster.vo;
  */
 public class ProjectVo {
 
-    /**
-     * 状态 project状态,刚创建,可以使用,暂不可使用,完全不能使用
-     */
-    public enum Status {
-        CREATED("created"), CAN_USE("can_use"), TEMPORARY_CAN_NOT_USE("temporary_can_not_use"), COMPLETE_CAN_NOT_USE("complete_can_not_use");
-        private String status;
-
-        Status(String status) {
-            this.status = status;
-        }
-
-        public String getStatus() {
-            return status;
-        }
-    }
-
 
     /**
      * 状态 zip状态 项目的下载包类型(流/盘)
