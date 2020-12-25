@@ -11,12 +11,12 @@ while [[ RET -ne 0 ]]; do
 done
 
 #PASS=${MYSQL_ADMIN_PASS:-$(pwgen -s 12 1)}
-PASS=123456
+PASS=123456111111
 _word=$( [ ${MYSQL_ADMIN_PASS} ] && echo "preset" || echo "random" )
-echo "=> Creating MySQL admin user with ${_word} password"
+echo "=> Creating MySQL admin111111 user with ${_word} password"
 
-mysql -uroot -e "CREATE USER 'admin'@'%' IDENTIFIED BY '$PASS'"
-mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin'@'%' WITH GRANT OPTION"
+mysql -uroot -e "CREATE USER 'admin111111'@'%' IDENTIFIED BY '$PASS'"
+mysql -uroot -e "GRANT ALL PRIVILEGES ON *.* TO 'admin111111'@'%' WITH GRANT OPTION"
 
 mysql -uroot -e " GRANT ALL PRIVILEGES ON phpmyadmin.* TO  'pma'@'localhost' IDENTIFIED BY ''"
 ##数据导入
@@ -47,7 +47,7 @@ echo "=> Done!"
 echo "========================================================================"
 echo "You can now connect to this MySQL Server with $PASS"
 echo ""
-echo "    mysql -uadmin -p$PASS -h<host> -P<port>"
+echo "    mysql -admin111111 -p$PASS -h<host> -P<port>"
 echo ""
 echo "Please remember to change the above password as soon as possible!"
 echo "MySQL user 'root' has no password but only allows local connections"

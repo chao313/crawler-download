@@ -49,6 +49,10 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
   * 目前考虑,修改好容器的数据之后,复制app下的文件,导出php_test里的sql -> 生成一个新的zip包 -> 名字就是xx_pro.zip
     -> 生成pro的image考虑 -> 数据库外迁,创建用户，密码，设置权限（账号,密码,数据库都和id保持一致）
     -> 增加容器再生成(pro->pro)
+    * 数据库导出: mysqldump  -u admin -p123456 php_test  > <id>.sql
+    * 文件导出 docker cp 11_softview_62253_:/app ./<id>app
+    * 文件/sql替换(账号密码去非常复杂的字符串 -> 方便替换) admin1111111 123456111111 (sql和后台管理的账号密码等同)
+    * 创建账号密码,设置访问权限,导入数据库(ip地址如何处理？ip6-localhost??ENV HOSTNAME localhost111111??)
   * 相关需求：
     * 添加字段(详见下临时1)
 
