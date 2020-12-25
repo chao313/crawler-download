@@ -54,6 +54,9 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 
 * 增加 根据访问的ip来显示不同的地址，内外网
 * 增加 安装步骤截图?
+* 前端 查看介绍可以换行+图片(脱离asp300)
+* 前端 编辑以弹出框的形式
+* 前端 合并内网外网(根据服务)
 
 
 
@@ -135,8 +138,6 @@ CREATE TABLE `project_plus` (
   `project_price` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-价格',
   `project_package_type` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-下载包类型(流/text)',
   `project_pan_address` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-网盘地址',
-  `project_real_file_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-真实文件名称',
-  `project_real_file_name_pro` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-真实文件名称-pro',
   `project_html_body` longtext COLLATE utf8_bin COMMENT '项目-网页Body',
   `project_source_url` text COLLATE utf8_bin COMMENT '项目-源ASPURL',
   `project_language` varchar(255) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-开发语言',
@@ -155,26 +156,38 @@ CREATE TABLE `project_plus` (
   `project_mark` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-备注',
   `project_can_running` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-是否正常运行',
   `project_sql` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-sql',
+  `project_port` varchar(10) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-端口号',
   `address_container_outer` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-容器外网',
   `address_container_inner` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-容器内网',
   `address_project_front` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目前端',
   `address_project_background` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目后台',
   `address_project_background_account_passwd` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '地址-项目后台-账号密码',
-  `docker_image_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-名称',
-  `docker_image_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-移除命令',
-  `docker_container_id` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-完整id',
-  `docker_container_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-名称',
-  `docker_container_port` varchar(10) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-端口号',
-  `docker_container_shell_create` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-创建命令',
-  `docker_container_shell_run` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-启动命令',
-  `docker_container_shell_stop` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-停止命令',
-  `docker_container_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-移除命令',
-  `docker_status_images_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-镜像是否存在',
-  `docker_status_container_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否存在',
-  `docker_status_container_is_running` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否运行',
-  `docker_status_images_is_exist_pro` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-镜像是否存在-pro',
-  `docker_status_container_is_exis_pro` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否存在-pro',
-  `docker_status_container_is_running_pro` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否运行-pro',
+  
+  `dev_project_real_file_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '项目-真实文件名称',
+  `dev_docker_image_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-名称',
+  `dev_docker_image_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-镜像-移除命令',
+  `dev_docker_container_id` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-完整id',
+  `dev_docker_container_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-名称',
+  `dev_docker_container_shell_create` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-创建命令',
+  `dev_docker_container_shell_run` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-启动命令',
+  `dev_docker_container_shell_stop` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-停止命令',
+  `dev_docker_container_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-容器-移除命令',
+  `dev_docker_status_images_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-镜像是否存在',
+  `dev_docker_status_container_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否存在',
+  `dev_docker_status_container_is_running` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'docker-状态-容器是否运行',
+  
+  `pro_project_real_file_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-项目-真实文件名称',
+  `pro_docker_image_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-镜像-名称',
+  `pro_docker_image_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-镜像-移除命令',
+  `pro_docker_container_id` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-完整id',
+  `pro_docker_container_name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-名称',
+  `pro_docker_container_shell_create` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-创建命令',
+  `pro_docker_container_shell_run` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-启动命令',
+  `pro_docker_container_shell_stop` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-停止命令',
+  `pro_docker_container_shell_remove` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-容器-移除命令',
+  `pro_docker_status_images_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-状态-镜像是否存在',
+  `pro_docker_status_container_is_exist` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-状态-容器是否存在',
+  `pro_docker_status_container_is_running` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT 'pro-docker-状态-容器是否运行',
 
 
   `update_time` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '更新时间',
