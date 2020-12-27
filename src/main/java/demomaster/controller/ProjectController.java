@@ -6,7 +6,7 @@ import com.github.pagehelper.PageInfo;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.RequestUpdate;
 import demo.spring.boot.demospringboot.framework.Response;
-import demo.spring.boot.demospringboot.util.DockerCmdUtils;
+import demo.spring.boot.demospringboot.util.CmdDockerUtils;
 import demomaster.service.ProjectService;
 import demomaster.vo.ProjectMultiTermVo;
 import demomaster.vo.ProjectVo;
@@ -32,7 +32,7 @@ public class ProjectController {
      *
      * @param vo
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/insert")
@@ -57,7 +57,7 @@ public class ProjectController {
      *
      * @param vos
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/inserts")
@@ -83,7 +83,7 @@ public class ProjectController {
      *
      * @param query
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryBase")
@@ -111,7 +111,7 @@ public class ProjectController {
      * @param pageNum  页码 默认值为1
      * @param pageSize 每页的size 默认值为10
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryBasePageHelper")
@@ -127,12 +127,12 @@ public class ProjectController {
             }
             List<ProjectVo> result = service.queryBase(query);
             //补全docker状态
-            List<String> containerRunningNames = DockerCmdUtils.getContainerRunningNames();
+            List<String> containerRunningNames = CmdDockerUtils.getContainerRunningNames();
             result.forEach(vo -> {
                 if (containerRunningNames.contains(vo.getDockerContainerName())) {
-                    vo.setDockerStatus(DockerCmdUtils.ContainerStatus.RUNNING.getStatus());
+                    vo.setDockerStatus(CmdDockerUtils.ContainerStatus.RUNNING.getStatus());
                 } else {
-                    vo.setDockerStatus(DockerCmdUtils.ContainerStatus.EXISTED.getStatus());
+                    vo.setDockerStatus(CmdDockerUtils.ContainerStatus.EXISTED.getStatus());
                 }
             });
             PageInfo pageInfo = new PageInfo(result);
@@ -156,7 +156,7 @@ public class ProjectController {
      * @param pageNum  页码 默认值为1
      * @param pageSize 每页的size 默认值为10
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryMultiTermPageHelper")
@@ -193,7 +193,7 @@ public class ProjectController {
      * @param source
      * @param target
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
@@ -221,7 +221,7 @@ public class ProjectController {
      * @param source
      * @param target
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
@@ -247,7 +247,7 @@ public class ProjectController {
      *
      * @param vo
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/deleteBase")
@@ -274,7 +274,7 @@ public class ProjectController {
      *
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/queryByPrimaryKey")
@@ -303,7 +303,7 @@ public class ProjectController {
      *
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/deleteByPrimaryKey")
@@ -332,7 +332,7 @@ public class ProjectController {
      * @param update.target 只包含主键的字段
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateByPrimaryKey")

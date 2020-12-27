@@ -1,9 +1,8 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
-import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
+import demo.spring.boot.demospringboot.service.zip.UnzipToDockerPro;
 import demo.spring.boot.demospringboot.util.*;
-import demo.spring.boot.demospringboot.vo.LanguageType;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
@@ -26,15 +25,11 @@ import java.util.stream.Collectors;
  */
 @Slf4j
 @Component
-public class DefaultUnzipToDocker extends UnzipToDocker {
+public class DefaultUnzipToDockerPro extends UnzipToDockerPro {
 
 
     @Override
-    protected String unzipAndGetRoot(String fileInDirAbsolutePath,
-                                     String fileName,
-                                     StringBuilder sql,
-                                     LanguageType checkLanguageType,
-                                     AtomicReference<LanguageType> languageType) {
+    protected String unzip(String fileInDirAbsolutePath, String fileName) {
         List<String> fileNames = new ArrayList<>();//存放所有文件的名称
         String targetFileDir = fileInDirAbsolutePath + "/tmp/" + "_" + fileName;
         SevenZipUtils.unzip(fileInDirAbsolutePath, fileName, targetFileDir,
@@ -51,25 +46,10 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
                         } else {
                             encodedBytes = bytes;
                         }
-                        if (fileName.endsWith("sql")) {
-                            sql.append(new String(encodedBytes));
-                        }
-                        if (null != checkLanguageType) {
-                            LanguageType.check(fileName, checkLanguageType);
-                        }
                         return encodedBytes;
                     }
                 });
-        Arrays.stream(LanguageType.values()).forEach(vo -> {
-            fileNames.forEach(fileNameTmp -> {
-                if (fileNameTmp.endsWith(vo.getType())) {
-                    languageType.set(vo);
-                }
-            });
-        });
-//        log.info("检测到sql:{}", sql.toString());
         return targetFileDir;
-
     }
 
     @Override
@@ -91,13 +71,6 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected void makeUpSqlPath(String dockerRealPath, StringBuilder sql) throws IOException {
-        File SQLFile = new File(dockerRealPath + DockerStructure.INSTALL_SQL);
-        FileUtils.write(SQLFile, sql.toString(), StandardCharsets.UTF_8);
-        return;
-    }
-
-    @Override
     protected void makeUpDecPath(String dockerRealPath, Map<String, byte[]> descMap) throws IOException {
         if (null != descMap) {
             String descFileDirPath = dockerRealPath + DockerStructure.DSC;
@@ -112,7 +85,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
 
 
     @Override
-    protected  void buildDockerImage(String dockerRealPath, String imageName) {
+    protected void buildDockerImage(String dockerRealPath, String imageName) {
         String shell = CmdDockerUtils.build(imageName, dockerRealPath);
         ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());
     }
@@ -130,7 +103,7 @@ public class DefaultUnzipToDocker extends UnzipToDocker {
     }
 
     @Override
-    protected  String buildRunDockerContainer(String imageName, Integer port) {
+    protected String buildRunDockerContainer(String imageName, Integer port) {
         String containerName = imageName + "_";
 //        String shell = CmdDockerUtils.create(containerName, port, 80, imageName);
 //        ShellUtil.executeLinuxShell(shell, new ShellUtil.LocalFun());

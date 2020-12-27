@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.controller.resource.service.ResourceServi
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
 import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
-import demo.spring.boot.demospringboot.util.DockerCmdUtils;
+import demo.spring.boot.demospringboot.util.CmdDockerUtils;
 import demo.spring.boot.demospringboot.util.ShellUtil;
 import demo.spring.boot.demospringboot.util.UUIDUtils;
 import demo.spring.boot.demospringboot.util.ZipUtils;
@@ -82,7 +82,7 @@ public class DockerShellController {
                     String containerName) {
         Response response = new Response<>();
         try {
-            String fullId = ShellUtil.executeLinuxShellStr(DockerCmdUtils.getFullId(containerName), new ShellUtil.LocalFun());
+            String fullId = ShellUtil.executeLinuxShellStr(CmdDockerUtils.getFullId(containerName), new ShellUtil.LocalFun());
             response.setCode(Code.System.OK);
             response.setContent(startConfig.getLocalHostPortainerOuter() + "/" + fullId);
             log.info("下载完成");
@@ -103,7 +103,7 @@ public class DockerShellController {
                     String containerName) {
         Response response = new Response<>();
         try {
-            String fullId = ShellUtil.executeLinuxShellStr(DockerCmdUtils.getFullId(containerName), new ShellUtil.LocalFun());
+            String fullId = ShellUtil.executeLinuxShellStr(CmdDockerUtils.getFullId(containerName), new ShellUtil.LocalFun());
             response.setCode(Code.System.OK);
             response.setContent(startConfig.getLocalHostPortainerInner() + "/" + fullId);
             log.info("下载完成");
@@ -165,11 +165,11 @@ public class DockerShellController {
             List<ProjectPlusVo> projectVos = projectPlusService.queryBase(query);
 
             for (ProjectPlusVo vo : projectVos) {
-                String dockerImageName = vo.getDockerImageName();
+                String dockerImageName = vo.getDevDockerImageName();
                 if (StringUtils.isNotBlank(dockerImageName)) {
                     //镜像名称不为空 -> 推送
-                    ShellUtil.executeLinuxShellStr(DockerCmdUtils.getTagCmd(dockerImageName), new ShellUtil.LocalFun());
-                    ShellUtil.executeLinuxShellStr(DockerCmdUtils.getPushCmd(dockerImageName), new ShellUtil.LocalFun());
+                    ShellUtil.executeLinuxShellStr(CmdDockerUtils.getTagCmd(dockerImageName), new ShellUtil.LocalFun());
+                    ShellUtil.executeLinuxShellStr(CmdDockerUtils.getPushCmd(dockerImageName), new ShellUtil.LocalFun());
                 }
             }
         } catch (Exception e) {
@@ -191,14 +191,14 @@ public class DockerShellController {
             ProjectPlusVo query = new ProjectPlusVo();
             List<ProjectPlusVo> projectVos = projectPlusService.queryBase(query);
             for (ProjectPlusVo vo : projectVos) {
-                if (StringUtils.isNotBlank(vo.getDockerImageName())) {
-                    if (!results.contains(vo.getDockerImageName())) {
+                if (StringUtils.isNotBlank(vo.getDevDockerImageName())) {
+                    if (!results.contains(vo.getDevDockerImageName())) {
                         //镜像名称不为空 -> 推送
                         threadPoolExecutorService.addWork(new Runnable() {
                             @Override
                             public void run() {
-                                ShellUtil.executeLinuxShellStr(DockerCmdUtils.getTagCmd(vo.getDockerImageName()), new ShellUtil.LocalFun());
-                                ShellUtil.executeLinuxShellStr(DockerCmdUtils.getPushCmd(vo.getDockerImageName()), new ShellUtil.LocalFun());
+                                ShellUtil.executeLinuxShellStr(CmdDockerUtils.getTagCmd(vo.getDevDockerImageName()), new ShellUtil.LocalFun());
+                                ShellUtil.executeLinuxShellStr(CmdDockerUtils.getPushCmd(vo.getDevDockerImageName()), new ShellUtil.LocalFun());
                             }
                         });
                     }

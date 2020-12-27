@@ -8,7 +8,7 @@ import demo.spring.boot.demospringboot.framework.MultiTerm;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-12-14
+ * 表创建      :2020-12-25
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -22,7 +22,6 @@ public class ProjectPlusMultiTermVo {
     private MultiTerm<String> projectPrice;  // 项目-价格
     private MultiTerm<String> projectPackageType;  // 项目-下载包类型(流/text)
     private MultiTerm<String> projectPanAddress;  // 项目-网盘地址
-    private MultiTerm<String> projectRealFileName;  // 项目-真实文件名称
     private MultiTerm<String> projectHtmlBody;  // 项目-网页Body
     private MultiTerm<String> projectSourceUrl;  // 项目-源ASPURL
     private MultiTerm<String> projectLanguage;  // 项目-开发语言
@@ -40,21 +39,37 @@ public class ProjectPlusMultiTermVo {
     private MultiTerm<String> projectStatus;  // 项目-状态,可用/废弃/暂定
     private MultiTerm<String> projectMark;  // 项目-备注
     private MultiTerm<String> projectCanRunning;  // 项目-是否正常运行
-    private MultiTerm<String> dockerImageName;  // docker-镜像-名称
-    private MultiTerm<String> dockerImageShellRemove;  // docker-镜像-移除命令
-    private MultiTerm<String> dockerStatus;  // docker-状态,创建.运行中,停止,容器移除,镜像移除
-    private MultiTerm<String> dockerContainerId;  // docker-容器-完整id
-    private MultiTerm<String> dockerContainerName;  // docker-容器-名称
-    private MultiTerm<String> dockerContainerPort;  // docker-端口号
-    private MultiTerm<String> dockerContainerShellCreate;  // docker-容器-创建命令
-    private MultiTerm<String> dockerContainerShellRun;  // docker-容器-启动命令
-    private MultiTerm<String> dockerContainerShellStop;  // docker-容器-停止命令
-    private MultiTerm<String> dockerContainerShellRemove;  // docker-容器-移除命令
+    private MultiTerm<String> projectSql;  // 项目-sql
+    private MultiTerm<String> projectPort;  // 项目-端口号
     private MultiTerm<String> addressContainerOuter;  // 地址-容器外网
     private MultiTerm<String> addressContainerInner;  // 地址-容器内网
     private MultiTerm<String> addressProjectFront;  // 地址-项目前端
     private MultiTerm<String> addressProjectBackground;  // 地址-项目后台
     private MultiTerm<String> addressProjectBackgroundAccountPasswd;  // 地址-项目后台-账号密码
+    private MultiTerm<String> devProjectRealFileName;  // 项目-真实文件名称
+    private MultiTerm<String> devDockerImageName;  // docker-镜像-名称
+    private MultiTerm<String> devDockerImageShellRemove;  // docker-镜像-移除命令
+    private MultiTerm<String> devDockerContainerId;  // docker-容器-完整id
+    private MultiTerm<String> devDockerContainerName;  // docker-容器-名称
+    private MultiTerm<String> devDockerContainerShellCreate;  // docker-容器-创建命令
+    private MultiTerm<String> devDockerContainerShellRun;  // docker-容器-启动命令
+    private MultiTerm<String> devDockerContainerShellStop;  // docker-容器-停止命令
+    private MultiTerm<String> devDockerContainerShellRemove;  // docker-容器-移除命令
+    private MultiTerm<String> devDockerStatusImagesIsExist;  // docker-状态-镜像是否存在
+    private MultiTerm<String> devDockerStatusContainerIsExist;  // docker-状态-容器是否存在
+    private MultiTerm<String> devDockerStatusContainerIsRunning;  // docker-状态-容器是否运行
+    private MultiTerm<String> proProjectRealFileName;  // pro-项目-真实文件名称
+    private MultiTerm<String> proDockerImageName;  // pro-docker-镜像-名称
+    private MultiTerm<String> proDockerImageShellRemove;  // pro-docker-镜像-移除命令
+    private MultiTerm<String> proDockerContainerId;  // pro-docker-容器-完整id
+    private MultiTerm<String> proDockerContainerName;  // pro-docker-容器-名称
+    private MultiTerm<String> proDockerContainerShellCreate;  // pro-docker-容器-创建命令
+    private MultiTerm<String> proDockerContainerShellRun;  // pro-docker-容器-启动命令
+    private MultiTerm<String> proDockerContainerShellStop;  // pro-docker-容器-停止命令
+    private MultiTerm<String> proDockerContainerShellRemove;  // pro-docker-容器-移除命令
+    private MultiTerm<String> proDockerStatusImagesIsExist;  // pro-docker-状态-镜像是否存在
+    private MultiTerm<String> proDockerStatusContainerIsExist;  // pro-docker-状态-容器是否存在
+    private MultiTerm<String> proDockerStatusContainerIsRunning;  // pro-docker-状态-容器是否运行
     private MultiTerm<String> updateTime;  // 更新时间
 
 
@@ -144,17 +159,6 @@ public class ProjectPlusMultiTermVo {
     public void setProjectPanAddress(MultiTerm<String> projectPanAddress) {
 
         this.projectPanAddress = projectPanAddress;
-
-    }
-    public MultiTerm<String> getProjectRealFileName() {
-
-        return projectRealFileName;
-
-    }
-
-    public void setProjectRealFileName(MultiTerm<String> projectRealFileName) {
-
-        this.projectRealFileName = projectRealFileName;
 
     }
     public MultiTerm<String> getProjectHtmlBody() {
@@ -344,114 +348,26 @@ public class ProjectPlusMultiTermVo {
         this.projectCanRunning = projectCanRunning;
 
     }
-    public MultiTerm<String> getDockerImageName() {
+    public MultiTerm<String> getProjectSql() {
 
-        return dockerImageName;
-
-    }
-
-    public void setDockerImageName(MultiTerm<String> dockerImageName) {
-
-        this.dockerImageName = dockerImageName;
-
-    }
-    public MultiTerm<String> getDockerImageShellRemove() {
-
-        return dockerImageShellRemove;
+        return projectSql;
 
     }
 
-    public void setDockerImageShellRemove(MultiTerm<String> dockerImageShellRemove) {
+    public void setProjectSql(MultiTerm<String> projectSql) {
 
-        this.dockerImageShellRemove = dockerImageShellRemove;
-
-    }
-    public MultiTerm<String> getDockerStatus() {
-
-        return dockerStatus;
+        this.projectSql = projectSql;
 
     }
+    public MultiTerm<String> getProjectPort() {
 
-    public void setDockerStatus(MultiTerm<String> dockerStatus) {
-
-        this.dockerStatus = dockerStatus;
-
-    }
-    public MultiTerm<String> getDockerContainerId() {
-
-        return dockerContainerId;
+        return projectPort;
 
     }
 
-    public void setDockerContainerId(MultiTerm<String> dockerContainerId) {
+    public void setProjectPort(MultiTerm<String> projectPort) {
 
-        this.dockerContainerId = dockerContainerId;
-
-    }
-    public MultiTerm<String> getDockerContainerName() {
-
-        return dockerContainerName;
-
-    }
-
-    public void setDockerContainerName(MultiTerm<String> dockerContainerName) {
-
-        this.dockerContainerName = dockerContainerName;
-
-    }
-    public MultiTerm<String> getDockerContainerPort() {
-
-        return dockerContainerPort;
-
-    }
-
-    public void setDockerContainerPort(MultiTerm<String> dockerContainerPort) {
-
-        this.dockerContainerPort = dockerContainerPort;
-
-    }
-    public MultiTerm<String> getDockerContainerShellCreate() {
-
-        return dockerContainerShellCreate;
-
-    }
-
-    public void setDockerContainerShellCreate(MultiTerm<String> dockerContainerShellCreate) {
-
-        this.dockerContainerShellCreate = dockerContainerShellCreate;
-
-    }
-    public MultiTerm<String> getDockerContainerShellRun() {
-
-        return dockerContainerShellRun;
-
-    }
-
-    public void setDockerContainerShellRun(MultiTerm<String> dockerContainerShellRun) {
-
-        this.dockerContainerShellRun = dockerContainerShellRun;
-
-    }
-    public MultiTerm<String> getDockerContainerShellStop() {
-
-        return dockerContainerShellStop;
-
-    }
-
-    public void setDockerContainerShellStop(MultiTerm<String> dockerContainerShellStop) {
-
-        this.dockerContainerShellStop = dockerContainerShellStop;
-
-    }
-    public MultiTerm<String> getDockerContainerShellRemove() {
-
-        return dockerContainerShellRemove;
-
-    }
-
-    public void setDockerContainerShellRemove(MultiTerm<String> dockerContainerShellRemove) {
-
-        this.dockerContainerShellRemove = dockerContainerShellRemove;
+        this.projectPort = projectPort;
 
     }
     public MultiTerm<String> getAddressContainerOuter() {
@@ -509,6 +425,270 @@ public class ProjectPlusMultiTermVo {
         this.addressProjectBackgroundAccountPasswd = addressProjectBackgroundAccountPasswd;
 
     }
+    public MultiTerm<String> getDevProjectRealFileName() {
+
+        return devProjectRealFileName;
+
+    }
+
+    public void setDevProjectRealFileName(MultiTerm<String> devProjectRealFileName) {
+
+        this.devProjectRealFileName = devProjectRealFileName;
+
+    }
+    public MultiTerm<String> getDevDockerImageName() {
+
+        return devDockerImageName;
+
+    }
+
+    public void setDevDockerImageName(MultiTerm<String> devDockerImageName) {
+
+        this.devDockerImageName = devDockerImageName;
+
+    }
+    public MultiTerm<String> getDevDockerImageShellRemove() {
+
+        return devDockerImageShellRemove;
+
+    }
+
+    public void setDevDockerImageShellRemove(MultiTerm<String> devDockerImageShellRemove) {
+
+        this.devDockerImageShellRemove = devDockerImageShellRemove;
+
+    }
+    public MultiTerm<String> getDevDockerContainerId() {
+
+        return devDockerContainerId;
+
+    }
+
+    public void setDevDockerContainerId(MultiTerm<String> devDockerContainerId) {
+
+        this.devDockerContainerId = devDockerContainerId;
+
+    }
+    public MultiTerm<String> getDevDockerContainerName() {
+
+        return devDockerContainerName;
+
+    }
+
+    public void setDevDockerContainerName(MultiTerm<String> devDockerContainerName) {
+
+        this.devDockerContainerName = devDockerContainerName;
+
+    }
+    public MultiTerm<String> getDevDockerContainerShellCreate() {
+
+        return devDockerContainerShellCreate;
+
+    }
+
+    public void setDevDockerContainerShellCreate(MultiTerm<String> devDockerContainerShellCreate) {
+
+        this.devDockerContainerShellCreate = devDockerContainerShellCreate;
+
+    }
+    public MultiTerm<String> getDevDockerContainerShellRun() {
+
+        return devDockerContainerShellRun;
+
+    }
+
+    public void setDevDockerContainerShellRun(MultiTerm<String> devDockerContainerShellRun) {
+
+        this.devDockerContainerShellRun = devDockerContainerShellRun;
+
+    }
+    public MultiTerm<String> getDevDockerContainerShellStop() {
+
+        return devDockerContainerShellStop;
+
+    }
+
+    public void setDevDockerContainerShellStop(MultiTerm<String> devDockerContainerShellStop) {
+
+        this.devDockerContainerShellStop = devDockerContainerShellStop;
+
+    }
+    public MultiTerm<String> getDevDockerContainerShellRemove() {
+
+        return devDockerContainerShellRemove;
+
+    }
+
+    public void setDevDockerContainerShellRemove(MultiTerm<String> devDockerContainerShellRemove) {
+
+        this.devDockerContainerShellRemove = devDockerContainerShellRemove;
+
+    }
+    public MultiTerm<String> getDevDockerStatusImagesIsExist() {
+
+        return devDockerStatusImagesIsExist;
+
+    }
+
+    public void setDevDockerStatusImagesIsExist(MultiTerm<String> devDockerStatusImagesIsExist) {
+
+        this.devDockerStatusImagesIsExist = devDockerStatusImagesIsExist;
+
+    }
+    public MultiTerm<String> getDevDockerStatusContainerIsExist() {
+
+        return devDockerStatusContainerIsExist;
+
+    }
+
+    public void setDevDockerStatusContainerIsExist(MultiTerm<String> devDockerStatusContainerIsExist) {
+
+        this.devDockerStatusContainerIsExist = devDockerStatusContainerIsExist;
+
+    }
+    public MultiTerm<String> getDevDockerStatusContainerIsRunning() {
+
+        return devDockerStatusContainerIsRunning;
+
+    }
+
+    public void setDevDockerStatusContainerIsRunning(MultiTerm<String> devDockerStatusContainerIsRunning) {
+
+        this.devDockerStatusContainerIsRunning = devDockerStatusContainerIsRunning;
+
+    }
+    public MultiTerm<String> getProProjectRealFileName() {
+
+        return proProjectRealFileName;
+
+    }
+
+    public void setProProjectRealFileName(MultiTerm<String> proProjectRealFileName) {
+
+        this.proProjectRealFileName = proProjectRealFileName;
+
+    }
+    public MultiTerm<String> getProDockerImageName() {
+
+        return proDockerImageName;
+
+    }
+
+    public void setProDockerImageName(MultiTerm<String> proDockerImageName) {
+
+        this.proDockerImageName = proDockerImageName;
+
+    }
+    public MultiTerm<String> getProDockerImageShellRemove() {
+
+        return proDockerImageShellRemove;
+
+    }
+
+    public void setProDockerImageShellRemove(MultiTerm<String> proDockerImageShellRemove) {
+
+        this.proDockerImageShellRemove = proDockerImageShellRemove;
+
+    }
+    public MultiTerm<String> getProDockerContainerId() {
+
+        return proDockerContainerId;
+
+    }
+
+    public void setProDockerContainerId(MultiTerm<String> proDockerContainerId) {
+
+        this.proDockerContainerId = proDockerContainerId;
+
+    }
+    public MultiTerm<String> getProDockerContainerName() {
+
+        return proDockerContainerName;
+
+    }
+
+    public void setProDockerContainerName(MultiTerm<String> proDockerContainerName) {
+
+        this.proDockerContainerName = proDockerContainerName;
+
+    }
+    public MultiTerm<String> getProDockerContainerShellCreate() {
+
+        return proDockerContainerShellCreate;
+
+    }
+
+    public void setProDockerContainerShellCreate(MultiTerm<String> proDockerContainerShellCreate) {
+
+        this.proDockerContainerShellCreate = proDockerContainerShellCreate;
+
+    }
+    public MultiTerm<String> getProDockerContainerShellRun() {
+
+        return proDockerContainerShellRun;
+
+    }
+
+    public void setProDockerContainerShellRun(MultiTerm<String> proDockerContainerShellRun) {
+
+        this.proDockerContainerShellRun = proDockerContainerShellRun;
+
+    }
+    public MultiTerm<String> getProDockerContainerShellStop() {
+
+        return proDockerContainerShellStop;
+
+    }
+
+    public void setProDockerContainerShellStop(MultiTerm<String> proDockerContainerShellStop) {
+
+        this.proDockerContainerShellStop = proDockerContainerShellStop;
+
+    }
+    public MultiTerm<String> getProDockerContainerShellRemove() {
+
+        return proDockerContainerShellRemove;
+
+    }
+
+    public void setProDockerContainerShellRemove(MultiTerm<String> proDockerContainerShellRemove) {
+
+        this.proDockerContainerShellRemove = proDockerContainerShellRemove;
+
+    }
+    public MultiTerm<String> getProDockerStatusImagesIsExist() {
+
+        return proDockerStatusImagesIsExist;
+
+    }
+
+    public void setProDockerStatusImagesIsExist(MultiTerm<String> proDockerStatusImagesIsExist) {
+
+        this.proDockerStatusImagesIsExist = proDockerStatusImagesIsExist;
+
+    }
+    public MultiTerm<String> getProDockerStatusContainerIsExist() {
+
+        return proDockerStatusContainerIsExist;
+
+    }
+
+    public void setProDockerStatusContainerIsExist(MultiTerm<String> proDockerStatusContainerIsExist) {
+
+        this.proDockerStatusContainerIsExist = proDockerStatusContainerIsExist;
+
+    }
+    public MultiTerm<String> getProDockerStatusContainerIsRunning() {
+
+        return proDockerStatusContainerIsRunning;
+
+    }
+
+    public void setProDockerStatusContainerIsRunning(MultiTerm<String> proDockerStatusContainerIsRunning) {
+
+        this.proDockerStatusContainerIsRunning = proDockerStatusContainerIsRunning;
+
+    }
     public MultiTerm<String> getUpdateTime() {
 
         return updateTime;
@@ -532,7 +712,6 @@ public class ProjectPlusMultiTermVo {
                 ", projectPrice '" + projectPrice + '\'' +
                 ", projectPackageType '" + projectPackageType + '\'' +
                 ", projectPanAddress '" + projectPanAddress + '\'' +
-                ", projectRealFileName '" + projectRealFileName + '\'' +
                 ", projectHtmlBody '" + projectHtmlBody + '\'' +
                 ", projectSourceUrl '" + projectSourceUrl + '\'' +
                 ", projectLanguage '" + projectLanguage + '\'' +
@@ -550,21 +729,37 @@ public class ProjectPlusMultiTermVo {
                 ", projectStatus '" + projectStatus + '\'' +
                 ", projectMark '" + projectMark + '\'' +
                 ", projectCanRunning '" + projectCanRunning + '\'' +
-                ", dockerImageName '" + dockerImageName + '\'' +
-                ", dockerImageShellRemove '" + dockerImageShellRemove + '\'' +
-                ", dockerStatus '" + dockerStatus + '\'' +
-                ", dockerContainerId '" + dockerContainerId + '\'' +
-                ", dockerContainerName '" + dockerContainerName + '\'' +
-                ", dockerContainerPort '" + dockerContainerPort + '\'' +
-                ", dockerContainerShellCreate '" + dockerContainerShellCreate + '\'' +
-                ", dockerContainerShellRun '" + dockerContainerShellRun + '\'' +
-                ", dockerContainerShellStop '" + dockerContainerShellStop + '\'' +
-                ", dockerContainerShellRemove '" + dockerContainerShellRemove + '\'' +
+                ", projectSql '" + projectSql + '\'' +
+                ", projectPort '" + projectPort + '\'' +
                 ", addressContainerOuter '" + addressContainerOuter + '\'' +
                 ", addressContainerInner '" + addressContainerInner + '\'' +
                 ", addressProjectFront '" + addressProjectFront + '\'' +
                 ", addressProjectBackground '" + addressProjectBackground + '\'' +
                 ", addressProjectBackgroundAccountPasswd '" + addressProjectBackgroundAccountPasswd + '\'' +
+                ", devProjectRealFileName '" + devProjectRealFileName + '\'' +
+                ", devDockerImageName '" + devDockerImageName + '\'' +
+                ", devDockerImageShellRemove '" + devDockerImageShellRemove + '\'' +
+                ", devDockerContainerId '" + devDockerContainerId + '\'' +
+                ", devDockerContainerName '" + devDockerContainerName + '\'' +
+                ", devDockerContainerShellCreate '" + devDockerContainerShellCreate + '\'' +
+                ", devDockerContainerShellRun '" + devDockerContainerShellRun + '\'' +
+                ", devDockerContainerShellStop '" + devDockerContainerShellStop + '\'' +
+                ", devDockerContainerShellRemove '" + devDockerContainerShellRemove + '\'' +
+                ", devDockerStatusImagesIsExist '" + devDockerStatusImagesIsExist + '\'' +
+                ", devDockerStatusContainerIsExist '" + devDockerStatusContainerIsExist + '\'' +
+                ", devDockerStatusContainerIsRunning '" + devDockerStatusContainerIsRunning + '\'' +
+                ", proProjectRealFileName '" + proProjectRealFileName + '\'' +
+                ", proDockerImageName '" + proDockerImageName + '\'' +
+                ", proDockerImageShellRemove '" + proDockerImageShellRemove + '\'' +
+                ", proDockerContainerId '" + proDockerContainerId + '\'' +
+                ", proDockerContainerName '" + proDockerContainerName + '\'' +
+                ", proDockerContainerShellCreate '" + proDockerContainerShellCreate + '\'' +
+                ", proDockerContainerShellRun '" + proDockerContainerShellRun + '\'' +
+                ", proDockerContainerShellStop '" + proDockerContainerShellStop + '\'' +
+                ", proDockerContainerShellRemove '" + proDockerContainerShellRemove + '\'' +
+                ", proDockerStatusImagesIsExist '" + proDockerStatusImagesIsExist + '\'' +
+                ", proDockerStatusContainerIsExist '" + proDockerStatusContainerIsExist + '\'' +
+                ", proDockerStatusContainerIsRunning '" + proDockerStatusContainerIsRunning + '\'' +
                 ", updateTime '" + updateTime + '\'' +
                 '}';
     }

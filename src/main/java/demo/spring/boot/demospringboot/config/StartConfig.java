@@ -38,6 +38,9 @@ public class StartConfig implements InitializingBean {
     @Value(value = "${local.fsPath.originZip}")
     private String localFsPathOriginZip;
 
+    @Value(value = "${local.fsPath.proZip}")
+    private String localFsPathProZip;
+
     @Value(value = "${local.host.inner}")
     private String localHostInner;
 
@@ -55,6 +58,9 @@ public class StartConfig implements InitializingBean {
      */
     @Value(value = "${local.host.docker.api}")
     private String localHostDockerApi;
+
+    @Value(value = "${local.host.docker.master}")
+    private String localHostDockerMaster;
 
     public String getLocalFsPathImg() {
         return localFsPathImg;
@@ -88,6 +94,14 @@ public class StartConfig implements InitializingBean {
         return localHostDockerApi;
     }
 
+    public String getLocalFsPathProZip() {
+        return localFsPathProZip;
+    }
+
+    public String getLocalHostDockerMaster() {
+        return localHostDockerMaster;
+    }
+
     @Override
     public void afterPropertiesSet() throws Exception {
         //保证文件夹存在
@@ -102,6 +116,11 @@ public class StartConfig implements InitializingBean {
         File localFsPathOriginZipFile = new File(localFsPathOriginZip);
         if (!localFsPathOriginZipFile.exists()) {
             localFsPathOriginZipFile.mkdirs();
+        }
+
+        File localFsPathProZipFile = new File(localFsPathProZip);
+        if (!localFsPathProZipFile.exists()) {
+            localFsPathProZipFile.mkdirs();
         }
     }
 

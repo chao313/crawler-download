@@ -7,15 +7,17 @@ local:
     tmp: /Users/chao/data/tmp
     img: /Users/chao/data/img
     originZip: /Users/chao/data/originZip
+    proZip: /Users/chao/data/proZip
 
   host:
-    inner: http://127.0.0.2
+    inner: http://127.0.0.1
     outer: http://39.107.236.187
     portainer:
       inner: http://127.0.0.1:9000/#/containers
       outer: http://39.107.236.187:9000/#/containers
     docker:
-      api: http://192.168.0.106:5555/
+      api: http://127.0.0.1:3375
+      master: host.docker.internal
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver

@@ -3,7 +3,6 @@ package demomaster.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import demo.spring.boot.demospringboot.enums.DockerStatus;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.RequestUpdate;
 import demo.spring.boot.demospringboot.framework.Response;
@@ -18,6 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +26,6 @@ import java.util.Map;
 @RequestMapping(value = "/ProjectPlusController")
 @Slf4j
 public class ProjectPlusController {
-
 
     @Autowired
     private ProjectPlusService service;
@@ -39,7 +38,7 @@ public class ProjectPlusController {
      *
      * @param vo
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/insert")
@@ -64,7 +63,7 @@ public class ProjectPlusController {
      *
      * @param vos
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/inserts")
@@ -90,7 +89,7 @@ public class ProjectPlusController {
      *
      * @param query
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryBase")
@@ -118,14 +117,14 @@ public class ProjectPlusController {
      * @param pageNum  页码 默认值为1
      * @param pageSize 每页的size 默认值为10
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryBasePageHelper")
     public Response queryBasePageHelper(@RequestBody ProjectPlusVo query,
                                         @RequestParam(value = "pageNum", defaultValue = "1", required = false) Integer pageNum,
                                         @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-                                        @RequestParam(value = "order", required = false) String order) {
+                                        @RequestParam(value = "order", required = false) String order) throws IOException {
         Response response = new Response();
         try {
             PageHelper.startPage(pageNum, pageSize);
@@ -138,33 +137,72 @@ public class ProjectPlusController {
             Collection<String> runningContainers = dockerRestApiService.getRunningContainers();
             List<ProjectPlusVo> result = service.queryBase(query);
             for (ProjectPlusVo vo : result) {
-                if (StringUtils.isNotBlank(vo.getDockerImageName())) {
-                    vo.setDockerStatus(DockerStatus.IMAGE_NO_EXIST.getStatus());
-                    //和docker交互
+                vo.setDevDockerStatusImagesIsExist("false");
+                vo.setDevDockerStatusContainerIsExist("false");
+                vo.setDevDockerStatusContainerIsRunning("false");
+                vo.setProDockerStatusImagesIsExist("false");
+                vo.setProDockerStatusContainerIsExist("false");
+                vo.setProDockerStatusContainerIsRunning("false");
+                if (StringUtils.isNotBlank(vo.getDevDockerImageName())) {
                     allImages.forEach(image -> {
-                        if (image.contains("/" + vo.getDockerImageName())) {
+                        if (image.contains("/" + vo.getDevDockerImageName())) {
                             //检索到代表镜像存在 -> 指定为镜像存在
-                            vo.setDockerStatus(DockerStatus.IMAGE_EXIST.getStatus());
+                            vo.setDevDockerStatusImagesIsExist("true");
                         }
                     });
-                    if (allContainers.contains("/" + vo.getDockerContainerName())) {
-                        //检索到代表容器存在 -> 暂时指定为停止 -> 后面会指定为运行
-                        vo.setDockerStatus(DockerStatus.CONTAINER_STOPPED.getStatus());
-                    }
-                    if (runningContainers.contains("/" + vo.getDockerContainerName())) {
-                        vo.setDockerStatus(DockerStatus.CONTAINER_RUNNING.getStatus());
-                    }
-                    //获取容器id(仅仅当容器运行时)
-                    String dockerContainerId = allContainersMap.get("/" + vo.getDockerContainerName());
-                    vo.setDockerContainerId(dockerContainerId);
                 }
+                if (StringUtils.isNotBlank(vo.getProDockerImageName())) {
+                    allImages.forEach(image -> {
+                        if (image.contains("/" + vo.getProDockerImageName())) {
+                            //检索到代表镜像存在 -> 指定为镜像存在
+                            vo.setProDockerStatusImagesIsExist("true");
+                        }
+                    });
+                }
+                if (StringUtils.isNotBlank(vo.getDevDockerContainerName())) {
+                    allContainers.forEach(container -> {
+                        if (container.contains("/" + vo.getDevDockerContainerName())) {
+                            //检索到代表容器存在
+                            vo.setDevDockerStatusContainerIsExist("true");
+                        }
+                    });
+                }
+                if (StringUtils.isNotBlank(vo.getProDockerContainerName())) {
+                    allContainers.forEach(container -> {
+                        if (container.contains("/" + vo.getProDockerContainerName())) {
+                            //检索到代表容器存在
+                            vo.setProDockerStatusContainerIsExist("true");
+                        }
+                    });
+                }
+                if (StringUtils.isNotBlank(vo.getDevDockerContainerName())) {
+                    runningContainers.forEach(container -> {
+                        if (container.contains("/" + vo.getDevDockerContainerName())) {
+                            //检索到代表容器存在 -> 指定为镜像存在
+                            vo.setDevDockerStatusContainerIsRunning("true");
+                        }
+                    });
+                }
+                if (StringUtils.isNotBlank(vo.getProDockerContainerName())) {
+                    runningContainers.forEach(container -> {
+                        if (container.contains("/" + vo.getProDockerContainerName())) {
+                            //检索到代表容器存在 -> 指定为镜像存在
+                            vo.setProDockerStatusContainerIsRunning("true");
+                        }
+                    });
+                }
+                String devDockerContainerId = allContainersMap.get("/" + vo.getDevDockerContainerName());
+                vo.setDevDockerContainerId(devDockerContainerId);
+                String proDockerContainerId = allContainersMap.get("/" + vo.getProDockerContainerName());
+                vo.setProDockerContainerId(proDockerContainerId);
             }
 
             PageInfo pageInfo = new PageInfo(result);
             response.setCode(Code.System.OK);
             response.setContent(pageInfo);
             log.info("success pageInfo -> {} ", pageInfo.getSize());
-        } catch (Exception e) {
+        } catch (
+                Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());
             response.addException(e);
@@ -181,7 +219,7 @@ public class ProjectPlusController {
      * @param pageNum  页码 默认值为1
      * @param pageSize 每页的size 默认值为10
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/queryMultiTermPageHelper")
@@ -199,7 +237,7 @@ public class ProjectPlusController {
             PageInfo pageInfo = new PageInfo(result);
             response.setCode(Code.System.OK);
             response.setContent(pageInfo);
-            log.info("success pageInfo -> {} ", pageInfo.getSize());
+            log.info("success pageInfo -> {} ", pageInfo);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());
@@ -218,7 +256,7 @@ public class ProjectPlusController {
      * @param source
      * @param target
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateBase")
@@ -246,7 +284,7 @@ public class ProjectPlusController {
      * @param source
      * @param target
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateBaseIncludeNull")
@@ -272,7 +310,7 @@ public class ProjectPlusController {
      *
      * @param vo
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/deleteBase")
@@ -299,7 +337,7 @@ public class ProjectPlusController {
      *
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/queryByPrimaryKey")
@@ -328,7 +366,7 @@ public class ProjectPlusController {
      *
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @GetMapping(value = "/deleteByPrimaryKey")
@@ -357,7 +395,7 @@ public class ProjectPlusController {
      * @param update.target 只包含主键的字段
      * @param id
      * @return 成功和失败都返回Response，具体的结果在response的
-     * code   :状态码
+     * app   :状态码
      * content:具体返回值
      */
     @PostMapping(value = "/updateByPrimaryKey")

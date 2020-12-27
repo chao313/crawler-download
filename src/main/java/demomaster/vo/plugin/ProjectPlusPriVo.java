@@ -9,7 +9,7 @@ package demomaster.vo.plugin;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-12-14
+ * 表创建      :2020-12-25
  * 字符集      :utf8_bin
  * 表注释      :
  */

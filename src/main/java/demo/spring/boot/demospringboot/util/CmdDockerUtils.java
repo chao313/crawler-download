@@ -1,10 +1,12 @@
 package demo.spring.boot.demospringboot.util;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //docker状态,创建,运行中,停止,容器移除,镜像移除
-public class DockerCmdUtils {
+public class CmdDockerUtils {
 
     /**
      * 状态
@@ -78,26 +80,57 @@ public class DockerCmdUtils {
      * 获取tag的命令
      */
     public static String getTagCmd(String imageName) {
-        return MessageFormat.format("docker tag {0}  docker.io/chao313/{0}:latest'", imageName, imageName);
+        return MessageFormat.format("docker tag {0}  docker.io/chao313/{0}:latest", imageName, imageName);
     }
 
     /**
      * 获取tag的命令
      */
     public static String getRemoveTagCmd(String imageName) {
-        return MessageFormat.format("docker rmi  docker.io/chao313/{0}:latest'", imageName, imageName);
+        return MessageFormat.format("docker rmi  docker.io/chao313/{0}:latest", imageName, imageName);
     }
 
     /**
      * 获取push的命令
      */
     public static String getPushCmd(String imageName) {
-        return MessageFormat.format("docker push docker.io/chao313/{0}:latest'", imageName);
+        return MessageFormat.format("docker push docker.io/chao313/{0}:latest", imageName);
     }
 
     public static List<String> getContainerRunningNames() {
         String cmd = "docker ps -a -f status=running --format {{.Names}}";
         return ShellUtil.getResult(cmd.split(" "));
+    }
+
+    /**
+     * 获取导出sql的命令
+     */
+    @Deprecated
+    public static String[] getCopySqlCmd(String containerName, String pathDir, String fileName) {
+        String format = MessageFormat.format("docker exec {0} mysqldump  -u admin111111 -p123456111111 php_test111111 ", containerName);
+        String format_end = MessageFormat.format(" > {1}/{2}.sql", pathDir, fileName);
+        List<String> tmp = new ArrayList<>(Arrays.asList(format.split(" ")));
+        tmp.add(0,"-c");
+        tmp.add(0,"/bin/bash");
+        tmp.add(format_end);
+        String[] result = {};
+        return tmp.toArray(result);
+    }
+
+    /**
+     * 获取导出sql的命令
+     */
+    public static String getCopySqlCmd(String containerName) {
+        String format = MessageFormat.format("docker exec {0} mysqldump  -u admin111111 -p123456111111 php_test111111 ", containerName);
+        return format;
+    }
+
+    /**
+     * 获取导出sql的命令
+     * docker cp 11_softview_62253_:/app ./<id>/app
+     */
+    public static String getCopyAppCmd(String containerName, String pathDir) {
+        return MessageFormat.format("docker cp {0}:/app {1}", containerName, pathDir);
     }
 
 

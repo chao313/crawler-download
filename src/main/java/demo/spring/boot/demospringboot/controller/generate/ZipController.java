@@ -119,7 +119,7 @@ public class ZipController {
             log.info("检测到sql:{}", sqlBuilder.toString());
             AtomicReference<String> atomicReference = new AtomicReference<>();
             this.find(new File(targetFileDir), atomicReference);
-            org.apache.commons.io.FileUtils.copyDirectory(new File(atomicReference.get()), new File(workOperateDir + "/code/"));//项目复制到目标文件夹下
+            org.apache.commons.io.FileUtils.copyDirectory(new File(atomicReference.get()), new File(workOperateDir + "/app/"));//项目复制到目标文件夹下
             String shellPath = new File(workOperateDir).getAbsolutePath();
             String shell = " docker build --rm -t tmp " + shellPath;
 //            shell = "docker build --rm -t tmp /Users/chao/IdeaWorkspace/crawler-download/locationResourcePath/e012c44049744210a7f6713e38952d57 ";

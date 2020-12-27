@@ -1,6 +1,5 @@
 package demo.spring.boot.demospringboot.service.zip;
 
-import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.enums.ProjectStatus;
 import demo.spring.boot.demospringboot.util.CmdDockerUtils;
 import demo.spring.boot.demospringboot.vo.LanguageType;
@@ -19,7 +18,7 @@ import java.util.concurrent.atomic.AtomicReference;
  */
 @Slf4j
 @Component
-public abstract class UnzipToDocker {
+public abstract class UnzipToDockerPro {
 
     /**
      * 解压并且获取解压缩的根目录
@@ -29,16 +28,9 @@ public abstract class UnzipToDocker {
      *
      * @param fileInDirAbsolutePath 压缩包所文件夹绝对路径
      * @param fileName              压缩包的
-     * @param sql                   压缩包内SQL
-     * @param checkLanguageType     期望压缩包语言类型(为空不做判断)
-     * @param languageType          压缩包语言类型
      * @return 返回解压缩的根目录 - 绝对路径
      */
-    protected abstract String unzipAndGetRoot(String fileInDirAbsolutePath,
-                                              String fileName,
-                                              StringBuilder sql,
-                                              LanguageType checkLanguageType,
-                                              AtomicReference<LanguageType> languageType);
+    protected abstract String unzip(String fileInDirAbsolutePath, String fileName);
 
     /**
      * 找到真正的数据路径
@@ -59,14 +51,6 @@ public abstract class UnzipToDocker {
                                                        String dockerModelPath,
                                                        String workDirAbsolutePath) throws IOException;
 
-    /**
-     * 补全sql文件
-     *
-     * @param dockerRealPath 解ocker组合后的路径
-     * @return 数据路径
-     */
-    protected abstract void makeUpSqlPath(String dockerRealPath,
-                                          StringBuilder sql) throws IOException;
 
     /**
      * 补全描述文件
@@ -121,8 +105,6 @@ public abstract class UnzipToDocker {
                           Map<String, byte[]> descMap,
                           ProjectPlusVo projectPlusVo) throws IOException {
 
-        StringBuilder sql = new StringBuilder();//存放sql的地址
-
         AtomicReference<LanguageType> languageType = new AtomicReference<>();
 
         File workFileDir = new File(workDirAbsolutePath);
@@ -134,7 +116,7 @@ public abstract class UnzipToDocker {
         /**
          * 解压并且获取解压缩的根目录
          */
-        String rootPath = this.unzipAndGetRoot(workDirAbsolutePath, file.getName(), sql, null, languageType);
+        String rootPath = this.unzip(workDirAbsolutePath, file.getName());
         log.info("解压的路径:{}", rootPath);
 //        if (null == languageType.get() || (null != languageType.get() && !languageType.get().equals(LanguageType.PHP))) {
 //            log.info("当前项目不是PHP项目:{}", languageType.get());
@@ -152,11 +134,7 @@ public abstract class UnzipToDocker {
         String dockerRealPath = this.copyCombineCodeAndDocker(dataPath, dockerModelDirPath, workDirAbsolutePath);
         log.info("组合docker的path:{}", dockerRealPath);
 
-        /**
-         * 补全sql文件
-         */
-        this.makeUpSqlPath(dockerRealPath, sql);
-        log.info("补全sql数据:{}", sql.toString().length());
+
         /**
          * 补全描述文件
          */
@@ -185,16 +163,14 @@ public abstract class UnzipToDocker {
             if (null != languageType.get()) {
                 projectPlusVo.setProjectLanguage(languageType.get().getType());
             }
-            projectPlusVo.setDevDockerImageName(imageName);
-            projectPlusVo.setDevDockerContainerName(containerName);
+            projectPlusVo.setProDockerImageName(imageName);
+            projectPlusVo.setProDockerContainerName(containerName);
             projectPlusVo.setProjectPort(port.toString());
-            projectPlusVo.setAddressContainerInner(StartConfig.INNER_HOST + ":" + port);
-            projectPlusVo.setAddressContainerOuter(StartConfig.OUT_HOST + ":" + port);
-            projectPlusVo.setDevDockerContainerShellCreate(CmdDockerUtils.create(containerName, port, 80, imageName));
-            projectPlusVo.setDevDockerContainerShellRun(CmdDockerUtils.run(containerName));
-            projectPlusVo.setDevDockerContainerShellStop(CmdDockerUtils.stopContainer(containerName));
-            projectPlusVo.setDevDockerContainerShellRemove(CmdDockerUtils.removeContainer(containerName));
-            projectPlusVo.setDevDockerImageShellRemove(CmdDockerUtils.removeImage(imageName));
+            projectPlusVo.setProDockerContainerShellCreate(CmdDockerUtils.create(containerName, port, 80, imageName));
+            projectPlusVo.setProDockerContainerShellRun(CmdDockerUtils.run(containerName));
+            projectPlusVo.setProDockerContainerShellStop(CmdDockerUtils.stopContainer(containerName));
+            projectPlusVo.setProDockerContainerShellRemove(CmdDockerUtils.removeContainer(containerName));
+            projectPlusVo.setProDockerImageShellRemove(CmdDockerUtils.removeImage(imageName));
             projectPlusVo.setProjectStatus(ProjectStatus.CREATED.getStatus());
         }
         //删除临时文件(为了防止误删,加上判断)

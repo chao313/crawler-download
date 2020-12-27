@@ -11,7 +11,6 @@
         <result column="project_price" property="projectPrice"/>
         <result column="project_package_type" property="projectPackageType"/>
         <result column="project_pan_address" property="projectPanAddress"/>
-        <result column="project_real_file_name" property="projectRealFileName"/>
         <result column="project_html_body" property="projectHtmlBody"/>
         <result column="project_source_url" property="projectSourceUrl"/>
         <result column="project_language" property="projectLanguage"/>
@@ -29,21 +28,37 @@
         <result column="project_status" property="projectStatus"/>
         <result column="project_mark" property="projectMark"/>
         <result column="project_can_running" property="projectCanRunning"/>
-        <result column="docker_image_name" property="dockerImageName"/>
-        <result column="docker_image_shell_remove" property="dockerImageShellRemove"/>
-        <result column="docker_status" property="dockerStatus"/>
-        <result column="docker_container_id" property="dockerContainerId"/>
-        <result column="docker_container_name" property="dockerContainerName"/>
-        <result column="docker_container_port" property="dockerContainerPort"/>
-        <result column="docker_container_shell_create" property="dockerContainerShellCreate"/>
-        <result column="docker_container_shell_run" property="dockerContainerShellRun"/>
-        <result column="docker_container_shell_stop" property="dockerContainerShellStop"/>
-        <result column="docker_container_shell_remove" property="dockerContainerShellRemove"/>
+        <result column="project_sql" property="projectSql"/>
+        <result column="project_port" property="projectPort"/>
         <result column="address_container_outer" property="addressContainerOuter"/>
         <result column="address_container_inner" property="addressContainerInner"/>
         <result column="address_project_front" property="addressProjectFront"/>
         <result column="address_project_background" property="addressProjectBackground"/>
         <result column="address_project_background_account_passwd" property="addressProjectBackgroundAccountPasswd"/>
+        <result column="dev_project_real_file_name" property="devProjectRealFileName"/>
+        <result column="dev_docker_image_name" property="devDockerImageName"/>
+        <result column="dev_docker_image_shell_remove" property="devDockerImageShellRemove"/>
+        <result column="dev_docker_container_id" property="devDockerContainerId"/>
+        <result column="dev_docker_container_name" property="devDockerContainerName"/>
+        <result column="dev_docker_container_shell_create" property="devDockerContainerShellCreate"/>
+        <result column="dev_docker_container_shell_run" property="devDockerContainerShellRun"/>
+        <result column="dev_docker_container_shell_stop" property="devDockerContainerShellStop"/>
+        <result column="dev_docker_container_shell_remove" property="devDockerContainerShellRemove"/>
+        <result column="dev_docker_status_images_is_exist" property="devDockerStatusImagesIsExist"/>
+        <result column="dev_docker_status_container_is_exist" property="devDockerStatusContainerIsExist"/>
+        <result column="dev_docker_status_container_is_running" property="devDockerStatusContainerIsRunning"/>
+        <result column="pro_project_real_file_name" property="proProjectRealFileName"/>
+        <result column="pro_docker_image_name" property="proDockerImageName"/>
+        <result column="pro_docker_image_shell_remove" property="proDockerImageShellRemove"/>
+        <result column="pro_docker_container_id" property="proDockerContainerId"/>
+        <result column="pro_docker_container_name" property="proDockerContainerName"/>
+        <result column="pro_docker_container_shell_create" property="proDockerContainerShellCreate"/>
+        <result column="pro_docker_container_shell_run" property="proDockerContainerShellRun"/>
+        <result column="pro_docker_container_shell_stop" property="proDockerContainerShellStop"/>
+        <result column="pro_docker_container_shell_remove" property="proDockerContainerShellRemove"/>
+        <result column="pro_docker_status_images_is_exist" property="proDockerStatusImagesIsExist"/>
+        <result column="pro_docker_status_container_is_exist" property="proDockerStatusContainerIsExist"/>
+        <result column="pro_docker_status_container_is_running" property="proDockerStatusContainerIsRunning"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
 
@@ -58,7 +73,6 @@
         `project_price` ,
         `project_package_type` ,
         `project_pan_address` ,
-        `project_real_file_name` ,
         `project_html_body` ,
         `project_source_url` ,
         `project_language` ,
@@ -76,21 +90,37 @@
         `project_status` ,
         `project_mark` ,
         `project_can_running` ,
-        `docker_image_name` ,
-        `docker_image_shell_remove` ,
-        `docker_status` ,
-        `docker_container_id` ,
-        `docker_container_name` ,
-        `docker_container_port` ,
-        `docker_container_shell_create` ,
-        `docker_container_shell_run` ,
-        `docker_container_shell_stop` ,
-        `docker_container_shell_remove` ,
+        `project_sql` ,
+        `project_port` ,
         `address_container_outer` ,
         `address_container_inner` ,
         `address_project_front` ,
         `address_project_background` ,
         `address_project_background_account_passwd` ,
+        `dev_project_real_file_name` ,
+        `dev_docker_image_name` ,
+        `dev_docker_image_shell_remove` ,
+        `dev_docker_container_id` ,
+        `dev_docker_container_name` ,
+        `dev_docker_container_shell_create` ,
+        `dev_docker_container_shell_run` ,
+        `dev_docker_container_shell_stop` ,
+        `dev_docker_container_shell_remove` ,
+        `dev_docker_status_images_is_exist` ,
+        `dev_docker_status_container_is_exist` ,
+        `dev_docker_status_container_is_running` ,
+        `pro_project_real_file_name` ,
+        `pro_docker_image_name` ,
+        `pro_docker_image_shell_remove` ,
+        `pro_docker_container_id` ,
+        `pro_docker_container_name` ,
+        `pro_docker_container_shell_create` ,
+        `pro_docker_container_shell_run` ,
+        `pro_docker_container_shell_stop` ,
+        `pro_docker_container_shell_remove` ,
+        `pro_docker_status_images_is_exist` ,
+        `pro_docker_status_container_is_exist` ,
+        `pro_docker_status_container_is_running` ,
         `update_time` 
         )VALUE(
           #{id}  ,
@@ -101,7 +131,6 @@
           #{projectPrice}  ,
           #{projectPackageType}  ,
           #{projectPanAddress}  ,
-          #{projectRealFileName}  ,
           #{projectHtmlBody}  ,
           #{projectSourceUrl}  ,
           #{projectLanguage}  ,
@@ -119,21 +148,37 @@
           #{projectStatus}  ,
           #{projectMark}  ,
           #{projectCanRunning}  ,
-          #{dockerImageName}  ,
-          #{dockerImageShellRemove}  ,
-          #{dockerStatus}  ,
-          #{dockerContainerId}  ,
-          #{dockerContainerName}  ,
-          #{dockerContainerPort}  ,
-          #{dockerContainerShellCreate}  ,
-          #{dockerContainerShellRun}  ,
-          #{dockerContainerShellStop}  ,
-          #{dockerContainerShellRemove}  ,
+          #{projectSql}  ,
+          #{projectPort}  ,
           #{addressContainerOuter}  ,
           #{addressContainerInner}  ,
           #{addressProjectFront}  ,
           #{addressProjectBackground}  ,
           #{addressProjectBackgroundAccountPasswd}  ,
+          #{devProjectRealFileName}  ,
+          #{devDockerImageName}  ,
+          #{devDockerImageShellRemove}  ,
+          #{devDockerContainerId}  ,
+          #{devDockerContainerName}  ,
+          #{devDockerContainerShellCreate}  ,
+          #{devDockerContainerShellRun}  ,
+          #{devDockerContainerShellStop}  ,
+          #{devDockerContainerShellRemove}  ,
+          #{devDockerStatusImagesIsExist}  ,
+          #{devDockerStatusContainerIsExist}  ,
+          #{devDockerStatusContainerIsRunning}  ,
+          #{proProjectRealFileName}  ,
+          #{proDockerImageName}  ,
+          #{proDockerImageShellRemove}  ,
+          #{proDockerContainerId}  ,
+          #{proDockerContainerName}  ,
+          #{proDockerContainerShellCreate}  ,
+          #{proDockerContainerShellRun}  ,
+          #{proDockerContainerShellStop}  ,
+          #{proDockerContainerShellRemove}  ,
+          #{proDockerStatusImagesIsExist}  ,
+          #{proDockerStatusContainerIsExist}  ,
+          #{proDockerStatusContainerIsRunning}  ,
           #{updateTime}  
         )
     </insert>
@@ -149,7 +194,6 @@
         `project_price`,
         `project_package_type`,
         `project_pan_address`,
-        `project_real_file_name`,
         `project_html_body`,
         `project_source_url`,
         `project_language`,
@@ -167,21 +211,37 @@
         `project_status`,
         `project_mark`,
         `project_can_running`,
-        `docker_image_name`,
-        `docker_image_shell_remove`,
-        `docker_status`,
-        `docker_container_id`,
-        `docker_container_name`,
-        `docker_container_port`,
-        `docker_container_shell_create`,
-        `docker_container_shell_run`,
-        `docker_container_shell_stop`,
-        `docker_container_shell_remove`,
+        `project_sql`,
+        `project_port`,
         `address_container_outer`,
         `address_container_inner`,
         `address_project_front`,
         `address_project_background`,
         `address_project_background_account_passwd`,
+        `dev_project_real_file_name`,
+        `dev_docker_image_name`,
+        `dev_docker_image_shell_remove`,
+        `dev_docker_container_id`,
+        `dev_docker_container_name`,
+        `dev_docker_container_shell_create`,
+        `dev_docker_container_shell_run`,
+        `dev_docker_container_shell_stop`,
+        `dev_docker_container_shell_remove`,
+        `dev_docker_status_images_is_exist`,
+        `dev_docker_status_container_is_exist`,
+        `dev_docker_status_container_is_running`,
+        `pro_project_real_file_name`,
+        `pro_docker_image_name`,
+        `pro_docker_image_shell_remove`,
+        `pro_docker_container_id`,
+        `pro_docker_container_name`,
+        `pro_docker_container_shell_create`,
+        `pro_docker_container_shell_run`,
+        `pro_docker_container_shell_stop`,
+        `pro_docker_container_shell_remove`,
+        `pro_docker_status_images_is_exist`,
+        `pro_docker_status_container_is_exist`,
+        `pro_docker_status_container_is_running`,
         `update_time`
         )VALUES
         <foreach collection="vos" item="item" separator=",">
@@ -194,7 +254,6 @@
             #{item.projectPrice},
             #{item.projectPackageType},
             #{item.projectPanAddress},
-            #{item.projectRealFileName},
             #{item.projectHtmlBody},
             #{item.projectSourceUrl},
             #{item.projectLanguage},
@@ -212,21 +271,37 @@
             #{item.projectStatus},
             #{item.projectMark},
             #{item.projectCanRunning},
-            #{item.dockerImageName},
-            #{item.dockerImageShellRemove},
-            #{item.dockerStatus},
-            #{item.dockerContainerId},
-            #{item.dockerContainerName},
-            #{item.dockerContainerPort},
-            #{item.dockerContainerShellCreate},
-            #{item.dockerContainerShellRun},
-            #{item.dockerContainerShellStop},
-            #{item.dockerContainerShellRemove},
+            #{item.projectSql},
+            #{item.projectPort},
             #{item.addressContainerOuter},
             #{item.addressContainerInner},
             #{item.addressProjectFront},
             #{item.addressProjectBackground},
             #{item.addressProjectBackgroundAccountPasswd},
+            #{item.devProjectRealFileName},
+            #{item.devDockerImageName},
+            #{item.devDockerImageShellRemove},
+            #{item.devDockerContainerId},
+            #{item.devDockerContainerName},
+            #{item.devDockerContainerShellCreate},
+            #{item.devDockerContainerShellRun},
+            #{item.devDockerContainerShellStop},
+            #{item.devDockerContainerShellRemove},
+            #{item.devDockerStatusImagesIsExist},
+            #{item.devDockerStatusContainerIsExist},
+            #{item.devDockerStatusContainerIsRunning},
+            #{item.proProjectRealFileName},
+            #{item.proDockerImageName},
+            #{item.proDockerImageShellRemove},
+            #{item.proDockerContainerId},
+            #{item.proDockerContainerName},
+            #{item.proDockerContainerShellCreate},
+            #{item.proDockerContainerShellRun},
+            #{item.proDockerContainerShellStop},
+            #{item.proDockerContainerShellRemove},
+            #{item.proDockerStatusImagesIsExist},
+            #{item.proDockerStatusContainerIsExist},
+            #{item.proDockerStatusContainerIsRunning},
             #{item.updateTime}
             )
         </foreach>
@@ -244,7 +319,6 @@
         `project_price`,
         `project_package_type`,
         `project_pan_address`,
-        `project_real_file_name`,
         `project_html_body`,
         `project_source_url`,
         `project_language`,
@@ -262,21 +336,37 @@
         `project_status`,
         `project_mark`,
         `project_can_running`,
-        `docker_image_name`,
-        `docker_image_shell_remove`,
-        `docker_status`,
-        `docker_container_id`,
-        `docker_container_name`,
-        `docker_container_port`,
-        `docker_container_shell_create`,
-        `docker_container_shell_run`,
-        `docker_container_shell_stop`,
-        `docker_container_shell_remove`,
+        `project_sql`,
+        `project_port`,
         `address_container_outer`,
         `address_container_inner`,
         `address_project_front`,
         `address_project_background`,
         `address_project_background_account_passwd`,
+        `dev_project_real_file_name`,
+        `dev_docker_image_name`,
+        `dev_docker_image_shell_remove`,
+        `dev_docker_container_id`,
+        `dev_docker_container_name`,
+        `dev_docker_container_shell_create`,
+        `dev_docker_container_shell_run`,
+        `dev_docker_container_shell_stop`,
+        `dev_docker_container_shell_remove`,
+        `dev_docker_status_images_is_exist`,
+        `dev_docker_status_container_is_exist`,
+        `dev_docker_status_container_is_running`,
+        `pro_project_real_file_name`,
+        `pro_docker_image_name`,
+        `pro_docker_image_shell_remove`,
+        `pro_docker_container_id`,
+        `pro_docker_container_name`,
+        `pro_docker_container_shell_create`,
+        `pro_docker_container_shell_run`,
+        `pro_docker_container_shell_stop`,
+        `pro_docker_container_shell_remove`,
+        `pro_docker_status_images_is_exist`,
+        `pro_docker_status_container_is_exist`,
+        `pro_docker_status_container_is_running`,
         `update_time`
         FROM `project_plus`
         <where>
@@ -304,9 +394,6 @@
             </if>
             <if test="projectPanAddress != null">
                 AND `project_pan_address` = #{projectPanAddress}
-            </if>
-            <if test="projectRealFileName != null">
-                AND `project_real_file_name` = #{projectRealFileName}
             </if>
             <if test="projectHtmlBody != null">
                 AND `project_html_body` = #{projectHtmlBody}
@@ -359,35 +446,11 @@
             <if test="projectCanRunning != null">
                 AND `project_can_running` = #{projectCanRunning}
             </if>
-            <if test="dockerImageName != null">
-                AND `docker_image_name` = #{dockerImageName}
+            <if test="projectSql != null">
+                AND `project_sql` = #{projectSql}
             </if>
-            <if test="dockerImageShellRemove != null">
-                AND `docker_image_shell_remove` = #{dockerImageShellRemove}
-            </if>
-            <if test="dockerStatus != null">
-                AND `docker_status` = #{dockerStatus}
-            </if>
-            <if test="dockerContainerId != null">
-                AND `docker_container_id` = #{dockerContainerId}
-            </if>
-            <if test="dockerContainerName != null">
-                AND `docker_container_name` = #{dockerContainerName}
-            </if>
-            <if test="dockerContainerPort != null">
-                AND `docker_container_port` = #{dockerContainerPort}
-            </if>
-            <if test="dockerContainerShellCreate != null">
-                AND `docker_container_shell_create` = #{dockerContainerShellCreate}
-            </if>
-            <if test="dockerContainerShellRun != null">
-                AND `docker_container_shell_run` = #{dockerContainerShellRun}
-            </if>
-            <if test="dockerContainerShellStop != null">
-                AND `docker_container_shell_stop` = #{dockerContainerShellStop}
-            </if>
-            <if test="dockerContainerShellRemove != null">
-                AND `docker_container_shell_remove` = #{dockerContainerShellRemove}
+            <if test="projectPort != null">
+                AND `project_port` = #{projectPort}
             </if>
             <if test="addressContainerOuter != null">
                 AND `address_container_outer` = #{addressContainerOuter}
@@ -403,6 +466,78 @@
             </if>
             <if test="addressProjectBackgroundAccountPasswd != null">
                 AND `address_project_background_account_passwd` = #{addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="devProjectRealFileName != null">
+                AND `dev_project_real_file_name` = #{devProjectRealFileName}
+            </if>
+            <if test="devDockerImageName != null">
+                AND `dev_docker_image_name` = #{devDockerImageName}
+            </if>
+            <if test="devDockerImageShellRemove != null">
+                AND `dev_docker_image_shell_remove` = #{devDockerImageShellRemove}
+            </if>
+            <if test="devDockerContainerId != null">
+                AND `dev_docker_container_id` = #{devDockerContainerId}
+            </if>
+            <if test="devDockerContainerName != null">
+                AND `dev_docker_container_name` = #{devDockerContainerName}
+            </if>
+            <if test="devDockerContainerShellCreate != null">
+                AND `dev_docker_container_shell_create` = #{devDockerContainerShellCreate}
+            </if>
+            <if test="devDockerContainerShellRun != null">
+                AND `dev_docker_container_shell_run` = #{devDockerContainerShellRun}
+            </if>
+            <if test="devDockerContainerShellStop != null">
+                AND `dev_docker_container_shell_stop` = #{devDockerContainerShellStop}
+            </if>
+            <if test="devDockerContainerShellRemove != null">
+                AND `dev_docker_container_shell_remove` = #{devDockerContainerShellRemove}
+            </if>
+            <if test="devDockerStatusImagesIsExist != null">
+                AND `dev_docker_status_images_is_exist` = #{devDockerStatusImagesIsExist}
+            </if>
+            <if test="devDockerStatusContainerIsExist != null">
+                AND `dev_docker_status_container_is_exist` = #{devDockerStatusContainerIsExist}
+            </if>
+            <if test="devDockerStatusContainerIsRunning != null">
+                AND `dev_docker_status_container_is_running` = #{devDockerStatusContainerIsRunning}
+            </if>
+            <if test="proProjectRealFileName != null">
+                AND `pro_project_real_file_name` = #{proProjectRealFileName}
+            </if>
+            <if test="proDockerImageName != null">
+                AND `pro_docker_image_name` = #{proDockerImageName}
+            </if>
+            <if test="proDockerImageShellRemove != null">
+                AND `pro_docker_image_shell_remove` = #{proDockerImageShellRemove}
+            </if>
+            <if test="proDockerContainerId != null">
+                AND `pro_docker_container_id` = #{proDockerContainerId}
+            </if>
+            <if test="proDockerContainerName != null">
+                AND `pro_docker_container_name` = #{proDockerContainerName}
+            </if>
+            <if test="proDockerContainerShellCreate != null">
+                AND `pro_docker_container_shell_create` = #{proDockerContainerShellCreate}
+            </if>
+            <if test="proDockerContainerShellRun != null">
+                AND `pro_docker_container_shell_run` = #{proDockerContainerShellRun}
+            </if>
+            <if test="proDockerContainerShellStop != null">
+                AND `pro_docker_container_shell_stop` = #{proDockerContainerShellStop}
+            </if>
+            <if test="proDockerContainerShellRemove != null">
+                AND `pro_docker_container_shell_remove` = #{proDockerContainerShellRemove}
+            </if>
+            <if test="proDockerStatusImagesIsExist != null">
+                AND `pro_docker_status_images_is_exist` = #{proDockerStatusImagesIsExist}
+            </if>
+            <if test="proDockerStatusContainerIsExist != null">
+                AND `pro_docker_status_container_is_exist` = #{proDockerStatusContainerIsExist}
+            </if>
+            <if test="proDockerStatusContainerIsRunning != null">
+                AND `pro_docker_status_container_is_running` = #{proDockerStatusContainerIsRunning}
             </if>
             <if test="updateTime != null">
                 AND `update_time` = #{updateTime}
@@ -422,7 +557,6 @@
         `project_price`,
         `project_package_type`,
         `project_pan_address`,
-        `project_real_file_name`,
         `project_html_body`,
         `project_source_url`,
         `project_language`,
@@ -440,21 +574,37 @@
         `project_status`,
         `project_mark`,
         `project_can_running`,
-        `docker_image_name`,
-        `docker_image_shell_remove`,
-        `docker_status`,
-        `docker_container_id`,
-        `docker_container_name`,
-        `docker_container_port`,
-        `docker_container_shell_create`,
-        `docker_container_shell_run`,
-        `docker_container_shell_stop`,
-        `docker_container_shell_remove`,
+        `project_sql`,
+        `project_port`,
         `address_container_outer`,
         `address_container_inner`,
         `address_project_front`,
         `address_project_background`,
         `address_project_background_account_passwd`,
+        `dev_project_real_file_name`,
+        `dev_docker_image_name`,
+        `dev_docker_image_shell_remove`,
+        `dev_docker_container_id`,
+        `dev_docker_container_name`,
+        `dev_docker_container_shell_create`,
+        `dev_docker_container_shell_run`,
+        `dev_docker_container_shell_stop`,
+        `dev_docker_container_shell_remove`,
+        `dev_docker_status_images_is_exist`,
+        `dev_docker_status_container_is_exist`,
+        `dev_docker_status_container_is_running`,
+        `pro_project_real_file_name`,
+        `pro_docker_image_name`,
+        `pro_docker_image_shell_remove`,
+        `pro_docker_container_id`,
+        `pro_docker_container_name`,
+        `pro_docker_container_shell_create`,
+        `pro_docker_container_shell_run`,
+        `pro_docker_container_shell_stop`,
+        `pro_docker_container_shell_remove`,
+        `pro_docker_status_images_is_exist`,
+        `pro_docker_status_container_is_exist`,
+        `pro_docker_status_container_is_running`,
         `update_time`
         FROM `project_plus`
         <where>
@@ -825,52 +975,6 @@
                  </if>
                   <if test="projectPanAddress._ge != null">
                       AND `project_pan_address` <![CDATA[ >= ]]>  #{{project_pan_address._lt}
-                 </if>
-            </if>
-            <if test="projectRealFileName != null">
-                 <if test="projectRealFileName._in != null">
-                     AND `project_real_file_name` in
-                     <foreach collection="project_real_file_name._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._notIn != null">
-                     AND `project_real_file_name`  not in
-                     <foreach collection="project_real_file_name._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._like != null">
-                     <foreach collection="project_real_file_name._like" item="item">
-                       AND `project_real_file_name` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._notLike != null">
-                     <foreach collection="project_real_file_name._notLike" item="item">
-                       AND `project_real_file_name` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._regex != null">
-                     <foreach collection="project_real_file_name._regex" item="item">
-                       AND `project_real_file_name` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._regex != null">
-                     <foreach collection="project_real_file_name._regex" item="item">
-                       AND `project_real_file_name` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="projectRealFileName._lt != null">
-                      AND `project_real_file_name` <![CDATA[ < ]]>  #{project_real_file_name._lt}
-                 </if>
-                  <if test="projectRealFileName._le != null">
-                      AND `project_real_file_name` <![CDATA[ <= ]]>  #{{project_real_file_name._lt}
-                 </if>
-                  <if test="projectRealFileName._gt != null">
-                      AND `project_real_file_name` <![CDATA[ > ]]>  #{{project_real_file_name._lt}
-                 </if>
-                  <if test="projectRealFileName._ge != null">
-                      AND `project_real_file_name` <![CDATA[ >= ]]>  #{{project_real_file_name._lt}
                  </if>
             </if>
             <if test="projectHtmlBody != null">
@@ -1655,464 +1759,96 @@
                       AND `project_can_running` <![CDATA[ >= ]]>  #{{project_can_running._lt}
                  </if>
             </if>
-            <if test="dockerImageName != null">
-                 <if test="dockerImageName._in != null">
-                     AND `docker_image_name` in
-                     <foreach collection="docker_image_name._in" item="item" separator="," open="(" close=")">
+            <if test="projectSql != null">
+                 <if test="projectSql._in != null">
+                     AND `project_sql` in
+                     <foreach collection="project_sql._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._notIn != null">
-                     AND `docker_image_name`  not in
-                     <foreach collection="docker_image_name._notIn" item="item" separator="," open="(" close=")">
+                 <if test="projectSql._notIn != null">
+                     AND `project_sql`  not in
+                     <foreach collection="project_sql._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._like != null">
-                     <foreach collection="docker_image_name._like" item="item">
-                       AND `docker_image_name` like #{item}
+                 <if test="projectSql._like != null">
+                     <foreach collection="project_sql._like" item="item">
+                       AND `project_sql` like #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._notLike != null">
-                     <foreach collection="docker_image_name._notLike" item="item">
-                       AND `docker_image_name` not like #{item}
+                 <if test="projectSql._notLike != null">
+                     <foreach collection="project_sql._notLike" item="item">
+                       AND `project_sql` not like #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._regex != null">
-                     <foreach collection="docker_image_name._regex" item="item">
-                       AND `docker_image_name` REGEXP #{item}
+                 <if test="projectSql._regex != null">
+                     <foreach collection="project_sql._regex" item="item">
+                       AND `project_sql` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._regex != null">
-                     <foreach collection="docker_image_name._regex" item="item">
-                       AND `docker_image_name` not REGEXP #{item}
+                 <if test="projectSql._regex != null">
+                     <foreach collection="project_sql._regex" item="item">
+                       AND `project_sql` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageName._lt != null">
-                      AND `docker_image_name` <![CDATA[ < ]]>  #{docker_image_name._lt}
+                 <if test="projectSql._lt != null">
+                      AND `project_sql` <![CDATA[ < ]]>  #{project_sql._lt}
                  </if>
-                  <if test="dockerImageName._le != null">
-                      AND `docker_image_name` <![CDATA[ <= ]]>  #{{docker_image_name._lt}
+                  <if test="projectSql._le != null">
+                      AND `project_sql` <![CDATA[ <= ]]>  #{{project_sql._lt}
                  </if>
-                  <if test="dockerImageName._gt != null">
-                      AND `docker_image_name` <![CDATA[ > ]]>  #{{docker_image_name._lt}
+                  <if test="projectSql._gt != null">
+                      AND `project_sql` <![CDATA[ > ]]>  #{{project_sql._lt}
                  </if>
-                  <if test="dockerImageName._ge != null">
-                      AND `docker_image_name` <![CDATA[ >= ]]>  #{{docker_image_name._lt}
+                  <if test="projectSql._ge != null">
+                      AND `project_sql` <![CDATA[ >= ]]>  #{{project_sql._lt}
                  </if>
             </if>
-            <if test="dockerImageShellRemove != null">
-                 <if test="dockerImageShellRemove._in != null">
-                     AND `docker_image_shell_remove` in
-                     <foreach collection="docker_image_shell_remove._in" item="item" separator="," open="(" close=")">
+            <if test="projectPort != null">
+                 <if test="projectPort._in != null">
+                     AND `project_port` in
+                     <foreach collection="project_port._in" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._notIn != null">
-                     AND `docker_image_shell_remove`  not in
-                     <foreach collection="docker_image_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                 <if test="projectPort._notIn != null">
+                     AND `project_port`  not in
+                     <foreach collection="project_port._notIn" item="item" separator="," open="(" close=")">
                          #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._like != null">
-                     <foreach collection="docker_image_shell_remove._like" item="item">
-                       AND `docker_image_shell_remove` like #{item}
+                 <if test="projectPort._like != null">
+                     <foreach collection="project_port._like" item="item">
+                       AND `project_port` like #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._notLike != null">
-                     <foreach collection="docker_image_shell_remove._notLike" item="item">
-                       AND `docker_image_shell_remove` not like #{item}
+                 <if test="projectPort._notLike != null">
+                     <foreach collection="project_port._notLike" item="item">
+                       AND `project_port` not like #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._regex != null">
-                     <foreach collection="docker_image_shell_remove._regex" item="item">
-                       AND `docker_image_shell_remove` REGEXP #{item}
+                 <if test="projectPort._regex != null">
+                     <foreach collection="project_port._regex" item="item">
+                       AND `project_port` REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._regex != null">
-                     <foreach collection="docker_image_shell_remove._regex" item="item">
-                       AND `docker_image_shell_remove` not REGEXP #{item}
+                 <if test="projectPort._regex != null">
+                     <foreach collection="project_port._regex" item="item">
+                       AND `project_port` not REGEXP #{item}
                      </foreach>
                  </if>
-                 <if test="dockerImageShellRemove._lt != null">
-                      AND `docker_image_shell_remove` <![CDATA[ < ]]>  #{docker_image_shell_remove._lt}
+                 <if test="projectPort._lt != null">
+                      AND `project_port` <![CDATA[ < ]]>  #{project_port._lt}
                  </if>
-                  <if test="dockerImageShellRemove._le != null">
-                      AND `docker_image_shell_remove` <![CDATA[ <= ]]>  #{{docker_image_shell_remove._lt}
+                  <if test="projectPort._le != null">
+                      AND `project_port` <![CDATA[ <= ]]>  #{{project_port._lt}
                  </if>
-                  <if test="dockerImageShellRemove._gt != null">
-                      AND `docker_image_shell_remove` <![CDATA[ > ]]>  #{{docker_image_shell_remove._lt}
+                  <if test="projectPort._gt != null">
+                      AND `project_port` <![CDATA[ > ]]>  #{{project_port._lt}
                  </if>
-                  <if test="dockerImageShellRemove._ge != null">
-                      AND `docker_image_shell_remove` <![CDATA[ >= ]]>  #{{docker_image_shell_remove._lt}
-                 </if>
-            </if>
-            <if test="dockerStatus != null">
-                 <if test="dockerStatus._in != null">
-                     AND `docker_status` in
-                     <foreach collection="docker_status._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._notIn != null">
-                     AND `docker_status`  not in
-                     <foreach collection="docker_status._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._like != null">
-                     <foreach collection="docker_status._like" item="item">
-                       AND `docker_status` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._notLike != null">
-                     <foreach collection="docker_status._notLike" item="item">
-                       AND `docker_status` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._regex != null">
-                     <foreach collection="docker_status._regex" item="item">
-                       AND `docker_status` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._regex != null">
-                     <foreach collection="docker_status._regex" item="item">
-                       AND `docker_status` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerStatus._lt != null">
-                      AND `docker_status` <![CDATA[ < ]]>  #{docker_status._lt}
-                 </if>
-                  <if test="dockerStatus._le != null">
-                      AND `docker_status` <![CDATA[ <= ]]>  #{{docker_status._lt}
-                 </if>
-                  <if test="dockerStatus._gt != null">
-                      AND `docker_status` <![CDATA[ > ]]>  #{{docker_status._lt}
-                 </if>
-                  <if test="dockerStatus._ge != null">
-                      AND `docker_status` <![CDATA[ >= ]]>  #{{docker_status._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerId != null">
-                 <if test="dockerContainerId._in != null">
-                     AND `docker_container_id` in
-                     <foreach collection="docker_container_id._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._notIn != null">
-                     AND `docker_container_id`  not in
-                     <foreach collection="docker_container_id._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._like != null">
-                     <foreach collection="docker_container_id._like" item="item">
-                       AND `docker_container_id` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._notLike != null">
-                     <foreach collection="docker_container_id._notLike" item="item">
-                       AND `docker_container_id` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._regex != null">
-                     <foreach collection="docker_container_id._regex" item="item">
-                       AND `docker_container_id` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._regex != null">
-                     <foreach collection="docker_container_id._regex" item="item">
-                       AND `docker_container_id` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerId._lt != null">
-                      AND `docker_container_id` <![CDATA[ < ]]>  #{docker_container_id._lt}
-                 </if>
-                  <if test="dockerContainerId._le != null">
-                      AND `docker_container_id` <![CDATA[ <= ]]>  #{{docker_container_id._lt}
-                 </if>
-                  <if test="dockerContainerId._gt != null">
-                      AND `docker_container_id` <![CDATA[ > ]]>  #{{docker_container_id._lt}
-                 </if>
-                  <if test="dockerContainerId._ge != null">
-                      AND `docker_container_id` <![CDATA[ >= ]]>  #{{docker_container_id._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerName != null">
-                 <if test="dockerContainerName._in != null">
-                     AND `docker_container_name` in
-                     <foreach collection="docker_container_name._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._notIn != null">
-                     AND `docker_container_name`  not in
-                     <foreach collection="docker_container_name._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._like != null">
-                     <foreach collection="docker_container_name._like" item="item">
-                       AND `docker_container_name` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._notLike != null">
-                     <foreach collection="docker_container_name._notLike" item="item">
-                       AND `docker_container_name` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._regex != null">
-                     <foreach collection="docker_container_name._regex" item="item">
-                       AND `docker_container_name` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._regex != null">
-                     <foreach collection="docker_container_name._regex" item="item">
-                       AND `docker_container_name` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerName._lt != null">
-                      AND `docker_container_name` <![CDATA[ < ]]>  #{docker_container_name._lt}
-                 </if>
-                  <if test="dockerContainerName._le != null">
-                      AND `docker_container_name` <![CDATA[ <= ]]>  #{{docker_container_name._lt}
-                 </if>
-                  <if test="dockerContainerName._gt != null">
-                      AND `docker_container_name` <![CDATA[ > ]]>  #{{docker_container_name._lt}
-                 </if>
-                  <if test="dockerContainerName._ge != null">
-                      AND `docker_container_name` <![CDATA[ >= ]]>  #{{docker_container_name._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerPort != null">
-                 <if test="dockerContainerPort._in != null">
-                     AND `docker_container_port` in
-                     <foreach collection="docker_container_port._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._notIn != null">
-                     AND `docker_container_port`  not in
-                     <foreach collection="docker_container_port._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._like != null">
-                     <foreach collection="docker_container_port._like" item="item">
-                       AND `docker_container_port` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._notLike != null">
-                     <foreach collection="docker_container_port._notLike" item="item">
-                       AND `docker_container_port` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._regex != null">
-                     <foreach collection="docker_container_port._regex" item="item">
-                       AND `docker_container_port` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._regex != null">
-                     <foreach collection="docker_container_port._regex" item="item">
-                       AND `docker_container_port` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerPort._lt != null">
-                      AND `docker_container_port` <![CDATA[ < ]]>  #{docker_container_port._lt}
-                 </if>
-                  <if test="dockerContainerPort._le != null">
-                      AND `docker_container_port` <![CDATA[ <= ]]>  #{{docker_container_port._lt}
-                 </if>
-                  <if test="dockerContainerPort._gt != null">
-                      AND `docker_container_port` <![CDATA[ > ]]>  #{{docker_container_port._lt}
-                 </if>
-                  <if test="dockerContainerPort._ge != null">
-                      AND `docker_container_port` <![CDATA[ >= ]]>  #{{docker_container_port._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerShellCreate != null">
-                 <if test="dockerContainerShellCreate._in != null">
-                     AND `docker_container_shell_create` in
-                     <foreach collection="docker_container_shell_create._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._notIn != null">
-                     AND `docker_container_shell_create`  not in
-                     <foreach collection="docker_container_shell_create._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._like != null">
-                     <foreach collection="docker_container_shell_create._like" item="item">
-                       AND `docker_container_shell_create` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._notLike != null">
-                     <foreach collection="docker_container_shell_create._notLike" item="item">
-                       AND `docker_container_shell_create` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._regex != null">
-                     <foreach collection="docker_container_shell_create._regex" item="item">
-                       AND `docker_container_shell_create` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._regex != null">
-                     <foreach collection="docker_container_shell_create._regex" item="item">
-                       AND `docker_container_shell_create` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellCreate._lt != null">
-                      AND `docker_container_shell_create` <![CDATA[ < ]]>  #{docker_container_shell_create._lt}
-                 </if>
-                  <if test="dockerContainerShellCreate._le != null">
-                      AND `docker_container_shell_create` <![CDATA[ <= ]]>  #{{docker_container_shell_create._lt}
-                 </if>
-                  <if test="dockerContainerShellCreate._gt != null">
-                      AND `docker_container_shell_create` <![CDATA[ > ]]>  #{{docker_container_shell_create._lt}
-                 </if>
-                  <if test="dockerContainerShellCreate._ge != null">
-                      AND `docker_container_shell_create` <![CDATA[ >= ]]>  #{{docker_container_shell_create._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerShellRun != null">
-                 <if test="dockerContainerShellRun._in != null">
-                     AND `docker_container_shell_run` in
-                     <foreach collection="docker_container_shell_run._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._notIn != null">
-                     AND `docker_container_shell_run`  not in
-                     <foreach collection="docker_container_shell_run._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._like != null">
-                     <foreach collection="docker_container_shell_run._like" item="item">
-                       AND `docker_container_shell_run` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._notLike != null">
-                     <foreach collection="docker_container_shell_run._notLike" item="item">
-                       AND `docker_container_shell_run` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._regex != null">
-                     <foreach collection="docker_container_shell_run._regex" item="item">
-                       AND `docker_container_shell_run` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._regex != null">
-                     <foreach collection="docker_container_shell_run._regex" item="item">
-                       AND `docker_container_shell_run` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRun._lt != null">
-                      AND `docker_container_shell_run` <![CDATA[ < ]]>  #{docker_container_shell_run._lt}
-                 </if>
-                  <if test="dockerContainerShellRun._le != null">
-                      AND `docker_container_shell_run` <![CDATA[ <= ]]>  #{{docker_container_shell_run._lt}
-                 </if>
-                  <if test="dockerContainerShellRun._gt != null">
-                      AND `docker_container_shell_run` <![CDATA[ > ]]>  #{{docker_container_shell_run._lt}
-                 </if>
-                  <if test="dockerContainerShellRun._ge != null">
-                      AND `docker_container_shell_run` <![CDATA[ >= ]]>  #{{docker_container_shell_run._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerShellStop != null">
-                 <if test="dockerContainerShellStop._in != null">
-                     AND `docker_container_shell_stop` in
-                     <foreach collection="docker_container_shell_stop._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._notIn != null">
-                     AND `docker_container_shell_stop`  not in
-                     <foreach collection="docker_container_shell_stop._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._like != null">
-                     <foreach collection="docker_container_shell_stop._like" item="item">
-                       AND `docker_container_shell_stop` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._notLike != null">
-                     <foreach collection="docker_container_shell_stop._notLike" item="item">
-                       AND `docker_container_shell_stop` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._regex != null">
-                     <foreach collection="docker_container_shell_stop._regex" item="item">
-                       AND `docker_container_shell_stop` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._regex != null">
-                     <foreach collection="docker_container_shell_stop._regex" item="item">
-                       AND `docker_container_shell_stop` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellStop._lt != null">
-                      AND `docker_container_shell_stop` <![CDATA[ < ]]>  #{docker_container_shell_stop._lt}
-                 </if>
-                  <if test="dockerContainerShellStop._le != null">
-                      AND `docker_container_shell_stop` <![CDATA[ <= ]]>  #{{docker_container_shell_stop._lt}
-                 </if>
-                  <if test="dockerContainerShellStop._gt != null">
-                      AND `docker_container_shell_stop` <![CDATA[ > ]]>  #{{docker_container_shell_stop._lt}
-                 </if>
-                  <if test="dockerContainerShellStop._ge != null">
-                      AND `docker_container_shell_stop` <![CDATA[ >= ]]>  #{{docker_container_shell_stop._lt}
-                 </if>
-            </if>
-            <if test="dockerContainerShellRemove != null">
-                 <if test="dockerContainerShellRemove._in != null">
-                     AND `docker_container_shell_remove` in
-                     <foreach collection="docker_container_shell_remove._in" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._notIn != null">
-                     AND `docker_container_shell_remove`  not in
-                     <foreach collection="docker_container_shell_remove._notIn" item="item" separator="," open="(" close=")">
-                         #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._like != null">
-                     <foreach collection="docker_container_shell_remove._like" item="item">
-                       AND `docker_container_shell_remove` like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._notLike != null">
-                     <foreach collection="docker_container_shell_remove._notLike" item="item">
-                       AND `docker_container_shell_remove` not like #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._regex != null">
-                     <foreach collection="docker_container_shell_remove._regex" item="item">
-                       AND `docker_container_shell_remove` REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._regex != null">
-                     <foreach collection="docker_container_shell_remove._regex" item="item">
-                       AND `docker_container_shell_remove` not REGEXP #{item}
-                     </foreach>
-                 </if>
-                 <if test="dockerContainerShellRemove._lt != null">
-                      AND `docker_container_shell_remove` <![CDATA[ < ]]>  #{docker_container_shell_remove._lt}
-                 </if>
-                  <if test="dockerContainerShellRemove._le != null">
-                      AND `docker_container_shell_remove` <![CDATA[ <= ]]>  #{{docker_container_shell_remove._lt}
-                 </if>
-                  <if test="dockerContainerShellRemove._gt != null">
-                      AND `docker_container_shell_remove` <![CDATA[ > ]]>  #{{docker_container_shell_remove._lt}
-                 </if>
-                  <if test="dockerContainerShellRemove._ge != null">
-                      AND `docker_container_shell_remove` <![CDATA[ >= ]]>  #{{docker_container_shell_remove._lt}
+                  <if test="projectPort._ge != null">
+                      AND `project_port` <![CDATA[ >= ]]>  #{{project_port._lt}
                  </if>
             </if>
             <if test="addressContainerOuter != null">
@@ -2345,6 +2081,1110 @@
                       AND `address_project_background_account_passwd` <![CDATA[ >= ]]>  #{{address_project_background_account_passwd._lt}
                  </if>
             </if>
+            <if test="devProjectRealFileName != null">
+                 <if test="devProjectRealFileName._in != null">
+                     AND `dev_project_real_file_name` in
+                     <foreach collection="dev_project_real_file_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._notIn != null">
+                     AND `dev_project_real_file_name`  not in
+                     <foreach collection="dev_project_real_file_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._like != null">
+                     <foreach collection="dev_project_real_file_name._like" item="item">
+                       AND `dev_project_real_file_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._notLike != null">
+                     <foreach collection="dev_project_real_file_name._notLike" item="item">
+                       AND `dev_project_real_file_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._regex != null">
+                     <foreach collection="dev_project_real_file_name._regex" item="item">
+                       AND `dev_project_real_file_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._regex != null">
+                     <foreach collection="dev_project_real_file_name._regex" item="item">
+                       AND `dev_project_real_file_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devProjectRealFileName._lt != null">
+                      AND `dev_project_real_file_name` <![CDATA[ < ]]>  #{dev_project_real_file_name._lt}
+                 </if>
+                  <if test="devProjectRealFileName._le != null">
+                      AND `dev_project_real_file_name` <![CDATA[ <= ]]>  #{{dev_project_real_file_name._lt}
+                 </if>
+                  <if test="devProjectRealFileName._gt != null">
+                      AND `dev_project_real_file_name` <![CDATA[ > ]]>  #{{dev_project_real_file_name._lt}
+                 </if>
+                  <if test="devProjectRealFileName._ge != null">
+                      AND `dev_project_real_file_name` <![CDATA[ >= ]]>  #{{dev_project_real_file_name._lt}
+                 </if>
+            </if>
+            <if test="devDockerImageName != null">
+                 <if test="devDockerImageName._in != null">
+                     AND `dev_docker_image_name` in
+                     <foreach collection="dev_docker_image_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._notIn != null">
+                     AND `dev_docker_image_name`  not in
+                     <foreach collection="dev_docker_image_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._like != null">
+                     <foreach collection="dev_docker_image_name._like" item="item">
+                       AND `dev_docker_image_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._notLike != null">
+                     <foreach collection="dev_docker_image_name._notLike" item="item">
+                       AND `dev_docker_image_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._regex != null">
+                     <foreach collection="dev_docker_image_name._regex" item="item">
+                       AND `dev_docker_image_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._regex != null">
+                     <foreach collection="dev_docker_image_name._regex" item="item">
+                       AND `dev_docker_image_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageName._lt != null">
+                      AND `dev_docker_image_name` <![CDATA[ < ]]>  #{dev_docker_image_name._lt}
+                 </if>
+                  <if test="devDockerImageName._le != null">
+                      AND `dev_docker_image_name` <![CDATA[ <= ]]>  #{{dev_docker_image_name._lt}
+                 </if>
+                  <if test="devDockerImageName._gt != null">
+                      AND `dev_docker_image_name` <![CDATA[ > ]]>  #{{dev_docker_image_name._lt}
+                 </if>
+                  <if test="devDockerImageName._ge != null">
+                      AND `dev_docker_image_name` <![CDATA[ >= ]]>  #{{dev_docker_image_name._lt}
+                 </if>
+            </if>
+            <if test="devDockerImageShellRemove != null">
+                 <if test="devDockerImageShellRemove._in != null">
+                     AND `dev_docker_image_shell_remove` in
+                     <foreach collection="dev_docker_image_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._notIn != null">
+                     AND `dev_docker_image_shell_remove`  not in
+                     <foreach collection="dev_docker_image_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._like != null">
+                     <foreach collection="dev_docker_image_shell_remove._like" item="item">
+                       AND `dev_docker_image_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._notLike != null">
+                     <foreach collection="dev_docker_image_shell_remove._notLike" item="item">
+                       AND `dev_docker_image_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._regex != null">
+                     <foreach collection="dev_docker_image_shell_remove._regex" item="item">
+                       AND `dev_docker_image_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._regex != null">
+                     <foreach collection="dev_docker_image_shell_remove._regex" item="item">
+                       AND `dev_docker_image_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerImageShellRemove._lt != null">
+                      AND `dev_docker_image_shell_remove` <![CDATA[ < ]]>  #{dev_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="devDockerImageShellRemove._le != null">
+                      AND `dev_docker_image_shell_remove` <![CDATA[ <= ]]>  #{{dev_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="devDockerImageShellRemove._gt != null">
+                      AND `dev_docker_image_shell_remove` <![CDATA[ > ]]>  #{{dev_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="devDockerImageShellRemove._ge != null">
+                      AND `dev_docker_image_shell_remove` <![CDATA[ >= ]]>  #{{dev_docker_image_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerId != null">
+                 <if test="devDockerContainerId._in != null">
+                     AND `dev_docker_container_id` in
+                     <foreach collection="dev_docker_container_id._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._notIn != null">
+                     AND `dev_docker_container_id`  not in
+                     <foreach collection="dev_docker_container_id._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._like != null">
+                     <foreach collection="dev_docker_container_id._like" item="item">
+                       AND `dev_docker_container_id` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._notLike != null">
+                     <foreach collection="dev_docker_container_id._notLike" item="item">
+                       AND `dev_docker_container_id` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._regex != null">
+                     <foreach collection="dev_docker_container_id._regex" item="item">
+                       AND `dev_docker_container_id` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._regex != null">
+                     <foreach collection="dev_docker_container_id._regex" item="item">
+                       AND `dev_docker_container_id` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerId._lt != null">
+                      AND `dev_docker_container_id` <![CDATA[ < ]]>  #{dev_docker_container_id._lt}
+                 </if>
+                  <if test="devDockerContainerId._le != null">
+                      AND `dev_docker_container_id` <![CDATA[ <= ]]>  #{{dev_docker_container_id._lt}
+                 </if>
+                  <if test="devDockerContainerId._gt != null">
+                      AND `dev_docker_container_id` <![CDATA[ > ]]>  #{{dev_docker_container_id._lt}
+                 </if>
+                  <if test="devDockerContainerId._ge != null">
+                      AND `dev_docker_container_id` <![CDATA[ >= ]]>  #{{dev_docker_container_id._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerName != null">
+                 <if test="devDockerContainerName._in != null">
+                     AND `dev_docker_container_name` in
+                     <foreach collection="dev_docker_container_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._notIn != null">
+                     AND `dev_docker_container_name`  not in
+                     <foreach collection="dev_docker_container_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._like != null">
+                     <foreach collection="dev_docker_container_name._like" item="item">
+                       AND `dev_docker_container_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._notLike != null">
+                     <foreach collection="dev_docker_container_name._notLike" item="item">
+                       AND `dev_docker_container_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._regex != null">
+                     <foreach collection="dev_docker_container_name._regex" item="item">
+                       AND `dev_docker_container_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._regex != null">
+                     <foreach collection="dev_docker_container_name._regex" item="item">
+                       AND `dev_docker_container_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerName._lt != null">
+                      AND `dev_docker_container_name` <![CDATA[ < ]]>  #{dev_docker_container_name._lt}
+                 </if>
+                  <if test="devDockerContainerName._le != null">
+                      AND `dev_docker_container_name` <![CDATA[ <= ]]>  #{{dev_docker_container_name._lt}
+                 </if>
+                  <if test="devDockerContainerName._gt != null">
+                      AND `dev_docker_container_name` <![CDATA[ > ]]>  #{{dev_docker_container_name._lt}
+                 </if>
+                  <if test="devDockerContainerName._ge != null">
+                      AND `dev_docker_container_name` <![CDATA[ >= ]]>  #{{dev_docker_container_name._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerShellCreate != null">
+                 <if test="devDockerContainerShellCreate._in != null">
+                     AND `dev_docker_container_shell_create` in
+                     <foreach collection="dev_docker_container_shell_create._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._notIn != null">
+                     AND `dev_docker_container_shell_create`  not in
+                     <foreach collection="dev_docker_container_shell_create._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._like != null">
+                     <foreach collection="dev_docker_container_shell_create._like" item="item">
+                       AND `dev_docker_container_shell_create` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._notLike != null">
+                     <foreach collection="dev_docker_container_shell_create._notLike" item="item">
+                       AND `dev_docker_container_shell_create` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._regex != null">
+                     <foreach collection="dev_docker_container_shell_create._regex" item="item">
+                       AND `dev_docker_container_shell_create` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._regex != null">
+                     <foreach collection="dev_docker_container_shell_create._regex" item="item">
+                       AND `dev_docker_container_shell_create` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellCreate._lt != null">
+                      AND `dev_docker_container_shell_create` <![CDATA[ < ]]>  #{dev_docker_container_shell_create._lt}
+                 </if>
+                  <if test="devDockerContainerShellCreate._le != null">
+                      AND `dev_docker_container_shell_create` <![CDATA[ <= ]]>  #{{dev_docker_container_shell_create._lt}
+                 </if>
+                  <if test="devDockerContainerShellCreate._gt != null">
+                      AND `dev_docker_container_shell_create` <![CDATA[ > ]]>  #{{dev_docker_container_shell_create._lt}
+                 </if>
+                  <if test="devDockerContainerShellCreate._ge != null">
+                      AND `dev_docker_container_shell_create` <![CDATA[ >= ]]>  #{{dev_docker_container_shell_create._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerShellRun != null">
+                 <if test="devDockerContainerShellRun._in != null">
+                     AND `dev_docker_container_shell_run` in
+                     <foreach collection="dev_docker_container_shell_run._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._notIn != null">
+                     AND `dev_docker_container_shell_run`  not in
+                     <foreach collection="dev_docker_container_shell_run._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._like != null">
+                     <foreach collection="dev_docker_container_shell_run._like" item="item">
+                       AND `dev_docker_container_shell_run` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._notLike != null">
+                     <foreach collection="dev_docker_container_shell_run._notLike" item="item">
+                       AND `dev_docker_container_shell_run` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._regex != null">
+                     <foreach collection="dev_docker_container_shell_run._regex" item="item">
+                       AND `dev_docker_container_shell_run` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._regex != null">
+                     <foreach collection="dev_docker_container_shell_run._regex" item="item">
+                       AND `dev_docker_container_shell_run` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRun._lt != null">
+                      AND `dev_docker_container_shell_run` <![CDATA[ < ]]>  #{dev_docker_container_shell_run._lt}
+                 </if>
+                  <if test="devDockerContainerShellRun._le != null">
+                      AND `dev_docker_container_shell_run` <![CDATA[ <= ]]>  #{{dev_docker_container_shell_run._lt}
+                 </if>
+                  <if test="devDockerContainerShellRun._gt != null">
+                      AND `dev_docker_container_shell_run` <![CDATA[ > ]]>  #{{dev_docker_container_shell_run._lt}
+                 </if>
+                  <if test="devDockerContainerShellRun._ge != null">
+                      AND `dev_docker_container_shell_run` <![CDATA[ >= ]]>  #{{dev_docker_container_shell_run._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerShellStop != null">
+                 <if test="devDockerContainerShellStop._in != null">
+                     AND `dev_docker_container_shell_stop` in
+                     <foreach collection="dev_docker_container_shell_stop._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._notIn != null">
+                     AND `dev_docker_container_shell_stop`  not in
+                     <foreach collection="dev_docker_container_shell_stop._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._like != null">
+                     <foreach collection="dev_docker_container_shell_stop._like" item="item">
+                       AND `dev_docker_container_shell_stop` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._notLike != null">
+                     <foreach collection="dev_docker_container_shell_stop._notLike" item="item">
+                       AND `dev_docker_container_shell_stop` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._regex != null">
+                     <foreach collection="dev_docker_container_shell_stop._regex" item="item">
+                       AND `dev_docker_container_shell_stop` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._regex != null">
+                     <foreach collection="dev_docker_container_shell_stop._regex" item="item">
+                       AND `dev_docker_container_shell_stop` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellStop._lt != null">
+                      AND `dev_docker_container_shell_stop` <![CDATA[ < ]]>  #{dev_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="devDockerContainerShellStop._le != null">
+                      AND `dev_docker_container_shell_stop` <![CDATA[ <= ]]>  #{{dev_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="devDockerContainerShellStop._gt != null">
+                      AND `dev_docker_container_shell_stop` <![CDATA[ > ]]>  #{{dev_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="devDockerContainerShellStop._ge != null">
+                      AND `dev_docker_container_shell_stop` <![CDATA[ >= ]]>  #{{dev_docker_container_shell_stop._lt}
+                 </if>
+            </if>
+            <if test="devDockerContainerShellRemove != null">
+                 <if test="devDockerContainerShellRemove._in != null">
+                     AND `dev_docker_container_shell_remove` in
+                     <foreach collection="dev_docker_container_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._notIn != null">
+                     AND `dev_docker_container_shell_remove`  not in
+                     <foreach collection="dev_docker_container_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._like != null">
+                     <foreach collection="dev_docker_container_shell_remove._like" item="item">
+                       AND `dev_docker_container_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._notLike != null">
+                     <foreach collection="dev_docker_container_shell_remove._notLike" item="item">
+                       AND `dev_docker_container_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._regex != null">
+                     <foreach collection="dev_docker_container_shell_remove._regex" item="item">
+                       AND `dev_docker_container_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._regex != null">
+                     <foreach collection="dev_docker_container_shell_remove._regex" item="item">
+                       AND `dev_docker_container_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerContainerShellRemove._lt != null">
+                      AND `dev_docker_container_shell_remove` <![CDATA[ < ]]>  #{dev_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="devDockerContainerShellRemove._le != null">
+                      AND `dev_docker_container_shell_remove` <![CDATA[ <= ]]>  #{{dev_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="devDockerContainerShellRemove._gt != null">
+                      AND `dev_docker_container_shell_remove` <![CDATA[ > ]]>  #{{dev_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="devDockerContainerShellRemove._ge != null">
+                      AND `dev_docker_container_shell_remove` <![CDATA[ >= ]]>  #{{dev_docker_container_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="devDockerStatusImagesIsExist != null">
+                 <if test="devDockerStatusImagesIsExist._in != null">
+                     AND `dev_docker_status_images_is_exist` in
+                     <foreach collection="dev_docker_status_images_is_exist._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._notIn != null">
+                     AND `dev_docker_status_images_is_exist`  not in
+                     <foreach collection="dev_docker_status_images_is_exist._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._like != null">
+                     <foreach collection="dev_docker_status_images_is_exist._like" item="item">
+                       AND `dev_docker_status_images_is_exist` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._notLike != null">
+                     <foreach collection="dev_docker_status_images_is_exist._notLike" item="item">
+                       AND `dev_docker_status_images_is_exist` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._regex != null">
+                     <foreach collection="dev_docker_status_images_is_exist._regex" item="item">
+                       AND `dev_docker_status_images_is_exist` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._regex != null">
+                     <foreach collection="dev_docker_status_images_is_exist._regex" item="item">
+                       AND `dev_docker_status_images_is_exist` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusImagesIsExist._lt != null">
+                      AND `dev_docker_status_images_is_exist` <![CDATA[ < ]]>  #{dev_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusImagesIsExist._le != null">
+                      AND `dev_docker_status_images_is_exist` <![CDATA[ <= ]]>  #{{dev_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusImagesIsExist._gt != null">
+                      AND `dev_docker_status_images_is_exist` <![CDATA[ > ]]>  #{{dev_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusImagesIsExist._ge != null">
+                      AND `dev_docker_status_images_is_exist` <![CDATA[ >= ]]>  #{{dev_docker_status_images_is_exist._lt}
+                 </if>
+            </if>
+            <if test="devDockerStatusContainerIsExist != null">
+                 <if test="devDockerStatusContainerIsExist._in != null">
+                     AND `dev_docker_status_container_is_exist` in
+                     <foreach collection="dev_docker_status_container_is_exist._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._notIn != null">
+                     AND `dev_docker_status_container_is_exist`  not in
+                     <foreach collection="dev_docker_status_container_is_exist._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._like != null">
+                     <foreach collection="dev_docker_status_container_is_exist._like" item="item">
+                       AND `dev_docker_status_container_is_exist` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._notLike != null">
+                     <foreach collection="dev_docker_status_container_is_exist._notLike" item="item">
+                       AND `dev_docker_status_container_is_exist` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._regex != null">
+                     <foreach collection="dev_docker_status_container_is_exist._regex" item="item">
+                       AND `dev_docker_status_container_is_exist` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._regex != null">
+                     <foreach collection="dev_docker_status_container_is_exist._regex" item="item">
+                       AND `dev_docker_status_container_is_exist` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsExist._lt != null">
+                      AND `dev_docker_status_container_is_exist` <![CDATA[ < ]]>  #{dev_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsExist._le != null">
+                      AND `dev_docker_status_container_is_exist` <![CDATA[ <= ]]>  #{{dev_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsExist._gt != null">
+                      AND `dev_docker_status_container_is_exist` <![CDATA[ > ]]>  #{{dev_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsExist._ge != null">
+                      AND `dev_docker_status_container_is_exist` <![CDATA[ >= ]]>  #{{dev_docker_status_container_is_exist._lt}
+                 </if>
+            </if>
+            <if test="devDockerStatusContainerIsRunning != null">
+                 <if test="devDockerStatusContainerIsRunning._in != null">
+                     AND `dev_docker_status_container_is_running` in
+                     <foreach collection="dev_docker_status_container_is_running._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._notIn != null">
+                     AND `dev_docker_status_container_is_running`  not in
+                     <foreach collection="dev_docker_status_container_is_running._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._like != null">
+                     <foreach collection="dev_docker_status_container_is_running._like" item="item">
+                       AND `dev_docker_status_container_is_running` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._notLike != null">
+                     <foreach collection="dev_docker_status_container_is_running._notLike" item="item">
+                       AND `dev_docker_status_container_is_running` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._regex != null">
+                     <foreach collection="dev_docker_status_container_is_running._regex" item="item">
+                       AND `dev_docker_status_container_is_running` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._regex != null">
+                     <foreach collection="dev_docker_status_container_is_running._regex" item="item">
+                       AND `dev_docker_status_container_is_running` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="devDockerStatusContainerIsRunning._lt != null">
+                      AND `dev_docker_status_container_is_running` <![CDATA[ < ]]>  #{dev_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsRunning._le != null">
+                      AND `dev_docker_status_container_is_running` <![CDATA[ <= ]]>  #{{dev_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsRunning._gt != null">
+                      AND `dev_docker_status_container_is_running` <![CDATA[ > ]]>  #{{dev_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="devDockerStatusContainerIsRunning._ge != null">
+                      AND `dev_docker_status_container_is_running` <![CDATA[ >= ]]>  #{{dev_docker_status_container_is_running._lt}
+                 </if>
+            </if>
+            <if test="proProjectRealFileName != null">
+                 <if test="proProjectRealFileName._in != null">
+                     AND `pro_project_real_file_name` in
+                     <foreach collection="pro_project_real_file_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._notIn != null">
+                     AND `pro_project_real_file_name`  not in
+                     <foreach collection="pro_project_real_file_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._like != null">
+                     <foreach collection="pro_project_real_file_name._like" item="item">
+                       AND `pro_project_real_file_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._notLike != null">
+                     <foreach collection="pro_project_real_file_name._notLike" item="item">
+                       AND `pro_project_real_file_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._regex != null">
+                     <foreach collection="pro_project_real_file_name._regex" item="item">
+                       AND `pro_project_real_file_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._regex != null">
+                     <foreach collection="pro_project_real_file_name._regex" item="item">
+                       AND `pro_project_real_file_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proProjectRealFileName._lt != null">
+                      AND `pro_project_real_file_name` <![CDATA[ < ]]>  #{pro_project_real_file_name._lt}
+                 </if>
+                  <if test="proProjectRealFileName._le != null">
+                      AND `pro_project_real_file_name` <![CDATA[ <= ]]>  #{{pro_project_real_file_name._lt}
+                 </if>
+                  <if test="proProjectRealFileName._gt != null">
+                      AND `pro_project_real_file_name` <![CDATA[ > ]]>  #{{pro_project_real_file_name._lt}
+                 </if>
+                  <if test="proProjectRealFileName._ge != null">
+                      AND `pro_project_real_file_name` <![CDATA[ >= ]]>  #{{pro_project_real_file_name._lt}
+                 </if>
+            </if>
+            <if test="proDockerImageName != null">
+                 <if test="proDockerImageName._in != null">
+                     AND `pro_docker_image_name` in
+                     <foreach collection="pro_docker_image_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._notIn != null">
+                     AND `pro_docker_image_name`  not in
+                     <foreach collection="pro_docker_image_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._like != null">
+                     <foreach collection="pro_docker_image_name._like" item="item">
+                       AND `pro_docker_image_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._notLike != null">
+                     <foreach collection="pro_docker_image_name._notLike" item="item">
+                       AND `pro_docker_image_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._regex != null">
+                     <foreach collection="pro_docker_image_name._regex" item="item">
+                       AND `pro_docker_image_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._regex != null">
+                     <foreach collection="pro_docker_image_name._regex" item="item">
+                       AND `pro_docker_image_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageName._lt != null">
+                      AND `pro_docker_image_name` <![CDATA[ < ]]>  #{pro_docker_image_name._lt}
+                 </if>
+                  <if test="proDockerImageName._le != null">
+                      AND `pro_docker_image_name` <![CDATA[ <= ]]>  #{{pro_docker_image_name._lt}
+                 </if>
+                  <if test="proDockerImageName._gt != null">
+                      AND `pro_docker_image_name` <![CDATA[ > ]]>  #{{pro_docker_image_name._lt}
+                 </if>
+                  <if test="proDockerImageName._ge != null">
+                      AND `pro_docker_image_name` <![CDATA[ >= ]]>  #{{pro_docker_image_name._lt}
+                 </if>
+            </if>
+            <if test="proDockerImageShellRemove != null">
+                 <if test="proDockerImageShellRemove._in != null">
+                     AND `pro_docker_image_shell_remove` in
+                     <foreach collection="pro_docker_image_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._notIn != null">
+                     AND `pro_docker_image_shell_remove`  not in
+                     <foreach collection="pro_docker_image_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._like != null">
+                     <foreach collection="pro_docker_image_shell_remove._like" item="item">
+                       AND `pro_docker_image_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._notLike != null">
+                     <foreach collection="pro_docker_image_shell_remove._notLike" item="item">
+                       AND `pro_docker_image_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._regex != null">
+                     <foreach collection="pro_docker_image_shell_remove._regex" item="item">
+                       AND `pro_docker_image_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._regex != null">
+                     <foreach collection="pro_docker_image_shell_remove._regex" item="item">
+                       AND `pro_docker_image_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerImageShellRemove._lt != null">
+                      AND `pro_docker_image_shell_remove` <![CDATA[ < ]]>  #{pro_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="proDockerImageShellRemove._le != null">
+                      AND `pro_docker_image_shell_remove` <![CDATA[ <= ]]>  #{{pro_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="proDockerImageShellRemove._gt != null">
+                      AND `pro_docker_image_shell_remove` <![CDATA[ > ]]>  #{{pro_docker_image_shell_remove._lt}
+                 </if>
+                  <if test="proDockerImageShellRemove._ge != null">
+                      AND `pro_docker_image_shell_remove` <![CDATA[ >= ]]>  #{{pro_docker_image_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerId != null">
+                 <if test="proDockerContainerId._in != null">
+                     AND `pro_docker_container_id` in
+                     <foreach collection="pro_docker_container_id._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._notIn != null">
+                     AND `pro_docker_container_id`  not in
+                     <foreach collection="pro_docker_container_id._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._like != null">
+                     <foreach collection="pro_docker_container_id._like" item="item">
+                       AND `pro_docker_container_id` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._notLike != null">
+                     <foreach collection="pro_docker_container_id._notLike" item="item">
+                       AND `pro_docker_container_id` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._regex != null">
+                     <foreach collection="pro_docker_container_id._regex" item="item">
+                       AND `pro_docker_container_id` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._regex != null">
+                     <foreach collection="pro_docker_container_id._regex" item="item">
+                       AND `pro_docker_container_id` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerId._lt != null">
+                      AND `pro_docker_container_id` <![CDATA[ < ]]>  #{pro_docker_container_id._lt}
+                 </if>
+                  <if test="proDockerContainerId._le != null">
+                      AND `pro_docker_container_id` <![CDATA[ <= ]]>  #{{pro_docker_container_id._lt}
+                 </if>
+                  <if test="proDockerContainerId._gt != null">
+                      AND `pro_docker_container_id` <![CDATA[ > ]]>  #{{pro_docker_container_id._lt}
+                 </if>
+                  <if test="proDockerContainerId._ge != null">
+                      AND `pro_docker_container_id` <![CDATA[ >= ]]>  #{{pro_docker_container_id._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerName != null">
+                 <if test="proDockerContainerName._in != null">
+                     AND `pro_docker_container_name` in
+                     <foreach collection="pro_docker_container_name._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._notIn != null">
+                     AND `pro_docker_container_name`  not in
+                     <foreach collection="pro_docker_container_name._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._like != null">
+                     <foreach collection="pro_docker_container_name._like" item="item">
+                       AND `pro_docker_container_name` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._notLike != null">
+                     <foreach collection="pro_docker_container_name._notLike" item="item">
+                       AND `pro_docker_container_name` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._regex != null">
+                     <foreach collection="pro_docker_container_name._regex" item="item">
+                       AND `pro_docker_container_name` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._regex != null">
+                     <foreach collection="pro_docker_container_name._regex" item="item">
+                       AND `pro_docker_container_name` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerName._lt != null">
+                      AND `pro_docker_container_name` <![CDATA[ < ]]>  #{pro_docker_container_name._lt}
+                 </if>
+                  <if test="proDockerContainerName._le != null">
+                      AND `pro_docker_container_name` <![CDATA[ <= ]]>  #{{pro_docker_container_name._lt}
+                 </if>
+                  <if test="proDockerContainerName._gt != null">
+                      AND `pro_docker_container_name` <![CDATA[ > ]]>  #{{pro_docker_container_name._lt}
+                 </if>
+                  <if test="proDockerContainerName._ge != null">
+                      AND `pro_docker_container_name` <![CDATA[ >= ]]>  #{{pro_docker_container_name._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerShellCreate != null">
+                 <if test="proDockerContainerShellCreate._in != null">
+                     AND `pro_docker_container_shell_create` in
+                     <foreach collection="pro_docker_container_shell_create._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._notIn != null">
+                     AND `pro_docker_container_shell_create`  not in
+                     <foreach collection="pro_docker_container_shell_create._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._like != null">
+                     <foreach collection="pro_docker_container_shell_create._like" item="item">
+                       AND `pro_docker_container_shell_create` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._notLike != null">
+                     <foreach collection="pro_docker_container_shell_create._notLike" item="item">
+                       AND `pro_docker_container_shell_create` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._regex != null">
+                     <foreach collection="pro_docker_container_shell_create._regex" item="item">
+                       AND `pro_docker_container_shell_create` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._regex != null">
+                     <foreach collection="pro_docker_container_shell_create._regex" item="item">
+                       AND `pro_docker_container_shell_create` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellCreate._lt != null">
+                      AND `pro_docker_container_shell_create` <![CDATA[ < ]]>  #{pro_docker_container_shell_create._lt}
+                 </if>
+                  <if test="proDockerContainerShellCreate._le != null">
+                      AND `pro_docker_container_shell_create` <![CDATA[ <= ]]>  #{{pro_docker_container_shell_create._lt}
+                 </if>
+                  <if test="proDockerContainerShellCreate._gt != null">
+                      AND `pro_docker_container_shell_create` <![CDATA[ > ]]>  #{{pro_docker_container_shell_create._lt}
+                 </if>
+                  <if test="proDockerContainerShellCreate._ge != null">
+                      AND `pro_docker_container_shell_create` <![CDATA[ >= ]]>  #{{pro_docker_container_shell_create._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerShellRun != null">
+                 <if test="proDockerContainerShellRun._in != null">
+                     AND `pro_docker_container_shell_run` in
+                     <foreach collection="pro_docker_container_shell_run._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._notIn != null">
+                     AND `pro_docker_container_shell_run`  not in
+                     <foreach collection="pro_docker_container_shell_run._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._like != null">
+                     <foreach collection="pro_docker_container_shell_run._like" item="item">
+                       AND `pro_docker_container_shell_run` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._notLike != null">
+                     <foreach collection="pro_docker_container_shell_run._notLike" item="item">
+                       AND `pro_docker_container_shell_run` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._regex != null">
+                     <foreach collection="pro_docker_container_shell_run._regex" item="item">
+                       AND `pro_docker_container_shell_run` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._regex != null">
+                     <foreach collection="pro_docker_container_shell_run._regex" item="item">
+                       AND `pro_docker_container_shell_run` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRun._lt != null">
+                      AND `pro_docker_container_shell_run` <![CDATA[ < ]]>  #{pro_docker_container_shell_run._lt}
+                 </if>
+                  <if test="proDockerContainerShellRun._le != null">
+                      AND `pro_docker_container_shell_run` <![CDATA[ <= ]]>  #{{pro_docker_container_shell_run._lt}
+                 </if>
+                  <if test="proDockerContainerShellRun._gt != null">
+                      AND `pro_docker_container_shell_run` <![CDATA[ > ]]>  #{{pro_docker_container_shell_run._lt}
+                 </if>
+                  <if test="proDockerContainerShellRun._ge != null">
+                      AND `pro_docker_container_shell_run` <![CDATA[ >= ]]>  #{{pro_docker_container_shell_run._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerShellStop != null">
+                 <if test="proDockerContainerShellStop._in != null">
+                     AND `pro_docker_container_shell_stop` in
+                     <foreach collection="pro_docker_container_shell_stop._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._notIn != null">
+                     AND `pro_docker_container_shell_stop`  not in
+                     <foreach collection="pro_docker_container_shell_stop._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._like != null">
+                     <foreach collection="pro_docker_container_shell_stop._like" item="item">
+                       AND `pro_docker_container_shell_stop` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._notLike != null">
+                     <foreach collection="pro_docker_container_shell_stop._notLike" item="item">
+                       AND `pro_docker_container_shell_stop` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._regex != null">
+                     <foreach collection="pro_docker_container_shell_stop._regex" item="item">
+                       AND `pro_docker_container_shell_stop` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._regex != null">
+                     <foreach collection="pro_docker_container_shell_stop._regex" item="item">
+                       AND `pro_docker_container_shell_stop` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellStop._lt != null">
+                      AND `pro_docker_container_shell_stop` <![CDATA[ < ]]>  #{pro_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="proDockerContainerShellStop._le != null">
+                      AND `pro_docker_container_shell_stop` <![CDATA[ <= ]]>  #{{pro_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="proDockerContainerShellStop._gt != null">
+                      AND `pro_docker_container_shell_stop` <![CDATA[ > ]]>  #{{pro_docker_container_shell_stop._lt}
+                 </if>
+                  <if test="proDockerContainerShellStop._ge != null">
+                      AND `pro_docker_container_shell_stop` <![CDATA[ >= ]]>  #{{pro_docker_container_shell_stop._lt}
+                 </if>
+            </if>
+            <if test="proDockerContainerShellRemove != null">
+                 <if test="proDockerContainerShellRemove._in != null">
+                     AND `pro_docker_container_shell_remove` in
+                     <foreach collection="pro_docker_container_shell_remove._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._notIn != null">
+                     AND `pro_docker_container_shell_remove`  not in
+                     <foreach collection="pro_docker_container_shell_remove._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._like != null">
+                     <foreach collection="pro_docker_container_shell_remove._like" item="item">
+                       AND `pro_docker_container_shell_remove` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._notLike != null">
+                     <foreach collection="pro_docker_container_shell_remove._notLike" item="item">
+                       AND `pro_docker_container_shell_remove` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._regex != null">
+                     <foreach collection="pro_docker_container_shell_remove._regex" item="item">
+                       AND `pro_docker_container_shell_remove` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._regex != null">
+                     <foreach collection="pro_docker_container_shell_remove._regex" item="item">
+                       AND `pro_docker_container_shell_remove` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerContainerShellRemove._lt != null">
+                      AND `pro_docker_container_shell_remove` <![CDATA[ < ]]>  #{pro_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="proDockerContainerShellRemove._le != null">
+                      AND `pro_docker_container_shell_remove` <![CDATA[ <= ]]>  #{{pro_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="proDockerContainerShellRemove._gt != null">
+                      AND `pro_docker_container_shell_remove` <![CDATA[ > ]]>  #{{pro_docker_container_shell_remove._lt}
+                 </if>
+                  <if test="proDockerContainerShellRemove._ge != null">
+                      AND `pro_docker_container_shell_remove` <![CDATA[ >= ]]>  #{{pro_docker_container_shell_remove._lt}
+                 </if>
+            </if>
+            <if test="proDockerStatusImagesIsExist != null">
+                 <if test="proDockerStatusImagesIsExist._in != null">
+                     AND `pro_docker_status_images_is_exist` in
+                     <foreach collection="pro_docker_status_images_is_exist._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._notIn != null">
+                     AND `pro_docker_status_images_is_exist`  not in
+                     <foreach collection="pro_docker_status_images_is_exist._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._like != null">
+                     <foreach collection="pro_docker_status_images_is_exist._like" item="item">
+                       AND `pro_docker_status_images_is_exist` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._notLike != null">
+                     <foreach collection="pro_docker_status_images_is_exist._notLike" item="item">
+                       AND `pro_docker_status_images_is_exist` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._regex != null">
+                     <foreach collection="pro_docker_status_images_is_exist._regex" item="item">
+                       AND `pro_docker_status_images_is_exist` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._regex != null">
+                     <foreach collection="pro_docker_status_images_is_exist._regex" item="item">
+                       AND `pro_docker_status_images_is_exist` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusImagesIsExist._lt != null">
+                      AND `pro_docker_status_images_is_exist` <![CDATA[ < ]]>  #{pro_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusImagesIsExist._le != null">
+                      AND `pro_docker_status_images_is_exist` <![CDATA[ <= ]]>  #{{pro_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusImagesIsExist._gt != null">
+                      AND `pro_docker_status_images_is_exist` <![CDATA[ > ]]>  #{{pro_docker_status_images_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusImagesIsExist._ge != null">
+                      AND `pro_docker_status_images_is_exist` <![CDATA[ >= ]]>  #{{pro_docker_status_images_is_exist._lt}
+                 </if>
+            </if>
+            <if test="proDockerStatusContainerIsExist != null">
+                 <if test="proDockerStatusContainerIsExist._in != null">
+                     AND `pro_docker_status_container_is_exist` in
+                     <foreach collection="pro_docker_status_container_is_exist._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._notIn != null">
+                     AND `pro_docker_status_container_is_exist`  not in
+                     <foreach collection="pro_docker_status_container_is_exist._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._like != null">
+                     <foreach collection="pro_docker_status_container_is_exist._like" item="item">
+                       AND `pro_docker_status_container_is_exist` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._notLike != null">
+                     <foreach collection="pro_docker_status_container_is_exist._notLike" item="item">
+                       AND `pro_docker_status_container_is_exist` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._regex != null">
+                     <foreach collection="pro_docker_status_container_is_exist._regex" item="item">
+                       AND `pro_docker_status_container_is_exist` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._regex != null">
+                     <foreach collection="pro_docker_status_container_is_exist._regex" item="item">
+                       AND `pro_docker_status_container_is_exist` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsExist._lt != null">
+                      AND `pro_docker_status_container_is_exist` <![CDATA[ < ]]>  #{pro_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsExist._le != null">
+                      AND `pro_docker_status_container_is_exist` <![CDATA[ <= ]]>  #{{pro_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsExist._gt != null">
+                      AND `pro_docker_status_container_is_exist` <![CDATA[ > ]]>  #{{pro_docker_status_container_is_exist._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsExist._ge != null">
+                      AND `pro_docker_status_container_is_exist` <![CDATA[ >= ]]>  #{{pro_docker_status_container_is_exist._lt}
+                 </if>
+            </if>
+            <if test="proDockerStatusContainerIsRunning != null">
+                 <if test="proDockerStatusContainerIsRunning._in != null">
+                     AND `pro_docker_status_container_is_running` in
+                     <foreach collection="pro_docker_status_container_is_running._in" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._notIn != null">
+                     AND `pro_docker_status_container_is_running`  not in
+                     <foreach collection="pro_docker_status_container_is_running._notIn" item="item" separator="," open="(" close=")">
+                         #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._like != null">
+                     <foreach collection="pro_docker_status_container_is_running._like" item="item">
+                       AND `pro_docker_status_container_is_running` like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._notLike != null">
+                     <foreach collection="pro_docker_status_container_is_running._notLike" item="item">
+                       AND `pro_docker_status_container_is_running` not like #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._regex != null">
+                     <foreach collection="pro_docker_status_container_is_running._regex" item="item">
+                       AND `pro_docker_status_container_is_running` REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._regex != null">
+                     <foreach collection="pro_docker_status_container_is_running._regex" item="item">
+                       AND `pro_docker_status_container_is_running` not REGEXP #{item}
+                     </foreach>
+                 </if>
+                 <if test="proDockerStatusContainerIsRunning._lt != null">
+                      AND `pro_docker_status_container_is_running` <![CDATA[ < ]]>  #{pro_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsRunning._le != null">
+                      AND `pro_docker_status_container_is_running` <![CDATA[ <= ]]>  #{{pro_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsRunning._gt != null">
+                      AND `pro_docker_status_container_is_running` <![CDATA[ > ]]>  #{{pro_docker_status_container_is_running._lt}
+                 </if>
+                  <if test="proDockerStatusContainerIsRunning._ge != null">
+                      AND `pro_docker_status_container_is_running` <![CDATA[ >= ]]>  #{{pro_docker_status_container_is_running._lt}
+                 </if>
+            </if>
             <if test="updateTime != null">
                  <if test="updateTime._in != null">
                      AND `update_time` in
@@ -2422,9 +3262,6 @@
             <if test="source.projectPanAddress != null">
                 `project_pan_address` = #{source.projectPanAddress},
             </if>
-            <if test="source.projectRealFileName != null">
-                `project_real_file_name` = #{source.projectRealFileName},
-            </if>
             <if test="source.projectHtmlBody != null">
                 `project_html_body` = #{source.projectHtmlBody},
             </if>
@@ -2476,35 +3313,11 @@
             <if test="source.projectCanRunning != null">
                 `project_can_running` = #{source.projectCanRunning},
             </if>
-            <if test="source.dockerImageName != null">
-                `docker_image_name` = #{source.dockerImageName},
+            <if test="source.projectSql != null">
+                `project_sql` = #{source.projectSql},
             </if>
-            <if test="source.dockerImageShellRemove != null">
-                `docker_image_shell_remove` = #{source.dockerImageShellRemove},
-            </if>
-            <if test="source.dockerStatus != null">
-                `docker_status` = #{source.dockerStatus},
-            </if>
-            <if test="source.dockerContainerId != null">
-                `docker_container_id` = #{source.dockerContainerId},
-            </if>
-            <if test="source.dockerContainerName != null">
-                `docker_container_name` = #{source.dockerContainerName},
-            </if>
-            <if test="source.dockerContainerPort != null">
-                `docker_container_port` = #{source.dockerContainerPort},
-            </if>
-            <if test="source.dockerContainerShellCreate != null">
-                `docker_container_shell_create` = #{source.dockerContainerShellCreate},
-            </if>
-            <if test="source.dockerContainerShellRun != null">
-                `docker_container_shell_run` = #{source.dockerContainerShellRun},
-            </if>
-            <if test="source.dockerContainerShellStop != null">
-                `docker_container_shell_stop` = #{source.dockerContainerShellStop},
-            </if>
-            <if test="source.dockerContainerShellRemove != null">
-                `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+            <if test="source.projectPort != null">
+                `project_port` = #{source.projectPort},
             </if>
             <if test="source.addressContainerOuter != null">
                 `address_container_outer` = #{source.addressContainerOuter},
@@ -2520,6 +3333,78 @@
             </if>
             <if test="source.addressProjectBackgroundAccountPasswd != null">
                 `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+            </if>
+            <if test="source.devProjectRealFileName != null">
+                `dev_project_real_file_name` = #{source.devProjectRealFileName},
+            </if>
+            <if test="source.devDockerImageName != null">
+                `dev_docker_image_name` = #{source.devDockerImageName},
+            </if>
+            <if test="source.devDockerImageShellRemove != null">
+                `dev_docker_image_shell_remove` = #{source.devDockerImageShellRemove},
+            </if>
+            <if test="source.devDockerContainerId != null">
+                `dev_docker_container_id` = #{source.devDockerContainerId},
+            </if>
+            <if test="source.devDockerContainerName != null">
+                `dev_docker_container_name` = #{source.devDockerContainerName},
+            </if>
+            <if test="source.devDockerContainerShellCreate != null">
+                `dev_docker_container_shell_create` = #{source.devDockerContainerShellCreate},
+            </if>
+            <if test="source.devDockerContainerShellRun != null">
+                `dev_docker_container_shell_run` = #{source.devDockerContainerShellRun},
+            </if>
+            <if test="source.devDockerContainerShellStop != null">
+                `dev_docker_container_shell_stop` = #{source.devDockerContainerShellStop},
+            </if>
+            <if test="source.devDockerContainerShellRemove != null">
+                `dev_docker_container_shell_remove` = #{source.devDockerContainerShellRemove},
+            </if>
+            <if test="source.devDockerStatusImagesIsExist != null">
+                `dev_docker_status_images_is_exist` = #{source.devDockerStatusImagesIsExist},
+            </if>
+            <if test="source.devDockerStatusContainerIsExist != null">
+                `dev_docker_status_container_is_exist` = #{source.devDockerStatusContainerIsExist},
+            </if>
+            <if test="source.devDockerStatusContainerIsRunning != null">
+                `dev_docker_status_container_is_running` = #{source.devDockerStatusContainerIsRunning},
+            </if>
+            <if test="source.proProjectRealFileName != null">
+                `pro_project_real_file_name` = #{source.proProjectRealFileName},
+            </if>
+            <if test="source.proDockerImageName != null">
+                `pro_docker_image_name` = #{source.proDockerImageName},
+            </if>
+            <if test="source.proDockerImageShellRemove != null">
+                `pro_docker_image_shell_remove` = #{source.proDockerImageShellRemove},
+            </if>
+            <if test="source.proDockerContainerId != null">
+                `pro_docker_container_id` = #{source.proDockerContainerId},
+            </if>
+            <if test="source.proDockerContainerName != null">
+                `pro_docker_container_name` = #{source.proDockerContainerName},
+            </if>
+            <if test="source.proDockerContainerShellCreate != null">
+                `pro_docker_container_shell_create` = #{source.proDockerContainerShellCreate},
+            </if>
+            <if test="source.proDockerContainerShellRun != null">
+                `pro_docker_container_shell_run` = #{source.proDockerContainerShellRun},
+            </if>
+            <if test="source.proDockerContainerShellStop != null">
+                `pro_docker_container_shell_stop` = #{source.proDockerContainerShellStop},
+            </if>
+            <if test="source.proDockerContainerShellRemove != null">
+                `pro_docker_container_shell_remove` = #{source.proDockerContainerShellRemove},
+            </if>
+            <if test="source.proDockerStatusImagesIsExist != null">
+                `pro_docker_status_images_is_exist` = #{source.proDockerStatusImagesIsExist},
+            </if>
+            <if test="source.proDockerStatusContainerIsExist != null">
+                `pro_docker_status_container_is_exist` = #{source.proDockerStatusContainerIsExist},
+            </if>
+            <if test="source.proDockerStatusContainerIsRunning != null">
+                `pro_docker_status_container_is_running` = #{source.proDockerStatusContainerIsRunning},
             </if>
             <if test="source.updateTime != null">
                 `update_time` = #{source.updateTime}
@@ -2551,9 +3436,6 @@
             <if test="target.projectPanAddress != null">
                 AND `project_pan_address` = #{target.projectPanAddress}
             </if>
-            <if test="target.projectRealFileName != null">
-                AND `project_real_file_name` = #{target.projectRealFileName}
-            </if>
             <if test="target.projectHtmlBody != null">
                 AND `project_html_body` = #{target.projectHtmlBody}
             </if>
@@ -2605,35 +3487,11 @@
             <if test="target.projectCanRunning != null">
                 AND `project_can_running` = #{target.projectCanRunning}
             </if>
-            <if test="target.dockerImageName != null">
-                AND `docker_image_name` = #{target.dockerImageName}
+            <if test="target.projectSql != null">
+                AND `project_sql` = #{target.projectSql}
             </if>
-            <if test="target.dockerImageShellRemove != null">
-                AND `docker_image_shell_remove` = #{target.dockerImageShellRemove}
-            </if>
-            <if test="target.dockerStatus != null">
-                AND `docker_status` = #{target.dockerStatus}
-            </if>
-            <if test="target.dockerContainerId != null">
-                AND `docker_container_id` = #{target.dockerContainerId}
-            </if>
-            <if test="target.dockerContainerName != null">
-                AND `docker_container_name` = #{target.dockerContainerName}
-            </if>
-            <if test="target.dockerContainerPort != null">
-                AND `docker_container_port` = #{target.dockerContainerPort}
-            </if>
-            <if test="target.dockerContainerShellCreate != null">
-                AND `docker_container_shell_create` = #{target.dockerContainerShellCreate}
-            </if>
-            <if test="target.dockerContainerShellRun != null">
-                AND `docker_container_shell_run` = #{target.dockerContainerShellRun}
-            </if>
-            <if test="target.dockerContainerShellStop != null">
-                AND `docker_container_shell_stop` = #{target.dockerContainerShellStop}
-            </if>
-            <if test="target.dockerContainerShellRemove != null">
-                AND `docker_container_shell_remove` = #{target.dockerContainerShellRemove}
+            <if test="target.projectPort != null">
+                AND `project_port` = #{target.projectPort}
             </if>
             <if test="target.addressContainerOuter != null">
                 AND `address_container_outer` = #{target.addressContainerOuter}
@@ -2649,6 +3507,78 @@
             </if>
             <if test="target.addressProjectBackgroundAccountPasswd != null">
                 AND `address_project_background_account_passwd` = #{target.addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="target.devProjectRealFileName != null">
+                AND `dev_project_real_file_name` = #{target.devProjectRealFileName}
+            </if>
+            <if test="target.devDockerImageName != null">
+                AND `dev_docker_image_name` = #{target.devDockerImageName}
+            </if>
+            <if test="target.devDockerImageShellRemove != null">
+                AND `dev_docker_image_shell_remove` = #{target.devDockerImageShellRemove}
+            </if>
+            <if test="target.devDockerContainerId != null">
+                AND `dev_docker_container_id` = #{target.devDockerContainerId}
+            </if>
+            <if test="target.devDockerContainerName != null">
+                AND `dev_docker_container_name` = #{target.devDockerContainerName}
+            </if>
+            <if test="target.devDockerContainerShellCreate != null">
+                AND `dev_docker_container_shell_create` = #{target.devDockerContainerShellCreate}
+            </if>
+            <if test="target.devDockerContainerShellRun != null">
+                AND `dev_docker_container_shell_run` = #{target.devDockerContainerShellRun}
+            </if>
+            <if test="target.devDockerContainerShellStop != null">
+                AND `dev_docker_container_shell_stop` = #{target.devDockerContainerShellStop}
+            </if>
+            <if test="target.devDockerContainerShellRemove != null">
+                AND `dev_docker_container_shell_remove` = #{target.devDockerContainerShellRemove}
+            </if>
+            <if test="target.devDockerStatusImagesIsExist != null">
+                AND `dev_docker_status_images_is_exist` = #{target.devDockerStatusImagesIsExist}
+            </if>
+            <if test="target.devDockerStatusContainerIsExist != null">
+                AND `dev_docker_status_container_is_exist` = #{target.devDockerStatusContainerIsExist}
+            </if>
+            <if test="target.devDockerStatusContainerIsRunning != null">
+                AND `dev_docker_status_container_is_running` = #{target.devDockerStatusContainerIsRunning}
+            </if>
+            <if test="target.proProjectRealFileName != null">
+                AND `pro_project_real_file_name` = #{target.proProjectRealFileName}
+            </if>
+            <if test="target.proDockerImageName != null">
+                AND `pro_docker_image_name` = #{target.proDockerImageName}
+            </if>
+            <if test="target.proDockerImageShellRemove != null">
+                AND `pro_docker_image_shell_remove` = #{target.proDockerImageShellRemove}
+            </if>
+            <if test="target.proDockerContainerId != null">
+                AND `pro_docker_container_id` = #{target.proDockerContainerId}
+            </if>
+            <if test="target.proDockerContainerName != null">
+                AND `pro_docker_container_name` = #{target.proDockerContainerName}
+            </if>
+            <if test="target.proDockerContainerShellCreate != null">
+                AND `pro_docker_container_shell_create` = #{target.proDockerContainerShellCreate}
+            </if>
+            <if test="target.proDockerContainerShellRun != null">
+                AND `pro_docker_container_shell_run` = #{target.proDockerContainerShellRun}
+            </if>
+            <if test="target.proDockerContainerShellStop != null">
+                AND `pro_docker_container_shell_stop` = #{target.proDockerContainerShellStop}
+            </if>
+            <if test="target.proDockerContainerShellRemove != null">
+                AND `pro_docker_container_shell_remove` = #{target.proDockerContainerShellRemove}
+            </if>
+            <if test="target.proDockerStatusImagesIsExist != null">
+                AND `pro_docker_status_images_is_exist` = #{target.proDockerStatusImagesIsExist}
+            </if>
+            <if test="target.proDockerStatusContainerIsExist != null">
+                AND `pro_docker_status_container_is_exist` = #{target.proDockerStatusContainerIsExist}
+            </if>
+            <if test="target.proDockerStatusContainerIsRunning != null">
+                AND `pro_docker_status_container_is_running` = #{target.proDockerStatusContainerIsRunning}
             </if>
             <if test="target.updateTime != null">
                 AND `update_time` = #{target.updateTime}
@@ -2668,7 +3598,6 @@
             `project_price` = #{source.projectPrice},
             `project_package_type` = #{source.projectPackageType},
             `project_pan_address` = #{source.projectPanAddress},
-            `project_real_file_name` = #{source.projectRealFileName},
             `project_html_body` = #{source.projectHtmlBody},
             `project_source_url` = #{source.projectSourceUrl},
             `project_language` = #{source.projectLanguage},
@@ -2686,21 +3615,37 @@
             `project_status` = #{source.projectStatus},
             `project_mark` = #{source.projectMark},
             `project_can_running` = #{source.projectCanRunning},
-            `docker_image_name` = #{source.dockerImageName},
-            `docker_image_shell_remove` = #{source.dockerImageShellRemove},
-            `docker_status` = #{source.dockerStatus},
-            `docker_container_id` = #{source.dockerContainerId},
-            `docker_container_name` = #{source.dockerContainerName},
-            `docker_container_port` = #{source.dockerContainerPort},
-            `docker_container_shell_create` = #{source.dockerContainerShellCreate},
-            `docker_container_shell_run` = #{source.dockerContainerShellRun},
-            `docker_container_shell_stop` = #{source.dockerContainerShellStop},
-            `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+            `project_sql` = #{source.projectSql},
+            `project_port` = #{source.projectPort},
             `address_container_outer` = #{source.addressContainerOuter},
             `address_container_inner` = #{source.addressContainerInner},
             `address_project_front` = #{source.addressProjectFront},
             `address_project_background` = #{source.addressProjectBackground},
             `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+            `dev_project_real_file_name` = #{source.devProjectRealFileName},
+            `dev_docker_image_name` = #{source.devDockerImageName},
+            `dev_docker_image_shell_remove` = #{source.devDockerImageShellRemove},
+            `dev_docker_container_id` = #{source.devDockerContainerId},
+            `dev_docker_container_name` = #{source.devDockerContainerName},
+            `dev_docker_container_shell_create` = #{source.devDockerContainerShellCreate},
+            `dev_docker_container_shell_run` = #{source.devDockerContainerShellRun},
+            `dev_docker_container_shell_stop` = #{source.devDockerContainerShellStop},
+            `dev_docker_container_shell_remove` = #{source.devDockerContainerShellRemove},
+            `dev_docker_status_images_is_exist` = #{source.devDockerStatusImagesIsExist},
+            `dev_docker_status_container_is_exist` = #{source.devDockerStatusContainerIsExist},
+            `dev_docker_status_container_is_running` = #{source.devDockerStatusContainerIsRunning},
+            `pro_project_real_file_name` = #{source.proProjectRealFileName},
+            `pro_docker_image_name` = #{source.proDockerImageName},
+            `pro_docker_image_shell_remove` = #{source.proDockerImageShellRemove},
+            `pro_docker_container_id` = #{source.proDockerContainerId},
+            `pro_docker_container_name` = #{source.proDockerContainerName},
+            `pro_docker_container_shell_create` = #{source.proDockerContainerShellCreate},
+            `pro_docker_container_shell_run` = #{source.proDockerContainerShellRun},
+            `pro_docker_container_shell_stop` = #{source.proDockerContainerShellStop},
+            `pro_docker_container_shell_remove` = #{source.proDockerContainerShellRemove},
+            `pro_docker_status_images_is_exist` = #{source.proDockerStatusImagesIsExist},
+            `pro_docker_status_container_is_exist` = #{source.proDockerStatusContainerIsExist},
+            `pro_docker_status_container_is_running` = #{source.proDockerStatusContainerIsRunning},
             `update_time` = #{source.updateTime}
         </set>
         <where>
@@ -2729,9 +3674,6 @@
             <if test="target.projectPanAddress != null">
                 AND `project_pan_address` = #{target.projectPanAddress}
             </if>
-            <if test="target.projectRealFileName != null">
-                AND `project_real_file_name` = #{target.projectRealFileName}
-            </if>
             <if test="target.projectHtmlBody != null">
                 AND `project_html_body` = #{target.projectHtmlBody}
             </if>
@@ -2783,35 +3725,11 @@
             <if test="target.projectCanRunning != null">
                 AND `project_can_running` = #{target.projectCanRunning}
             </if>
-            <if test="target.dockerImageName != null">
-                AND `docker_image_name` = #{target.dockerImageName}
+            <if test="target.projectSql != null">
+                AND `project_sql` = #{target.projectSql}
             </if>
-            <if test="target.dockerImageShellRemove != null">
-                AND `docker_image_shell_remove` = #{target.dockerImageShellRemove}
-            </if>
-            <if test="target.dockerStatus != null">
-                AND `docker_status` = #{target.dockerStatus}
-            </if>
-            <if test="target.dockerContainerId != null">
-                AND `docker_container_id` = #{target.dockerContainerId}
-            </if>
-            <if test="target.dockerContainerName != null">
-                AND `docker_container_name` = #{target.dockerContainerName}
-            </if>
-            <if test="target.dockerContainerPort != null">
-                AND `docker_container_port` = #{target.dockerContainerPort}
-            </if>
-            <if test="target.dockerContainerShellCreate != null">
-                AND `docker_container_shell_create` = #{target.dockerContainerShellCreate}
-            </if>
-            <if test="target.dockerContainerShellRun != null">
-                AND `docker_container_shell_run` = #{target.dockerContainerShellRun}
-            </if>
-            <if test="target.dockerContainerShellStop != null">
-                AND `docker_container_shell_stop` = #{target.dockerContainerShellStop}
-            </if>
-            <if test="target.dockerContainerShellRemove != null">
-                AND `docker_container_shell_remove` = #{target.dockerContainerShellRemove}
+            <if test="target.projectPort != null">
+                AND `project_port` = #{target.projectPort}
             </if>
             <if test="target.addressContainerOuter != null">
                 AND `address_container_outer` = #{target.addressContainerOuter}
@@ -2827,6 +3745,78 @@
             </if>
             <if test="target.addressProjectBackgroundAccountPasswd != null">
                 AND `address_project_background_account_passwd` = #{target.addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="target.devProjectRealFileName != null">
+                AND `dev_project_real_file_name` = #{target.devProjectRealFileName}
+            </if>
+            <if test="target.devDockerImageName != null">
+                AND `dev_docker_image_name` = #{target.devDockerImageName}
+            </if>
+            <if test="target.devDockerImageShellRemove != null">
+                AND `dev_docker_image_shell_remove` = #{target.devDockerImageShellRemove}
+            </if>
+            <if test="target.devDockerContainerId != null">
+                AND `dev_docker_container_id` = #{target.devDockerContainerId}
+            </if>
+            <if test="target.devDockerContainerName != null">
+                AND `dev_docker_container_name` = #{target.devDockerContainerName}
+            </if>
+            <if test="target.devDockerContainerShellCreate != null">
+                AND `dev_docker_container_shell_create` = #{target.devDockerContainerShellCreate}
+            </if>
+            <if test="target.devDockerContainerShellRun != null">
+                AND `dev_docker_container_shell_run` = #{target.devDockerContainerShellRun}
+            </if>
+            <if test="target.devDockerContainerShellStop != null">
+                AND `dev_docker_container_shell_stop` = #{target.devDockerContainerShellStop}
+            </if>
+            <if test="target.devDockerContainerShellRemove != null">
+                AND `dev_docker_container_shell_remove` = #{target.devDockerContainerShellRemove}
+            </if>
+            <if test="target.devDockerStatusImagesIsExist != null">
+                AND `dev_docker_status_images_is_exist` = #{target.devDockerStatusImagesIsExist}
+            </if>
+            <if test="target.devDockerStatusContainerIsExist != null">
+                AND `dev_docker_status_container_is_exist` = #{target.devDockerStatusContainerIsExist}
+            </if>
+            <if test="target.devDockerStatusContainerIsRunning != null">
+                AND `dev_docker_status_container_is_running` = #{target.devDockerStatusContainerIsRunning}
+            </if>
+            <if test="target.proProjectRealFileName != null">
+                AND `pro_project_real_file_name` = #{target.proProjectRealFileName}
+            </if>
+            <if test="target.proDockerImageName != null">
+                AND `pro_docker_image_name` = #{target.proDockerImageName}
+            </if>
+            <if test="target.proDockerImageShellRemove != null">
+                AND `pro_docker_image_shell_remove` = #{target.proDockerImageShellRemove}
+            </if>
+            <if test="target.proDockerContainerId != null">
+                AND `pro_docker_container_id` = #{target.proDockerContainerId}
+            </if>
+            <if test="target.proDockerContainerName != null">
+                AND `pro_docker_container_name` = #{target.proDockerContainerName}
+            </if>
+            <if test="target.proDockerContainerShellCreate != null">
+                AND `pro_docker_container_shell_create` = #{target.proDockerContainerShellCreate}
+            </if>
+            <if test="target.proDockerContainerShellRun != null">
+                AND `pro_docker_container_shell_run` = #{target.proDockerContainerShellRun}
+            </if>
+            <if test="target.proDockerContainerShellStop != null">
+                AND `pro_docker_container_shell_stop` = #{target.proDockerContainerShellStop}
+            </if>
+            <if test="target.proDockerContainerShellRemove != null">
+                AND `pro_docker_container_shell_remove` = #{target.proDockerContainerShellRemove}
+            </if>
+            <if test="target.proDockerStatusImagesIsExist != null">
+                AND `pro_docker_status_images_is_exist` = #{target.proDockerStatusImagesIsExist}
+            </if>
+            <if test="target.proDockerStatusContainerIsExist != null">
+                AND `pro_docker_status_container_is_exist` = #{target.proDockerStatusContainerIsExist}
+            </if>
+            <if test="target.proDockerStatusContainerIsRunning != null">
+                AND `pro_docker_status_container_is_running` = #{target.proDockerStatusContainerIsRunning}
             </if>
             <if test="target.updateTime != null">
                 AND `update_time` = #{target.updateTime}
@@ -2862,9 +3852,6 @@
             </if>
             <if test="projectPanAddress != null">
                 AND `project_pan_address` = #{projectPanAddress}
-            </if>
-            <if test="projectRealFileName != null">
-                AND `project_real_file_name` = #{projectRealFileName}
             </if>
             <if test="projectHtmlBody != null">
                 AND `project_html_body` = #{projectHtmlBody}
@@ -2917,35 +3904,11 @@
             <if test="projectCanRunning != null">
                 AND `project_can_running` = #{projectCanRunning}
             </if>
-            <if test="dockerImageName != null">
-                AND `docker_image_name` = #{dockerImageName}
+            <if test="projectSql != null">
+                AND `project_sql` = #{projectSql}
             </if>
-            <if test="dockerImageShellRemove != null">
-                AND `docker_image_shell_remove` = #{dockerImageShellRemove}
-            </if>
-            <if test="dockerStatus != null">
-                AND `docker_status` = #{dockerStatus}
-            </if>
-            <if test="dockerContainerId != null">
-                AND `docker_container_id` = #{dockerContainerId}
-            </if>
-            <if test="dockerContainerName != null">
-                AND `docker_container_name` = #{dockerContainerName}
-            </if>
-            <if test="dockerContainerPort != null">
-                AND `docker_container_port` = #{dockerContainerPort}
-            </if>
-            <if test="dockerContainerShellCreate != null">
-                AND `docker_container_shell_create` = #{dockerContainerShellCreate}
-            </if>
-            <if test="dockerContainerShellRun != null">
-                AND `docker_container_shell_run` = #{dockerContainerShellRun}
-            </if>
-            <if test="dockerContainerShellStop != null">
-                AND `docker_container_shell_stop` = #{dockerContainerShellStop}
-            </if>
-            <if test="dockerContainerShellRemove != null">
-                AND `docker_container_shell_remove` = #{dockerContainerShellRemove}
+            <if test="projectPort != null">
+                AND `project_port` = #{projectPort}
             </if>
             <if test="addressContainerOuter != null">
                 AND `address_container_outer` = #{addressContainerOuter}
@@ -2961,6 +3924,78 @@
             </if>
             <if test="addressProjectBackgroundAccountPasswd != null">
                 AND `address_project_background_account_passwd` = #{addressProjectBackgroundAccountPasswd}
+            </if>
+            <if test="devProjectRealFileName != null">
+                AND `dev_project_real_file_name` = #{devProjectRealFileName}
+            </if>
+            <if test="devDockerImageName != null">
+                AND `dev_docker_image_name` = #{devDockerImageName}
+            </if>
+            <if test="devDockerImageShellRemove != null">
+                AND `dev_docker_image_shell_remove` = #{devDockerImageShellRemove}
+            </if>
+            <if test="devDockerContainerId != null">
+                AND `dev_docker_container_id` = #{devDockerContainerId}
+            </if>
+            <if test="devDockerContainerName != null">
+                AND `dev_docker_container_name` = #{devDockerContainerName}
+            </if>
+            <if test="devDockerContainerShellCreate != null">
+                AND `dev_docker_container_shell_create` = #{devDockerContainerShellCreate}
+            </if>
+            <if test="devDockerContainerShellRun != null">
+                AND `dev_docker_container_shell_run` = #{devDockerContainerShellRun}
+            </if>
+            <if test="devDockerContainerShellStop != null">
+                AND `dev_docker_container_shell_stop` = #{devDockerContainerShellStop}
+            </if>
+            <if test="devDockerContainerShellRemove != null">
+                AND `dev_docker_container_shell_remove` = #{devDockerContainerShellRemove}
+            </if>
+            <if test="devDockerStatusImagesIsExist != null">
+                AND `dev_docker_status_images_is_exist` = #{devDockerStatusImagesIsExist}
+            </if>
+            <if test="devDockerStatusContainerIsExist != null">
+                AND `dev_docker_status_container_is_exist` = #{devDockerStatusContainerIsExist}
+            </if>
+            <if test="devDockerStatusContainerIsRunning != null">
+                AND `dev_docker_status_container_is_running` = #{devDockerStatusContainerIsRunning}
+            </if>
+            <if test="proProjectRealFileName != null">
+                AND `pro_project_real_file_name` = #{proProjectRealFileName}
+            </if>
+            <if test="proDockerImageName != null">
+                AND `pro_docker_image_name` = #{proDockerImageName}
+            </if>
+            <if test="proDockerImageShellRemove != null">
+                AND `pro_docker_image_shell_remove` = #{proDockerImageShellRemove}
+            </if>
+            <if test="proDockerContainerId != null">
+                AND `pro_docker_container_id` = #{proDockerContainerId}
+            </if>
+            <if test="proDockerContainerName != null">
+                AND `pro_docker_container_name` = #{proDockerContainerName}
+            </if>
+            <if test="proDockerContainerShellCreate != null">
+                AND `pro_docker_container_shell_create` = #{proDockerContainerShellCreate}
+            </if>
+            <if test="proDockerContainerShellRun != null">
+                AND `pro_docker_container_shell_run` = #{proDockerContainerShellRun}
+            </if>
+            <if test="proDockerContainerShellStop != null">
+                AND `pro_docker_container_shell_stop` = #{proDockerContainerShellStop}
+            </if>
+            <if test="proDockerContainerShellRemove != null">
+                AND `pro_docker_container_shell_remove` = #{proDockerContainerShellRemove}
+            </if>
+            <if test="proDockerStatusImagesIsExist != null">
+                AND `pro_docker_status_images_is_exist` = #{proDockerStatusImagesIsExist}
+            </if>
+            <if test="proDockerStatusContainerIsExist != null">
+                AND `pro_docker_status_container_is_exist` = #{proDockerStatusContainerIsExist}
+            </if>
+            <if test="proDockerStatusContainerIsRunning != null">
+                AND `pro_docker_status_container_is_running` = #{proDockerStatusContainerIsRunning}
             </if>
             <if test="updateTime != null">
                 AND `update_time` = #{updateTime}
@@ -2980,7 +4015,6 @@
         `project_price`,
         `project_package_type`,
         `project_pan_address`,
-        `project_real_file_name`,
         `project_html_body`,
         `project_source_url`,
         `project_language`,
@@ -2998,21 +4032,37 @@
         `project_status`,
         `project_mark`,
         `project_can_running`,
-        `docker_image_name`,
-        `docker_image_shell_remove`,
-        `docker_status`,
-        `docker_container_id`,
-        `docker_container_name`,
-        `docker_container_port`,
-        `docker_container_shell_create`,
-        `docker_container_shell_run`,
-        `docker_container_shell_stop`,
-        `docker_container_shell_remove`,
+        `project_sql`,
+        `project_port`,
         `address_container_outer`,
         `address_container_inner`,
         `address_project_front`,
         `address_project_background`,
         `address_project_background_account_passwd`,
+        `dev_project_real_file_name`,
+        `dev_docker_image_name`,
+        `dev_docker_image_shell_remove`,
+        `dev_docker_container_id`,
+        `dev_docker_container_name`,
+        `dev_docker_container_shell_create`,
+        `dev_docker_container_shell_run`,
+        `dev_docker_container_shell_stop`,
+        `dev_docker_container_shell_remove`,
+        `dev_docker_status_images_is_exist`,
+        `dev_docker_status_container_is_exist`,
+        `dev_docker_status_container_is_running`,
+        `pro_project_real_file_name`,
+        `pro_docker_image_name`,
+        `pro_docker_image_shell_remove`,
+        `pro_docker_container_id`,
+        `pro_docker_container_name`,
+        `pro_docker_container_shell_create`,
+        `pro_docker_container_shell_run`,
+        `pro_docker_container_shell_stop`,
+        `pro_docker_container_shell_remove`,
+        `pro_docker_status_images_is_exist`,
+        `pro_docker_status_container_is_exist`,
+        `pro_docker_status_container_is_running`,
         `update_time`
         FROM `project_plus`
         <where>
@@ -3053,9 +4103,6 @@
                </if>
                <if test="source.projectPanAddress != null">
                    `project_pan_address` = #{source.projectPanAddress},
-               </if>
-               <if test="source.projectRealFileName != null">
-                   `project_real_file_name` = #{source.projectRealFileName},
                </if>
                <if test="source.projectHtmlBody != null">
                    `project_html_body` = #{source.projectHtmlBody},
@@ -3108,35 +4155,11 @@
                <if test="source.projectCanRunning != null">
                    `project_can_running` = #{source.projectCanRunning},
                </if>
-               <if test="source.dockerImageName != null">
-                   `docker_image_name` = #{source.dockerImageName},
+               <if test="source.projectSql != null">
+                   `project_sql` = #{source.projectSql},
                </if>
-               <if test="source.dockerImageShellRemove != null">
-                   `docker_image_shell_remove` = #{source.dockerImageShellRemove},
-               </if>
-               <if test="source.dockerStatus != null">
-                   `docker_status` = #{source.dockerStatus},
-               </if>
-               <if test="source.dockerContainerId != null">
-                   `docker_container_id` = #{source.dockerContainerId},
-               </if>
-               <if test="source.dockerContainerName != null">
-                   `docker_container_name` = #{source.dockerContainerName},
-               </if>
-               <if test="source.dockerContainerPort != null">
-                   `docker_container_port` = #{source.dockerContainerPort},
-               </if>
-               <if test="source.dockerContainerShellCreate != null">
-                   `docker_container_shell_create` = #{source.dockerContainerShellCreate},
-               </if>
-               <if test="source.dockerContainerShellRun != null">
-                   `docker_container_shell_run` = #{source.dockerContainerShellRun},
-               </if>
-               <if test="source.dockerContainerShellStop != null">
-                   `docker_container_shell_stop` = #{source.dockerContainerShellStop},
-               </if>
-               <if test="source.dockerContainerShellRemove != null">
-                   `docker_container_shell_remove` = #{source.dockerContainerShellRemove},
+               <if test="source.projectPort != null">
+                   `project_port` = #{source.projectPort},
                </if>
                <if test="source.addressContainerOuter != null">
                    `address_container_outer` = #{source.addressContainerOuter},
@@ -3152,6 +4175,78 @@
                </if>
                <if test="source.addressProjectBackgroundAccountPasswd != null">
                    `address_project_background_account_passwd` = #{source.addressProjectBackgroundAccountPasswd},
+               </if>
+               <if test="source.devProjectRealFileName != null">
+                   `dev_project_real_file_name` = #{source.devProjectRealFileName},
+               </if>
+               <if test="source.devDockerImageName != null">
+                   `dev_docker_image_name` = #{source.devDockerImageName},
+               </if>
+               <if test="source.devDockerImageShellRemove != null">
+                   `dev_docker_image_shell_remove` = #{source.devDockerImageShellRemove},
+               </if>
+               <if test="source.devDockerContainerId != null">
+                   `dev_docker_container_id` = #{source.devDockerContainerId},
+               </if>
+               <if test="source.devDockerContainerName != null">
+                   `dev_docker_container_name` = #{source.devDockerContainerName},
+               </if>
+               <if test="source.devDockerContainerShellCreate != null">
+                   `dev_docker_container_shell_create` = #{source.devDockerContainerShellCreate},
+               </if>
+               <if test="source.devDockerContainerShellRun != null">
+                   `dev_docker_container_shell_run` = #{source.devDockerContainerShellRun},
+               </if>
+               <if test="source.devDockerContainerShellStop != null">
+                   `dev_docker_container_shell_stop` = #{source.devDockerContainerShellStop},
+               </if>
+               <if test="source.devDockerContainerShellRemove != null">
+                   `dev_docker_container_shell_remove` = #{source.devDockerContainerShellRemove},
+               </if>
+               <if test="source.devDockerStatusImagesIsExist != null">
+                   `dev_docker_status_images_is_exist` = #{source.devDockerStatusImagesIsExist},
+               </if>
+               <if test="source.devDockerStatusContainerIsExist != null">
+                   `dev_docker_status_container_is_exist` = #{source.devDockerStatusContainerIsExist},
+               </if>
+               <if test="source.devDockerStatusContainerIsRunning != null">
+                   `dev_docker_status_container_is_running` = #{source.devDockerStatusContainerIsRunning},
+               </if>
+               <if test="source.proProjectRealFileName != null">
+                   `pro_project_real_file_name` = #{source.proProjectRealFileName},
+               </if>
+               <if test="source.proDockerImageName != null">
+                   `pro_docker_image_name` = #{source.proDockerImageName},
+               </if>
+               <if test="source.proDockerImageShellRemove != null">
+                   `pro_docker_image_shell_remove` = #{source.proDockerImageShellRemove},
+               </if>
+               <if test="source.proDockerContainerId != null">
+                   `pro_docker_container_id` = #{source.proDockerContainerId},
+               </if>
+               <if test="source.proDockerContainerName != null">
+                   `pro_docker_container_name` = #{source.proDockerContainerName},
+               </if>
+               <if test="source.proDockerContainerShellCreate != null">
+                   `pro_docker_container_shell_create` = #{source.proDockerContainerShellCreate},
+               </if>
+               <if test="source.proDockerContainerShellRun != null">
+                   `pro_docker_container_shell_run` = #{source.proDockerContainerShellRun},
+               </if>
+               <if test="source.proDockerContainerShellStop != null">
+                   `pro_docker_container_shell_stop` = #{source.proDockerContainerShellStop},
+               </if>
+               <if test="source.proDockerContainerShellRemove != null">
+                   `pro_docker_container_shell_remove` = #{source.proDockerContainerShellRemove},
+               </if>
+               <if test="source.proDockerStatusImagesIsExist != null">
+                   `pro_docker_status_images_is_exist` = #{source.proDockerStatusImagesIsExist},
+               </if>
+               <if test="source.proDockerStatusContainerIsExist != null">
+                   `pro_docker_status_container_is_exist` = #{source.proDockerStatusContainerIsExist},
+               </if>
+               <if test="source.proDockerStatusContainerIsRunning != null">
+                   `pro_docker_status_container_is_running` = #{source.proDockerStatusContainerIsRunning},
                </if>
                <if test="source.updateTime != null">
                    `update_time` = #{source.updateTime}

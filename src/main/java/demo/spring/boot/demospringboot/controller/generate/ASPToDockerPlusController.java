@@ -1,10 +1,13 @@
 package demo.spring.boot.demospringboot.controller.generate;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
+import demo.spring.boot.demospringboot.config.DockerStructurePro;
 import demo.spring.boot.demospringboot.config.StartConfig;
 import demo.spring.boot.demospringboot.framework.Code;
 import demo.spring.boot.demospringboot.framework.Response;
+import demo.spring.boot.demospringboot.service.zip.DevToPro;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDocker;
+import demo.spring.boot.demospringboot.service.zip.UnzipToDockerPro;
 import demo.spring.boot.demospringboot.thread.ThreadPoolExecutorService;
 import demo.spring.boot.demospringboot.util.URLUtils;
 import demo.spring.boot.demospringboot.util.UUIDUtils;
@@ -47,6 +50,12 @@ public class ASPToDockerPlusController {
     private UnzipToDocker unzipToDocker;
 
     @Autowired
+    private UnzipToDockerPro unzipToDockerPro;
+
+    @Autowired
+    private DevToPro devToPro;
+
+    @Autowired
     private ProjectPlusService projectService;
 
     @Autowired
@@ -68,7 +77,7 @@ public class ASPToDockerPlusController {
             String localFsPathOriginZip = startConfig.getLocalFsPathOriginZip();
             String workDirAbsolutePath = startConfig.getLocalFsPathTmp();
             for (ProjectPlusVo vo : projectVos) {
-                String projectRealFileName = vo.getProjectRealFileName();
+                String projectRealFileName = vo.getDevProjectRealFileName();
                 String absolutePathFilePath = localFsPathOriginZip + "/" + projectRealFileName;
                 String contentImgs = vo.getProjectImgs();
                 Map<String, byte[]> descMap = new HashMap<>();
@@ -84,23 +93,19 @@ public class ASPToDockerPlusController {
                         }
                     }
                 }
-                try {
-                    String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
-                    ProjectPlusVo tmp = new ProjectPlusVo();
-                    unzipToDocker.doWork(
-                            workDirAbsolutePath,
-                            new File(absolutePathFilePath),
-                            criteriaid.toLowerCase(), dockerModelDirPath, Integer.valueOf(vo.getDockerContainerPort()), descMap, tmp);
-                    ProjectPlusPriVo target = new ProjectPlusPriVo();
-                    target.setId(vo.getId());
-                    ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
-                    source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));//设置更新时间
-                    BeanUtils.copyProperties(tmp, source);
-                    projectService.updateByPrimaryKey(source, target);//更新
+                String dockerModelDirPath = DockerStructure.DOCKER_MODEL_Dir_Path;
+                ProjectPlusVo tmp = new ProjectPlusVo();
+                unzipToDocker.doWork(
+                        workDirAbsolutePath,
+                        new File(absolutePathFilePath),
+                        criteriaid.toLowerCase(), dockerModelDirPath, Integer.valueOf(vo.getProjectPort()), descMap, tmp);
+                ProjectPlusPriVo target = new ProjectPlusPriVo();
+                target.setId(vo.getId());
+                ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
+                source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));//设置更新时间
+                BeanUtils.copyProperties(tmp, source);
+                projectService.updateByPrimaryKey(source, target);//更新
 
-                } catch (Exception e) {
-                    log.error("e:{}", e.toString(), e);
-                }
             }
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
@@ -121,7 +126,7 @@ public class ASPToDockerPlusController {
         query.setProjectPackageType(URLUtils.Type.stream.getType());
         List<ProjectPlusVo> projectVos = projectService.queryBase(query);
         for (ProjectPlusVo vo : projectVos) {
-            if (StringUtils.isBlank(vo.getDockerImageName())) {
+            if (StringUtils.isBlank(vo.getDevDockerImageName())) {
                 threadPoolExecutorService.addWork(new Runnable() {
                     @Override
                     public void run() {
@@ -151,7 +156,7 @@ public class ASPToDockerPlusController {
         if (projectVos.size() > 1) {
             throw new RuntimeException("同一个criteriaid可用检索出两条:" + criteriaid);
         }
-        String fileName = projectVos.get(0).getProjectRealFileName();
+        String fileName = projectVos.get(0).getDevProjectRealFileName();
         String s = startConfig.getLocalFsPathOriginZip() + "/" + fileName;
         File file = new File(s);
         HttpHeaders headers = new HttpHeaders();//设置响应头
@@ -203,6 +208,112 @@ public class ASPToDockerPlusController {
         HttpStatus statusCode = HttpStatus.OK;//设置响应吗
         ResponseEntity<byte[]> response = new ResponseEntity<>(((ByteArrayOutputStream) outputStream).toByteArray(), headers, statusCode);
         demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(s);//删除文件
+        return response;
+
+    }
+
+    @ApiOperation(value = "预览指定文件的文件")
+    @GetMapping("/preByFileName")
+    public ResponseEntity<byte[]> preByFileName(@RequestParam(value = "fileName") String fileName) throws Exception {
+        String workDirAbsolutePath = startConfig.getLocalFsPathImg();
+        String fileNamePath = workDirAbsolutePath + "/" + fileName;
+        File file = new File(fileNamePath);
+        if (file.exists() == false) {
+            throw new Exception("指定文件不存在");
+        }
+
+        byte[] fileBytes = FileUtils.readFileToByteArray(file);
+        HttpHeaders headers = new HttpHeaders();//设置响应头
+        headers.add(HttpHeaders.CONTENT_TYPE, "image/jpeg");//指定类型
+        HttpStatus statusCode = HttpStatus.OK;//设置响应吗
+        ResponseEntity<byte[]> response = new ResponseEntity<>(fileBytes, headers, statusCode);
+        return response;
+    }
+
+    @ApiOperation(value = "生成DockerProZip")
+    @GetMapping("/generateImageProZip")
+    public Response generateImageProZip(@RequestParam(value = "criteriaid") String criteriaid) {
+        Response response = new Response<>();
+        try {
+            ProjectPlusVo query = new ProjectPlusVo();
+            query.setCriteriaid(criteriaid);
+            List<ProjectPlusVo> projectVos = projectService.queryBase(query);
+            String workDirAbsolutePath = startConfig.getLocalFsPathTmp();
+            String localFsPathProZip = startConfig.getLocalFsPathProZip();
+            for (ProjectPlusVo vo : projectVos) {
+                String s = devToPro.doWork(vo.getCriteriaid(), vo.getDevDockerContainerName(), workDirAbsolutePath, localFsPathProZip);
+
+//                ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
+//                ProjectPlusPriVo target = new ProjectPlusPriVo();
+//                target.setId(vo.getId());
+//                source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));
+//                source.setDevDockerContainerShellCreate(CmdDockerUtils.create(vo.get(), Integer.valueOf(vo.getDockerContainerPort()), 80, vo.getDockerImageName()));
+//                source.setDevDockerContainerShellRemove(CmdDockerUtils.removeImage(vo.getDockerContainerName()));
+//                source.setDevDockerContainerShellRun(CmdDockerUtils.removeImage(vo.getDockerContainerName()));
+//                source.setDevDockerContainerShellStop(CmdDockerUtils.removeImage(vo.getDockerContainerName()));
+//                projectPlusService.updateByPrimaryKey(source, target);
+            }
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
+
+    @ApiOperation(value = "生成DockerPro的image")
+    @GetMapping("/buildToDockerPro")
+    public Response buildToDockerPro(@RequestParam(value = "criteriaid") String criteriaid) {
+        Response response = new Response<>();
+        try {
+            ProjectPlusVo query = new ProjectPlusVo();
+            query.setCriteriaid(criteriaid);
+            List<ProjectPlusVo> projectVos = projectService.queryBase(query);
+            String workDirAbsolutePath = startConfig.getLocalFsPathTmp();
+            String localFsPathProZip = startConfig.getLocalFsPathProZip();
+            for (ProjectPlusVo vo : projectVos) {
+                String proProjectRealFileName = vo.getProProjectRealFileName();
+                if (StringUtils.isBlank(proProjectRealFileName)) {
+                    proProjectRealFileName = criteriaid + "_pro.zip";
+                }
+                String absolutePathFilePath = localFsPathProZip + "/" + proProjectRealFileName;
+                String contentImgs = vo.getProjectImgs();
+                Map<String, byte[]> descMap = new HashMap<>();
+                descMap.put("readme.txt", vo.getProjectIntroduction().getBytes());//加入介绍
+                if (StringUtils.isNotBlank(contentImgs)) {
+                    String[] split = contentImgs.substring(1, contentImgs.length() - 1).split(",");
+                    for (String imgName : split) {
+                        String s = startConfig.getLocalFsPathImg() + "/" + imgName;
+                        File file = new File(s);
+                        if (file.exists()) {
+                            //如果存在
+                            descMap.put(imgName, IOUtils.toByteArray(FileUtils.openInputStream(file)));
+                        }
+                    }
+                }
+                String dockerModelDirPath = DockerStructurePro.DOCKER_MODEL_Dir_Path_PRO;
+                ProjectPlusVo tmp = new ProjectPlusVo();
+                unzipToDockerPro.doWork(
+                        workDirAbsolutePath,
+                        new File(absolutePathFilePath),
+                        criteriaid.toLowerCase() + "_pro", dockerModelDirPath, Integer.valueOf(vo.getProjectPort()), descMap, tmp);
+                ProjectPlusPriVo target = new ProjectPlusPriVo();
+                target.setId(vo.getId());
+                ProjectPlusNoPriVo source = new ProjectPlusNoPriVo();
+                source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));//设置更新时间
+                BeanUtils.copyProperties(tmp, source);
+                projectService.updateByPrimaryKey(source, target);//更新
+
+            }
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
         return response;
 
     }

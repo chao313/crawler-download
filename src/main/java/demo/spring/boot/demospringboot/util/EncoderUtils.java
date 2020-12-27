@@ -19,7 +19,7 @@ public class EncoderUtils {
                 detector.handleData(bytes, 0, nread);
             }
         } catch (Exception localException) {
-            log.info("detected code:", localException);
+            log.info("detected app:", localException);
         }
         detector.dataEnd();
         String encode = detector.getDetectedCharset();

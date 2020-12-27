@@ -9,7 +9,7 @@ package demomaster.vo;
  * 表引擎      :InnoDB
  * 表版本      :10
  * 行格式      :Dynamic
- * 表创建      :2020-12-14
+ * 表创建      :2020-12-25
  * 字符集      :utf8_bin
  * 表注释      :
  */
@@ -23,7 +23,6 @@ public class ProjectPlusVo {
     private String projectPrice;  // 项目-价格 
     private String projectPackageType;  // 项目-下载包类型(流/text) 
     private String projectPanAddress;  // 项目-网盘地址 
-    private String projectRealFileName;  // 项目-真实文件名称 
     private String projectHtmlBody;  // 项目-网页Body 
     private String projectSourceUrl;  // 项目-源ASPURL 
     private String projectLanguage;  // 项目-开发语言 
@@ -41,21 +40,37 @@ public class ProjectPlusVo {
     private String projectStatus;  // 项目-状态,可用/废弃/暂定 
     private String projectMark;  // 项目-备注 
     private String projectCanRunning;  // 项目-是否正常运行 
-    private String dockerImageName;  // docker-镜像-名称 
-    private String dockerImageShellRemove;  // docker-镜像-移除命令 
-    private String dockerStatus;  // docker-状态,创建.运行中,停止,容器移除,镜像移除 
-    private String dockerContainerId;  // docker-容器-完整id 
-    private String dockerContainerName;  // docker-容器-名称 
-    private String dockerContainerPort;  // docker-端口号 
-    private String dockerContainerShellCreate;  // docker-容器-创建命令 
-    private String dockerContainerShellRun;  // docker-容器-启动命令 
-    private String dockerContainerShellStop;  // docker-容器-停止命令 
-    private String dockerContainerShellRemove;  // docker-容器-移除命令 
+    private String projectSql;  // 项目-sql 
+    private String projectPort;  // 项目-端口号 
     private String addressContainerOuter;  // 地址-容器外网 
     private String addressContainerInner;  // 地址-容器内网 
     private String addressProjectFront;  // 地址-项目前端 
     private String addressProjectBackground;  // 地址-项目后台 
     private String addressProjectBackgroundAccountPasswd;  // 地址-项目后台-账号密码 
+    private String devProjectRealFileName;  // 项目-真实文件名称 
+    private String devDockerImageName;  // docker-镜像-名称 
+    private String devDockerImageShellRemove;  // docker-镜像-移除命令 
+    private String devDockerContainerId;  // docker-容器-完整id 
+    private String devDockerContainerName;  // docker-容器-名称 
+    private String devDockerContainerShellCreate;  // docker-容器-创建命令 
+    private String devDockerContainerShellRun;  // docker-容器-启动命令 
+    private String devDockerContainerShellStop;  // docker-容器-停止命令 
+    private String devDockerContainerShellRemove;  // docker-容器-移除命令 
+    private String devDockerStatusImagesIsExist;  // docker-状态-镜像是否存在 
+    private String devDockerStatusContainerIsExist;  // docker-状态-容器是否存在 
+    private String devDockerStatusContainerIsRunning;  // docker-状态-容器是否运行 
+    private String proProjectRealFileName;  // pro-项目-真实文件名称 
+    private String proDockerImageName;  // pro-docker-镜像-名称 
+    private String proDockerImageShellRemove;  // pro-docker-镜像-移除命令 
+    private String proDockerContainerId;  // pro-docker-容器-完整id 
+    private String proDockerContainerName;  // pro-docker-容器-名称 
+    private String proDockerContainerShellCreate;  // pro-docker-容器-创建命令 
+    private String proDockerContainerShellRun;  // pro-docker-容器-启动命令 
+    private String proDockerContainerShellStop;  // pro-docker-容器-停止命令 
+    private String proDockerContainerShellRemove;  // pro-docker-容器-移除命令 
+    private String proDockerStatusImagesIsExist;  // pro-docker-状态-镜像是否存在 
+    private String proDockerStatusContainerIsExist;  // pro-docker-状态-容器是否存在 
+    private String proDockerStatusContainerIsRunning;  // pro-docker-状态-容器是否运行 
     private String updateTime;  // 更新时间 
 
 
@@ -152,18 +167,6 @@ public class ProjectPlusVo {
     public void setProjectPanAddress(String projectPanAddress) {
 
         this.projectPanAddress = projectPanAddress;
-
-    }
-
-    public String getProjectRealFileName() {
-
-        return projectRealFileName;
-
-    }
-
-    public void setProjectRealFileName(String projectRealFileName) {
-
-        this.projectRealFileName = projectRealFileName;
 
     }
 
@@ -371,123 +374,27 @@ public class ProjectPlusVo {
 
     }
 
-    public String getDockerImageName() {
+    public String getProjectSql() {
 
-        return dockerImageName;
-
-    }
-
-    public void setDockerImageName(String dockerImageName) {
-
-        this.dockerImageName = dockerImageName;
+        return projectSql;
 
     }
 
-    public String getDockerImageShellRemove() {
+    public void setProjectSql(String projectSql) {
 
-        return dockerImageShellRemove;
-
-    }
-
-    public void setDockerImageShellRemove(String dockerImageShellRemove) {
-
-        this.dockerImageShellRemove = dockerImageShellRemove;
+        this.projectSql = projectSql;
 
     }
 
-    public String getDockerStatus() {
+    public String getProjectPort() {
 
-        return dockerStatus;
-
-    }
-
-    public void setDockerStatus(String dockerStatus) {
-
-        this.dockerStatus = dockerStatus;
+        return projectPort;
 
     }
 
-    public String getDockerContainerId() {
+    public void setProjectPort(String projectPort) {
 
-        return dockerContainerId;
-
-    }
-
-    public void setDockerContainerId(String dockerContainerId) {
-
-        this.dockerContainerId = dockerContainerId;
-
-    }
-
-    public String getDockerContainerName() {
-
-        return dockerContainerName;
-
-    }
-
-    public void setDockerContainerName(String dockerContainerName) {
-
-        this.dockerContainerName = dockerContainerName;
-
-    }
-
-    public String getDockerContainerPort() {
-
-        return dockerContainerPort;
-
-    }
-
-    public void setDockerContainerPort(String dockerContainerPort) {
-
-        this.dockerContainerPort = dockerContainerPort;
-
-    }
-
-    public String getDockerContainerShellCreate() {
-
-        return dockerContainerShellCreate;
-
-    }
-
-    public void setDockerContainerShellCreate(String dockerContainerShellCreate) {
-
-        this.dockerContainerShellCreate = dockerContainerShellCreate;
-
-    }
-
-    public String getDockerContainerShellRun() {
-
-        return dockerContainerShellRun;
-
-    }
-
-    public void setDockerContainerShellRun(String dockerContainerShellRun) {
-
-        this.dockerContainerShellRun = dockerContainerShellRun;
-
-    }
-
-    public String getDockerContainerShellStop() {
-
-        return dockerContainerShellStop;
-
-    }
-
-    public void setDockerContainerShellStop(String dockerContainerShellStop) {
-
-        this.dockerContainerShellStop = dockerContainerShellStop;
-
-    }
-
-    public String getDockerContainerShellRemove() {
-
-        return dockerContainerShellRemove;
-
-    }
-
-    public void setDockerContainerShellRemove(String dockerContainerShellRemove) {
-
-        this.dockerContainerShellRemove = dockerContainerShellRemove;
+        this.projectPort = projectPort;
 
     }
 
@@ -551,6 +458,294 @@ public class ProjectPlusVo {
 
     }
 
+    public String getDevProjectRealFileName() {
+
+        return devProjectRealFileName;
+
+    }
+
+    public void setDevProjectRealFileName(String devProjectRealFileName) {
+
+        this.devProjectRealFileName = devProjectRealFileName;
+
+    }
+
+    public String getDevDockerImageName() {
+
+        return devDockerImageName;
+
+    }
+
+    public void setDevDockerImageName(String devDockerImageName) {
+
+        this.devDockerImageName = devDockerImageName;
+
+    }
+
+    public String getDevDockerImageShellRemove() {
+
+        return devDockerImageShellRemove;
+
+    }
+
+    public void setDevDockerImageShellRemove(String devDockerImageShellRemove) {
+
+        this.devDockerImageShellRemove = devDockerImageShellRemove;
+
+    }
+
+    public String getDevDockerContainerId() {
+
+        return devDockerContainerId;
+
+    }
+
+    public void setDevDockerContainerId(String devDockerContainerId) {
+
+        this.devDockerContainerId = devDockerContainerId;
+
+    }
+
+    public String getDevDockerContainerName() {
+
+        return devDockerContainerName;
+
+    }
+
+    public void setDevDockerContainerName(String devDockerContainerName) {
+
+        this.devDockerContainerName = devDockerContainerName;
+
+    }
+
+    public String getDevDockerContainerShellCreate() {
+
+        return devDockerContainerShellCreate;
+
+    }
+
+    public void setDevDockerContainerShellCreate(String devDockerContainerShellCreate) {
+
+        this.devDockerContainerShellCreate = devDockerContainerShellCreate;
+
+    }
+
+    public String getDevDockerContainerShellRun() {
+
+        return devDockerContainerShellRun;
+
+    }
+
+    public void setDevDockerContainerShellRun(String devDockerContainerShellRun) {
+
+        this.devDockerContainerShellRun = devDockerContainerShellRun;
+
+    }
+
+    public String getDevDockerContainerShellStop() {
+
+        return devDockerContainerShellStop;
+
+    }
+
+    public void setDevDockerContainerShellStop(String devDockerContainerShellStop) {
+
+        this.devDockerContainerShellStop = devDockerContainerShellStop;
+
+    }
+
+    public String getDevDockerContainerShellRemove() {
+
+        return devDockerContainerShellRemove;
+
+    }
+
+    public void setDevDockerContainerShellRemove(String devDockerContainerShellRemove) {
+
+        this.devDockerContainerShellRemove = devDockerContainerShellRemove;
+
+    }
+
+    public String getDevDockerStatusImagesIsExist() {
+
+        return devDockerStatusImagesIsExist;
+
+    }
+
+    public void setDevDockerStatusImagesIsExist(String devDockerStatusImagesIsExist) {
+
+        this.devDockerStatusImagesIsExist = devDockerStatusImagesIsExist;
+
+    }
+
+    public String getDevDockerStatusContainerIsExist() {
+
+        return devDockerStatusContainerIsExist;
+
+    }
+
+    public void setDevDockerStatusContainerIsExist(String devDockerStatusContainerIsExist) {
+
+        this.devDockerStatusContainerIsExist = devDockerStatusContainerIsExist;
+
+    }
+
+    public String getDevDockerStatusContainerIsRunning() {
+
+        return devDockerStatusContainerIsRunning;
+
+    }
+
+    public void setDevDockerStatusContainerIsRunning(String devDockerStatusContainerIsRunning) {
+
+        this.devDockerStatusContainerIsRunning = devDockerStatusContainerIsRunning;
+
+    }
+
+    public String getProProjectRealFileName() {
+
+        return proProjectRealFileName;
+
+    }
+
+    public void setProProjectRealFileName(String proProjectRealFileName) {
+
+        this.proProjectRealFileName = proProjectRealFileName;
+
+    }
+
+    public String getProDockerImageName() {
+
+        return proDockerImageName;
+
+    }
+
+    public void setProDockerImageName(String proDockerImageName) {
+
+        this.proDockerImageName = proDockerImageName;
+
+    }
+
+    public String getProDockerImageShellRemove() {
+
+        return proDockerImageShellRemove;
+
+    }
+
+    public void setProDockerImageShellRemove(String proDockerImageShellRemove) {
+
+        this.proDockerImageShellRemove = proDockerImageShellRemove;
+
+    }
+
+    public String getProDockerContainerId() {
+
+        return proDockerContainerId;
+
+    }
+
+    public void setProDockerContainerId(String proDockerContainerId) {
+
+        this.proDockerContainerId = proDockerContainerId;
+
+    }
+
+    public String getProDockerContainerName() {
+
+        return proDockerContainerName;
+
+    }
+
+    public void setProDockerContainerName(String proDockerContainerName) {
+
+        this.proDockerContainerName = proDockerContainerName;
+
+    }
+
+    public String getProDockerContainerShellCreate() {
+
+        return proDockerContainerShellCreate;
+
+    }
+
+    public void setProDockerContainerShellCreate(String proDockerContainerShellCreate) {
+
+        this.proDockerContainerShellCreate = proDockerContainerShellCreate;
+
+    }
+
+    public String getProDockerContainerShellRun() {
+
+        return proDockerContainerShellRun;
+
+    }
+
+    public void setProDockerContainerShellRun(String proDockerContainerShellRun) {
+
+        this.proDockerContainerShellRun = proDockerContainerShellRun;
+
+    }
+
+    public String getProDockerContainerShellStop() {
+
+        return proDockerContainerShellStop;
+
+    }
+
+    public void setProDockerContainerShellStop(String proDockerContainerShellStop) {
+
+        this.proDockerContainerShellStop = proDockerContainerShellStop;
+
+    }
+
+    public String getProDockerContainerShellRemove() {
+
+        return proDockerContainerShellRemove;
+
+    }
+
+    public void setProDockerContainerShellRemove(String proDockerContainerShellRemove) {
+
+        this.proDockerContainerShellRemove = proDockerContainerShellRemove;
+
+    }
+
+    public String getProDockerStatusImagesIsExist() {
+
+        return proDockerStatusImagesIsExist;
+
+    }
+
+    public void setProDockerStatusImagesIsExist(String proDockerStatusImagesIsExist) {
+
+        this.proDockerStatusImagesIsExist = proDockerStatusImagesIsExist;
+
+    }
+
+    public String getProDockerStatusContainerIsExist() {
+
+        return proDockerStatusContainerIsExist;
+
+    }
+
+    public void setProDockerStatusContainerIsExist(String proDockerStatusContainerIsExist) {
+
+        this.proDockerStatusContainerIsExist = proDockerStatusContainerIsExist;
+
+    }
+
+    public String getProDockerStatusContainerIsRunning() {
+
+        return proDockerStatusContainerIsRunning;
+
+    }
+
+    public void setProDockerStatusContainerIsRunning(String proDockerStatusContainerIsRunning) {
+
+        this.proDockerStatusContainerIsRunning = proDockerStatusContainerIsRunning;
+
+    }
+
     public String getUpdateTime() {
 
         return updateTime;
@@ -575,7 +770,6 @@ public class ProjectPlusVo {
                 ", projectPrice '" + projectPrice + '\'' +
                 ", projectPackageType '" + projectPackageType + '\'' +
                 ", projectPanAddress '" + projectPanAddress + '\'' +
-                ", projectRealFileName '" + projectRealFileName + '\'' +
                 ", projectHtmlBody '" + projectHtmlBody + '\'' +
                 ", projectSourceUrl '" + projectSourceUrl + '\'' +
                 ", projectLanguage '" + projectLanguage + '\'' +
@@ -593,21 +787,37 @@ public class ProjectPlusVo {
                 ", projectStatus '" + projectStatus + '\'' +
                 ", projectMark '" + projectMark + '\'' +
                 ", projectCanRunning '" + projectCanRunning + '\'' +
-                ", dockerImageName '" + dockerImageName + '\'' +
-                ", dockerImageShellRemove '" + dockerImageShellRemove + '\'' +
-                ", dockerStatus '" + dockerStatus + '\'' +
-                ", dockerContainerId '" + dockerContainerId + '\'' +
-                ", dockerContainerName '" + dockerContainerName + '\'' +
-                ", dockerContainerPort '" + dockerContainerPort + '\'' +
-                ", dockerContainerShellCreate '" + dockerContainerShellCreate + '\'' +
-                ", dockerContainerShellRun '" + dockerContainerShellRun + '\'' +
-                ", dockerContainerShellStop '" + dockerContainerShellStop + '\'' +
-                ", dockerContainerShellRemove '" + dockerContainerShellRemove + '\'' +
+                ", projectSql '" + projectSql + '\'' +
+                ", projectPort '" + projectPort + '\'' +
                 ", addressContainerOuter '" + addressContainerOuter + '\'' +
                 ", addressContainerInner '" + addressContainerInner + '\'' +
                 ", addressProjectFront '" + addressProjectFront + '\'' +
                 ", addressProjectBackground '" + addressProjectBackground + '\'' +
                 ", addressProjectBackgroundAccountPasswd '" + addressProjectBackgroundAccountPasswd + '\'' +
+                ", devProjectRealFileName '" + devProjectRealFileName + '\'' +
+                ", devDockerImageName '" + devDockerImageName + '\'' +
+                ", devDockerImageShellRemove '" + devDockerImageShellRemove + '\'' +
+                ", devDockerContainerId '" + devDockerContainerId + '\'' +
+                ", devDockerContainerName '" + devDockerContainerName + '\'' +
+                ", devDockerContainerShellCreate '" + devDockerContainerShellCreate + '\'' +
+                ", devDockerContainerShellRun '" + devDockerContainerShellRun + '\'' +
+                ", devDockerContainerShellStop '" + devDockerContainerShellStop + '\'' +
+                ", devDockerContainerShellRemove '" + devDockerContainerShellRemove + '\'' +
+                ", devDockerStatusImagesIsExist '" + devDockerStatusImagesIsExist + '\'' +
+                ", devDockerStatusContainerIsExist '" + devDockerStatusContainerIsExist + '\'' +
+                ", devDockerStatusContainerIsRunning '" + devDockerStatusContainerIsRunning + '\'' +
+                ", proProjectRealFileName '" + proProjectRealFileName + '\'' +
+                ", proDockerImageName '" + proDockerImageName + '\'' +
+                ", proDockerImageShellRemove '" + proDockerImageShellRemove + '\'' +
+                ", proDockerContainerId '" + proDockerContainerId + '\'' +
+                ", proDockerContainerName '" + proDockerContainerName + '\'' +
+                ", proDockerContainerShellCreate '" + proDockerContainerShellCreate + '\'' +
+                ", proDockerContainerShellRun '" + proDockerContainerShellRun + '\'' +
+                ", proDockerContainerShellStop '" + proDockerContainerShellStop + '\'' +
+                ", proDockerContainerShellRemove '" + proDockerContainerShellRemove + '\'' +
+                ", proDockerStatusImagesIsExist '" + proDockerStatusImagesIsExist + '\'' +
+                ", proDockerStatusContainerIsExist '" + proDockerStatusContainerIsExist + '\'' +
+                ", proDockerStatusContainerIsRunning '" + proDockerStatusContainerIsRunning + '\'' +
                 ", updateTime '" + updateTime + '\'' +
                 '}';
     }
