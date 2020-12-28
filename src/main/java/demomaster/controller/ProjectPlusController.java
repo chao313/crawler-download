@@ -145,7 +145,7 @@ public class ProjectPlusController {
                 vo.setProDockerStatusContainerIsRunning("false");
                 if (StringUtils.isNotBlank(vo.getDevDockerImageName())) {
                     allImages.forEach(image -> {
-                        if (image.contains("/" + vo.getDevDockerImageName())) {
+                        if (image.contains("/" + vo.getDevDockerImageName() + ":")) {
                             //检索到代表镜像存在 -> 指定为镜像存在
                             vo.setDevDockerStatusImagesIsExist("true");
                         }
@@ -153,7 +153,7 @@ public class ProjectPlusController {
                 }
                 if (StringUtils.isNotBlank(vo.getProDockerImageName())) {
                     allImages.forEach(image -> {
-                        if (image.contains("/" + vo.getProDockerImageName())) {
+                        if (image.contains("/" + vo.getProDockerImageName() + ":")) {
                             //检索到代表镜像存在 -> 指定为镜像存在
                             vo.setProDockerStatusImagesIsExist("true");
                         }

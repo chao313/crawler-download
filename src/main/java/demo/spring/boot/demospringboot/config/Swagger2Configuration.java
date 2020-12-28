@@ -33,6 +33,22 @@ public class Swagger2Configuration {
                 ;
     }
 
+    @Bean
+    public Docket createRestApiDemo() {
+        return new Docket(DocumentationType.SWAGGER_2)//Docket, Springfox’s, primary api configuration mechanism is initialized for swagger specification 2.0
+                .select()//select() returns an instance of ApiSelectorBuilder to give fine grained control over the endpoints exposed via swagger.
+                .apis(RequestHandlerSelectors.basePackage("demomaster"))
+                .paths(PathSelectors.any())// .paths(Predicates.or(PathSelectors.regex("/api/.*")))//过滤的接口,此片过滤掉/api/打头的接口
+                .build()//The selector requires to be built after configuring the api and path selectors. Out of the box we provide predicates for regex, ant, any, none
+                .genericModelSubstitutes(DeferredResult.class)//异步http请求
+                .forCodeGeneration(true)//By default, types with generics will be labeled with '\u00ab'(<<), '\u00bb'(>>), and commas. This can be problematic with things like swagger-codegen. You can override this behavior by implementing your own GenericTypeNamingStrategy.
+                .pathMapping("/")// 在这里可以设置请求的统一前缀；默认请求都是以 / 根路径开始，如果我们的应用不是部署在根路径，比如以/platform（应用名）部署，则可以通过一下方式设置请求的统一前缀。
+                .apiInfo(apiInfo())
+                .useDefaultResponseMessages(false)//使用默认的响应信息true：默认响应信息将会回到全局的响应信息中；false:不加到全局的响应信息中
+                .groupName("demo")
+                ;
+    }
+
 
     /**
      * api描述信息

@@ -58,9 +58,12 @@ http://127.0.0.1:8083/download/swagger-ui.html#!/asp45controller/downloadDetailU
 
 * 增加 根据访问的ip来显示不同的地址，内外网
 * 增加 安装步骤截图?
-* 前端 查看介绍可以换行+图片(脱离asp300)
+[x]前端 查看介绍可以换行+图片(脱离asp300)
 * 前端 编辑以弹出框的形式
 * 前端 合并内网外网(根据服务)
+* 增加 devToPro/proToPro
+* 增加 pro容器的reset(sql)
+
 
 
 
