@@ -33,8 +33,8 @@ public class DefaultDevToProImpl extends DevToPro {
         ProUtils.threadLocalVar.remove();
         ProUtils.threadLocalVar.get().put(ProUtils.PATH_ROOT, targetDirAbsolutePathName);
         ProUtils.threadLocalVar.get().put(ProUtils.PATH_APP, targetDirAbsolutePathName + "/app");
-        ProUtils.threadLocalVar.get().put(ProUtils.PATH_SQL, targetDirAbsolutePathName + "/sql/db.sql");
-        ProUtils.threadLocalVar.get().put(ProUtils.PATH_INIT, targetDirAbsolutePathName + "/init/init.sql");
+        ProUtils.threadLocalVar.get().put(ProUtils.PATH_SQL, targetDirAbsolutePathName + "/init/db.sql");
+        ProUtils.threadLocalVar.get().put(ProUtils.PATH_INIT, targetDirAbsolutePathName + "/init/init.sh");
         ProUtils.threadLocalVar.get().put(ProUtils.NAME_PRO_ZIP, nameProZip);
         ProUtils.threadLocalVar.get().put(ProUtils.PATH_PRO_ZIP, localFsPathProZip + "/" + nameProZip);
         ProUtils.threadLocalVar.get().put(ProUtils.TO_DELETE_DIR, tmp);
@@ -48,6 +48,9 @@ public class DefaultDevToProImpl extends DevToPro {
     protected String copyDataAndSqlFromContainer(String containerName, String path_sql, String path_root) throws IOException {
         ShellUtil.executeLinuxShellStr(CmdDockerUtils.getCopyAppCmd(containerName, path_root).split(" "), new ShellUtil.LocalFun());
         String sql = ShellUtil.executeLinuxShellStr(CmdDockerUtils.getCopySqlCmd(containerName), new ShellUtil.LocalFun());
+//        if (sql.equalsIgnoreCase("null") || sql.contains()){
+//
+//        }
         FileUtils.writeByteArrayToFile(new File(path_sql), sql.getBytes());
         return ProUtils.threadLocalVar.get().get(ProUtils.PATH_ROOT);
     }
