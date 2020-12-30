@@ -253,6 +253,7 @@ public class ASPToDockerPlusController {
 //                source.setDevDockerContainerShellStop(CmdDockerUtils.removeImage(vo.getDockerContainerName()));
 //                projectPlusService.updateByPrimaryKey(source, target);
             }
+            response.setCode(Code.System.OK);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());
@@ -306,8 +307,8 @@ public class ASPToDockerPlusController {
                 source.setUpdateTime(FastDateFormat.getInstance("yyyyMMddHHmmss").format(new Date()));//设置更新时间
                 BeanUtils.copyProperties(tmp, source);
                 projectService.updateByPrimaryKey(source, target);//更新
-
             }
+            response.setCode(Code.System.OK);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());

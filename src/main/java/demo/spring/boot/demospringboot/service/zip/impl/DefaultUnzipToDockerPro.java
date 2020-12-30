@@ -1,6 +1,7 @@
 package demo.spring.boot.demospringboot.service.zip.impl;
 
 import demo.spring.boot.demospringboot.config.DockerStructure;
+import demo.spring.boot.demospringboot.config.DockerStructurePro;
 import demo.spring.boot.demospringboot.service.zip.UnzipToDockerPro;
 import demo.spring.boot.demospringboot.util.*;
 import lombok.SneakyThrows;
@@ -66,7 +67,7 @@ public class DefaultUnzipToDockerPro extends UnzipToDockerPro {
         String uuid = UUIDUtils.generateUUID();
         String dockerRealPath = workDirAbsolutePath + "/" + uuid;
         FileUtils.copyDirectory(new File(dockerModelPath), new File(dockerRealPath));//项目复制到目标文件夹下
-        FileUtils.copyDirectory(new File(dataPath), new File(dockerRealPath + DockerStructure.CODE));//项目复制到目标data文件夹下
+        FileUtils.copyDirectory(new File(dataPath), new File(dockerRealPath + DockerStructurePro.APP));//项目复制到目标data文件夹下
         return dockerRealPath;
     }
 

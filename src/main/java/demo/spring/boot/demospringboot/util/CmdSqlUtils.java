@@ -14,7 +14,7 @@ public class CmdSqlUtils {
      * 获取创建db并且导入的语句
      */
     public static String getCreateDbAndImportShell(String db) {
-        String format = MessageFormat.format("create database {0};use {1};set names utf8;source  /app/sql/db.sql;", db, db);
+        String format = MessageFormat.format("create database {0};use {1};set names utf8;source  /app/init/db.sql;", db, db);
         return format;
     }
 
