@@ -200,7 +200,8 @@ public abstract class UnzipToDocker {
         //删除临时文件(为了防止误删,加上判断)
         if (rootPath.contains("tmp") && dockerRealPath.contains("tmp") && tmpCopyFilePath.contains("tmp")) {
             demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(rootPath);
-            demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(dockerRealPath);
+//            demo.spring.boot.demospringboot.util.FileUtils.deleteDirectory(dockerRealPath);
+            log.info("保留dockerRealPath:{}", dockerRealPath);
             demo.spring.boot.demospringboot.util.FileUtils.deleteFile(tmpCopyFilePath);
         }
 

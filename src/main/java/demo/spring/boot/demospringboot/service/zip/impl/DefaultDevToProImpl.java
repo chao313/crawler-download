@@ -48,7 +48,9 @@ public class DefaultDevToProImpl extends DevToPro {
     protected String copyDataAndSqlFromContainer(String containerName, String path_sql, String path_root) throws IOException {
         ShellUtil.executeLinuxShellStr(CmdDockerUtils.getCopyAppCmd(containerName, path_root).split(" "), new ShellUtil.LocalFun());
         String sql = ShellUtil.executeLinuxShellStr(CmdDockerUtils.getCopySqlCmd(containerName), new ShellUtil.LocalFun());
-        if (sql.equalsIgnoreCase("null") || sql.contains("Can't connect to local MySQL server")) {
+        if (sql.equalsIgnoreCase("null")
+                || sql.contains("Can't connect to local MySQL server")
+                || sql.contains("Access denied for user")) {
             throw new RuntimeException("导出sql异常:" + sql);
         }
         FileUtils.writeByteArrayToFile(new File(path_sql), sql.getBytes());

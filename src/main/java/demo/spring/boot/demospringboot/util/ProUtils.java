@@ -19,7 +19,7 @@ public class ProUtils {
     public static ThreadLocal<Map<String, String>> threadLocalVar = InheritableThreadLocal.withInitial(HashMap::new);
 
     public static String getProAccount(String criteriaid) {
-        return criteriaid + "_admin";
+        return criteriaid + "_admin".replace("_SoftView", "");
     }
 
     public static String getProPasswd(String criteriaid) {
