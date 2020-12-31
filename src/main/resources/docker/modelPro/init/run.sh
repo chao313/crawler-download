@@ -45,7 +45,8 @@ rm /var/run/mysqld/mysqld.sock
 sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
 sed -i "s/user.*/user = www-data/" /etc/mysql/my.cnf
 
-if [[ ! -d $VOLUME_HOME/mysql ]]; then
+#if [[ ! -d $VOLUME_HOME/mysql ]]; then
+if [ 1>2 ]; then
     echo "=> An empty or uninitialized MySQL volume is detected in $VOLUME_HOME"
     echo "=> Installing MySQL ..."
 
