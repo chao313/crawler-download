@@ -75,6 +75,31 @@ public class DockerShellController {
 
     }
 
+    @ApiOperation(value = "运行dockers的命令")
+    @GetMapping("/runDockerShells")
+    public Response runDockerShells(
+            @RequestParam(value = "shell")
+                    List<String> shells) {
+        Response response = new Response<>();
+        try {
+            StringBuilder sb = new StringBuilder();
+            shells.forEach(shell -> {
+                String result = ShellUtil.executeLinuxShellStr(shell, new ShellUtil.LocalFun());
+                sb.append(result).append("\n");
+            });
+            response.setCode(Code.System.OK);
+            response.setContent(sb.toString());
+            log.info("下载完成");
+        } catch (Exception e) {
+            response.setCode(Code.System.FAIL);
+            response.setMsg(e.getMessage());
+            response.addException(e);
+            log.error("异常 ：{} ", e.getMessage(), e);
+        }
+        return response;
+
+    }
+
     @ApiOperation(value = "获取容器的URL")
     @GetMapping("/getOuterPortainerUrl")
     public Response getOuterPortainerUrl(

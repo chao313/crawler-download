@@ -160,36 +160,28 @@ public class ProjectPlusController {
                     });
                 }
                 if (StringUtils.isNotBlank(vo.getDevDockerContainerName())) {
-                    allContainers.forEach(container -> {
-                        if (container.contains("/" + vo.getDevDockerContainerName())) {
-                            //检索到代表容器存在
-                            vo.setDevDockerStatusContainerIsExist("true");
-                        }
-                    });
+                    if (allContainers.contains("/" + vo.getDevDockerContainerName())) {
+                        //检索到代表容器存在
+                        vo.setDevDockerStatusContainerIsExist("true");
+                    }
                 }
                 if (StringUtils.isNotBlank(vo.getProDockerContainerName())) {
-                    allContainers.forEach(container -> {
-                        if (container.contains("/" + vo.getProDockerContainerName())) {
-                            //检索到代表容器存在
-                            vo.setProDockerStatusContainerIsExist("true");
-                        }
-                    });
+                    if (allContainers.contains("/" + vo.getProDockerContainerName())) {
+                        //检索到代表容器存在
+                        vo.setProDockerStatusContainerIsExist("true");
+                    }
                 }
                 if (StringUtils.isNotBlank(vo.getDevDockerContainerName())) {
-                    runningContainers.forEach(container -> {
-                        if (container.contains("/" + vo.getDevDockerContainerName())) {
-                            //检索到代表容器存在 -> 指定为镜像存在
-                            vo.setDevDockerStatusContainerIsRunning("true");
-                        }
-                    });
+                    if (runningContainers.contains("/" + vo.getDevDockerContainerName())) {
+                        //检索到代表容器存在 -> 指定为镜像存在
+                        vo.setDevDockerStatusContainerIsRunning("true");
+                    }
                 }
                 if (StringUtils.isNotBlank(vo.getProDockerContainerName())) {
-                    runningContainers.forEach(container -> {
-                        if (container.contains("/" + vo.getProDockerContainerName())) {
-                            //检索到代表容器存在 -> 指定为镜像存在
-                            vo.setProDockerStatusContainerIsRunning("true");
-                        }
-                    });
+                    if (runningContainers.contains("/" + vo.getProDockerContainerName())) {
+                        //检索到代表容器存在 -> 指定为镜像存在
+                        vo.setProDockerStatusContainerIsRunning("true");
+                    }
                 }
                 String devDockerContainerId = allContainersMap.get("/" + vo.getDevDockerContainerName());
                 vo.setDevDockerContainerId(devDockerContainerId);

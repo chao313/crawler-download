@@ -65,4 +65,4 @@ else
     echo "=> Using an existing volume of MySQL"
 fi
 
-exec supervisord -
+exec supervisord -n

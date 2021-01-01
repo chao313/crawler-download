@@ -107,6 +107,7 @@ public class ASPToDockerPlusController {
                 projectService.updateByPrimaryKey(source, target);//更新
 
             }
+            response.setCode(Code.System.OK);
         } catch (Exception e) {
             response.setCode(Code.System.FAIL);
             response.setMsg(e.getMessage());
